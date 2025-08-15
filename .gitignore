@@ -1,0 +1,31 @@
+# Pipeline output directories
+L1_pdf_analysis/
+L2_csv_optimize/
+L3_cpp_generator/
+L4_Reg_generator/
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Virtual environments
+venv/
+env/
+ENV/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
