@@ -9,6 +9,19 @@ import pandas as pd
 import re
 from pathlib import Path
 
+def sanitize_name(name):
+    """Sanitize names for C++ identifiers (same as L4)"""
+    # Replace invalid C++ identifier characters
+    name = re.sub(r'[^a-zA-Z0-9_]', '_', name)
+    # Ensure it doesn't start with a number
+    if name and name[0].isdigit():
+        name = '_' + name
+    # Remove consecutive underscores
+    name = re.sub(r'_+', '_', name)
+    # Remove trailing underscores
+    name = name.strip('_')
+    return name
+
 def deduplicate_attributes(attributes_df, output_dir):
     """
     Deduplicate fields in attributes dataframe.
@@ -26,6 +39,7 @@ def deduplicate_attributes(attributes_df, output_dir):
         
         seen_exact = set()  # (field_name, bits) tuples
         field_name_counts = {}  # Track field names for renaming
+        sanitized_name_counts = {}  # Track sanitized names to detect collisions
         
         for _, row in register_fields.iterrows():
             key = (row['field_name'], row['bits'])
@@ -38,22 +52,48 @@ def deduplicate_attributes(attributes_df, output_dir):
             seen_exact.add(key)
             new_row = row.copy()
             
-            # Rename if same field name with different bits
             field_name = row['field_name']
+            # Handle NaN or empty field names
+            if pd.isna(field_name) or not str(field_name).strip():
+                continue
+            
+            field_name = str(field_name).strip()
+            sanitized = sanitize_name(field_name.upper())
+            
+            # Check for both raw name collisions and sanitized name collisions
+            needs_rename = False
+            
+            # Case 1: Same raw field name with different bits
             if field_name in field_name_counts:
-                suffix = field_name_counts[field_name]
+                needs_rename = True
+            # Case 2: Different raw names but same sanitized name
+            elif sanitized in sanitized_name_counts and sanitized_name_counts[sanitized] != field_name:
+                needs_rename = True
+                
+            if needs_rename:
+                # Determine suffix based on sanitized name count
+                if sanitized in sanitized_name_counts:
+                    suffix = len([k for k in sanitized_name_counts.keys() if k.startswith(sanitized)]) + 1
+                else:
+                    suffix = 1
+                    
                 original_name = new_row['field_name']
                 new_row['field_name'] = f"{field_name}_{suffix}"
-                field_name_counts[field_name] += 1
                 stats['fields_renamed'] += 1
                 rename_log.append({
                     'register': register_name,
                     'original': original_name,
                     'renamed': new_row['field_name'],
-                    'bits': row['bits']
+                    'bits': row['bits'],
+                    'reason': 'sanitized_collision' if field_name not in field_name_counts else 'raw_collision'
                 })
+                
+                # Update tracking
+                field_name_counts[new_row['field_name']] = 1
+                sanitized_name_counts[sanitize_name(new_row['field_name'].upper())] = new_row['field_name']
             else:
                 field_name_counts[field_name] = 1
+                sanitized_name_counts[sanitized] = field_name
             
             deduplicated_rows.append(new_row)
     
@@ -346,6 +386,7 @@ def process_register_blocks():
             'array_size': int(row['array_size']) if pd.notna(row['array_size']) else 1,
             'array_indices': str(row['array_indices']) if pd.notna(row['array_indices']) else "",
             'register_type': row['type'] if pd.notna(row['type']) else "RW",
+            'bit_width': int(row['register_size']) if 'register_size' in row and pd.notna(row['register_size']) else 64,
             'fields': [],
             'calculated_reset': 0,
             'reset_flags': []

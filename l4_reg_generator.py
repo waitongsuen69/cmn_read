@@ -86,25 +86,29 @@ def get_access_and_write_effect(field_type):
     return None, None
 
 def generate_field_cpp(l2_df, output_dir):
-    """Generate field.cpp with vlab::Field64 definitions for all fields"""
+    """Generate field.cpp with vlab::Field32/Field64 definitions for all fields"""
     output_file = output_dir / "field.cpp"
     field_variables = {}  # Track generated field variables for register generator
     
     print(f"Generating {output_file}...")
     
-    # Load L3 JSON to get all register names for conflict detection
+    # Load L3 JSON to get all register names and sizes for conflict detection
     try:
         l3_data = load_l3_json()
         all_register_names = set()
+        register_sizes = {}  # Map register name to bit width
         for block_data in l3_data['register_blocks'].values():
             for register in block_data['registers']:
                 # Store sanitized uppercase register names for comparison
                 reg_name_sanitized = sanitize_name(register['name'].upper())
                 all_register_names.add(reg_name_sanitized)
+                # Store register size
+                register_sizes[register['name']] = register.get('bit_width', 64)
         print(f"Loaded {len(all_register_names)} register names for conflict detection")
     except Exception as e:
         print(f"Warning: Could not load register names for conflict detection: {e}")
         all_register_names = set()
+        register_sizes = {}
     
     with open(output_file, 'w') as f:
         # Process each field in original L2 CSV order (no grouping)
@@ -144,8 +148,8 @@ def generate_field_cpp(l2_df, output_dir):
                 conflict_count += 1
                 print(f"  Resolved naming conflict: {register_name}.{field_name} -> {field_var_name}")
             
-            # Store for register generator
-            field_variables[field_name] = field_var_name
+            # Store for register generator with register-specific key
+            field_variables[(register_name, field_name)] = field_var_name
             
             # Get access and write effect parameters
             access_param, write_effect_param = get_access_and_write_effect(field_type)
@@ -162,9 +166,13 @@ def generate_field_cpp(l2_df, output_dir):
                 f.write(f"\n// Fields for register: {register_name}\n")
                 current_register = register_name
             
+            # Determine field type based on register size
+            register_bit_width = register_sizes.get(register_name, 64)
+            field_type_name = f"Field{register_bit_width}"
+            
             # Write field definition immediately (preserve L2 order)
             param_str = ", ".join(params)
-            f.write(f"vlab::Field64 {field_var_name} {{{param_str}}};\n")
+            f.write(f"vlab::{field_type_name} {field_var_name} {{{param_str}}};\n")
             
             field_count += 1
         
@@ -221,8 +229,8 @@ def get_fields_for_register(register_name, l2_df, field_variables):
         
         field_name = str(field_name).strip()
         
-        if field_name in field_variables:
-            field_vars.append(field_variables[field_name])
+        if (register_name, field_name) in field_variables:
+            field_vars.append(field_variables[(register_name, field_name)])
         else:
             # Generate expected variable name if not found
             register_cpp_name = sanitize_name(register_name.upper())
@@ -269,14 +277,19 @@ def generate_register_cpp(l3_data, l2_df, field_variables, output_dir):
                 # Sanitize register name for C++ variable
                 register_cpp_name = sanitize_name(register_name.upper())
                 
+                # Get register bit width
+                register_bit_width = register.get('bit_width', 64)
+                reg_type = f"Reg{register_bit_width}"
+                byte_size = register_bit_width // 8  # 4 for 32-bit, 8 for 64-bit
+                
                 if array_size > 1:
-                    # Register array
+                    # Register array with correct byte size
                     field_str = ", ".join(field_list) if field_list else ""
-                    f.write(f"vlab::Reg64Array {register_cpp_name} {{{block_name}, \"{register_name}\", {offset_hex}, {array_size}, {reset_simplified}, {{{field_str}}}, 8}};\n")
+                    f.write(f"vlab::{reg_type}Array {register_cpp_name} {{{block_name}, \"{register_name}\", {offset_hex}, {array_size}, {reset_simplified}, {{{field_str}}}, {byte_size}}};\n")
                 else:
                     # Single register
                     field_str = ", ".join(field_list) if field_list else ""
-                    f.write(f"vlab::Reg64 {register_cpp_name} {{{block_name}, \"{register_name}\", {offset_hex}, {reset_simplified}, {{{field_str}}}}};\n")
+                    f.write(f"vlab::{reg_type} {register_cpp_name} {{{block_name}, \"{register_name}\", {offset_hex}, {reset_simplified}, {{{field_str}}}}};\n")
                 
                 total_registers += 1
         

@@ -87,6 +87,25 @@ def simplify_single_element_offset(offset, array_size):
     
     return offset
 
+def determine_register_size(register_name, attributes_df):
+    """
+    Determine if register is 32-bit or 64-bit based on max bit position.
+    Returns 32 if max bit <= 31, otherwise 64.
+    """
+    reg_fields = attributes_df[attributes_df['register_name'] == register_name]
+    max_bit = 0
+    
+    for _, row in reg_fields.iterrows():
+        bits = str(row['bits'])
+        # Extract all numbers from the bits string
+        numbers = re.findall(r'\d+', bits)
+        if numbers:
+            current_max = max(int(n) for n in numbers)
+            max_bit = max(max_bit, current_max)
+    
+    # Return 32 if max bit is <= 31, otherwise 64
+    return 32 if max_bit <= 31 else 64
+
 def parse_array_info(name, preserve_full_name=False):
     """
     Parse array information from register name.
@@ -276,6 +295,59 @@ def optimize_register_summaries(input_csv, output_csv):
     print(f"  Optimized rows: {len(result_df)}")
     print(f"  Arrays detected: {len(result_df[result_df['array_size'] > 1])}")
     print(f"  Single registers: {len(result_df[result_df['array_size'] == 1])}")
+    print(f"  Unique register blocks: {result_df['reg_block'].nunique()}")
+    
+    return result_df
+
+def optimize_register_summaries_with_size(input_csv, output_csv, attributes_df):
+    """
+    Transform register summaries CSV with array handling and register size detection.
+    """
+    print(f"Processing {input_csv} with size detection...")
+    df = pd.read_csv(input_csv)
+    
+    # Process each row and collect results
+    all_rows = []
+    for _, row in df.iterrows():
+        # Extract register block name
+        row['reg_block'] = extract_reg_block_name(row['table'])
+        
+        # Process array information
+        processed = process_register_entry(row)
+        for entry in processed:
+            # Reorder columns: reg_block, name, offset, array_size, array_indices, type, register_size, description
+            new_row = {
+                'reg_block': entry['reg_block'],
+                'name': entry['name'],
+                'offset': entry['offset'],
+                'array_size': entry.get('array_size', 1),
+                'array_indices': entry.get('array_indices', ''),
+                'type': entry['type'],
+                'register_size': 64,  # Default to 64-bit
+                'description': entry['description']
+            }
+            
+            # Determine register size if attributes are available
+            if attributes_df is not None:
+                new_row['register_size'] = determine_register_size(entry['name'], attributes_df)
+            
+            all_rows.append(new_row)
+    
+    # Create DataFrame with new structure
+    result_df = pd.DataFrame(all_rows)
+    
+    # Preserve L1 document order - do not sort
+    
+    # Save to CSV
+    result_df.to_csv(output_csv, index=False)
+    
+    # Print statistics
+    print(f"  Original rows: {len(df)}")
+    print(f"  Optimized rows: {len(result_df)}")
+    print(f"  Arrays detected: {len(result_df[result_df['array_size'] > 1])}")
+    print(f"  Single registers: {len(result_df[result_df['array_size'] == 1])}")
+    print(f"  32-bit registers: {len(result_df[result_df['register_size'] == 32])}")
+    print(f"  64-bit registers: {len(result_df[result_df['register_size'] == 64])}")
     print(f"  Unique register blocks: {result_df['reg_block'].nunique()}")
     
     return result_df
@@ -475,23 +547,24 @@ def main():
     print("L2 CSV Optimization")
     print("=" * 60)
     
-    # Process register summaries
+    # Process register attributes first (needed for size detection)
+    attributes_input = input_dir / "all_register_attributes.csv"
+    attributes_output = output_dir / "register_attributes_optimized.csv"
+    
+    attributes_df = None
+    if attributes_input.exists():
+        attributes_df = optimize_register_attributes(attributes_input, attributes_output)
+    else:
+        print(f"Warning: {attributes_input} not found")
+    
+    # Process register summaries with size information
     summaries_input = input_dir / "all_register_summaries.csv"
     summaries_output = output_dir / "register_summaries_optimized.csv"
     
     if summaries_input.exists():
-        optimize_register_summaries(summaries_input, summaries_output)
+        optimize_register_summaries_with_size(summaries_input, summaries_output, attributes_df)
     else:
         print(f"Warning: {summaries_input} not found")
-    
-    # Process register attributes
-    attributes_input = input_dir / "all_register_attributes.csv"
-    attributes_output = output_dir / "register_attributes_optimized.csv"
-    
-    if attributes_input.exists():
-        optimize_register_attributes(attributes_input, attributes_output)
-    else:
-        print(f"Warning: {attributes_input} not found")
     
     print("\n" + "=" * 60)
     print("L2 optimization complete!")

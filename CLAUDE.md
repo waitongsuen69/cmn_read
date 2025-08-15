@@ -22,7 +22,7 @@ ARM CMN (Coherent Mesh Network) register extraction pipeline that parses PDF doc
 # L1: PDF Analysis - Extract tables from PDF
 python3 l1_pdf_analysis.py path/to/pdf_file.pdf
 
-# L2: CSV Optimization - Clean and structure data
+# L2: CSV Optimization - Clean and structure data  
 python3 l2_csv_optimize.py
 
 # L3: JSON Generation - Create register data model
@@ -30,9 +30,6 @@ python3 l3_cpp_generator.py
 
 # L4: C++ Generation - Generate field.cpp and register.cpp
 python3 l4_reg_generator.py
-
-# Verify deduplication results
-python3 verify_deduplication.py
 ```
 
 ### Dependencies
@@ -84,6 +81,7 @@ pip install pymupdf pandas
 - Bit field columns: `table_name, Bits, Name, Description, Type, Reset`
 - Handles 21 type token variants (RO, RW, WO, R/W, R/W1C, etc.)
 - **Sub-bit filtering**: Skips sub-bit definitions (e.g., `[4]`, `[3]`) within multi-bit field descriptions to prevent false field detection
+- **Reserved concatenation artifacts**: Filters PDF extraction artifacts where "Reserved" concatenates with following content without spaces
 
 ### L2 Array Register Detection
 - Pattern: `{start-end} 0xSTART : 0xEND` indicates array
@@ -107,7 +105,7 @@ pip install pymupdf pandas
 L1_pdf_analysis/
 ├── all_register_summaries.csv    # Raw register definitions
 ├── all_register_attributes.csv   # Raw bit field definitions
-└── cmn437-2072.pdf               # Extracted PDF pages
+└── cmn437-2072.pdf               # Original PDF (if copied)
 
 L2_csv_optimize/
 ├── register_summaries_optimized.csv    # Structured registers
@@ -117,7 +115,10 @@ L3_cpp_generator/
 ├── register_data.json            # Complete data model
 ├── register_summary.txt          # Human-readable summary
 ├── field_rename_log.json         # Field modification tracking
-└── register_rename_log.json      # Register modification tracking
+├── register_rename_log.json      # Register modification tracking
+├── register_summaries_deduplicated.csv
+├── register_attributes_deduplicated.csv
+└── unmatched_fields.log          # Fields without matching registers
 
 L4_Reg_generator/
 ├── field.cpp                     # C++ field definitions
@@ -128,14 +129,13 @@ L4_Reg_generator/
 
 ### Quality Metrics
 - Target: ~1045 registers (based on manual verification)
-- Current accuracy: ~96% coverage
 - Zero boilerplate entries expected in output
 - All names follow C++ identifier conventions
 
 ### Common Issues
 - **Missing registers**: Check table header patterns in L1
-- **Concatenated fields**: Verify L1 split_concatenated_registers()
-- **Array detection**: Check L2 check_contiguous_segments()
+- **Concatenated fields**: Verify L1 `split_concatenated_registers()`
+- **Array detection**: Check L2 `check_contiguous_segments()`
 - **Duplicate fields**: Review L3 deduplication logs
 
 ### Verification Commands
@@ -146,8 +146,8 @@ wc -l L1_pdf_analysis/all_register_summaries.csv
 # Find concatenated entries (lines > 200 chars)
 awk -F',' '{if(length($5) > 200) print NR ":" length($5)}' L1_pdf_analysis/all_register_summaries.csv
 
-# Verify deduplication
-python3 verify_deduplication.py
+# Test name/type separation fix
+python3 l1_pdf_analysis.py --test
 ```
 
 ## Key Functions Reference
@@ -155,10 +155,11 @@ python3 verify_deduplication.py
 ### L1: PDF Analysis
 - `get_all_lines()`: Extract text from PDF
 - `parse_register_tables()`: Find register summary tables
-- `parse_attribute_tables()`: Find bit field tables (with sub-bit detection)
+- `parse_attribute_tables()`: Find bit field tables with sub-bit detection
 - `split_concatenated_registers()`: Recover merged entries
 - `clean_rows()`: Remove boilerplate and artifacts
 - `is_probable_name()`: Validate field names (rejects "1-" patterns)
+- `is_reserved_concatenation_artifact()`: Filter Reserved concatenation artifacts
 
 ### L2: CSV Optimization
 - `extract_reg_block_name()`: Parse table headers
