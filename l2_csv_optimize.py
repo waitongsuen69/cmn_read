@@ -106,6 +106,60 @@ def determine_register_size(register_name, attributes_df):
     # Return 32 if max bit is <= 31, otherwise 64
     return 32 if max_bit <= 31 else 64
 
+def calculate_register_sizes_from_l1(input_csv):
+    """
+    Calculate register sizes from L1 attributes INCLUDING Reserved fields.
+    Returns a dictionary mapping register_name -> size (32 or 64).
+    """
+    print(f"  Calculating register sizes from L1 (including Reserved fields)...")
+    df = pd.read_csv(input_csv)
+    
+    register_sizes = {}
+    register_has_reserved_21 = {}  # Track if register has Reserved bit 21
+    
+    for _, row in df.iterrows():
+        # Parse table header to get register name
+        table_id, register_name = parse_table_header(row['table'])
+        
+        # Get bit range and field name
+        bits = str(row['bits'])
+        field_name = str(row.get('name', '')).lower()
+        
+        # Check if this is Reserved bit 21 (single bit)
+        if bits == '21' and 'reserved' in field_name:
+            register_has_reserved_21[register_name] = True
+        
+        # Extract all numbers from the bits string
+        numbers = re.findall(r'\d+', bits)
+        if numbers:
+            max_bit = max(int(n) for n in numbers)
+            
+            # Update the maximum bit for this register
+            if register_name not in register_sizes:
+                register_sizes[register_name] = 0
+            register_sizes[register_name] = max(register_sizes[register_name], max_bit)
+    
+    # Convert max bits to register sizes (32 or 64)
+    # WORKAROUND: If a register has Reserved bit 21 as its highest bit,
+    # assume there are missing Reserved[63:22] or Reserved[31:22] fields
+    for reg_name in register_sizes:
+        max_bit = register_sizes[reg_name]
+        
+        # Check if this register likely has missing upper Reserved bits
+        if max_bit == 21 and register_has_reserved_21.get(reg_name, False):
+            # Assume 64-bit register with missing Reserved[63:22]
+            print(f"    WARNING: {reg_name} has Reserved bit 21 as highest - assuming 64-bit (missing Reserved[63:22])")
+            register_sizes[reg_name] = 64
+        else:
+            register_sizes[reg_name] = 32 if max_bit <= 31 else 64
+    
+    # Print some statistics
+    size_32 = sum(1 for size in register_sizes.values() if size == 32)
+    size_64 = sum(1 for size in register_sizes.values() if size == 64)
+    print(f"    Found {len(register_sizes)} registers: {size_32} are 32-bit, {size_64} are 64-bit")
+    
+    return register_sizes
+
 def parse_array_info(name, preserve_full_name=False):
     """
     Parse array information from register name.
@@ -299,7 +353,7 @@ def optimize_register_summaries(input_csv, output_csv):
     
     return result_df
 
-def optimize_register_summaries_with_size(input_csv, output_csv, attributes_df):
+def optimize_register_summaries_with_size(input_csv, output_csv, register_sizes):
     """
     Transform register summaries CSV with array handling and register size detection.
     """
@@ -323,13 +377,9 @@ def optimize_register_summaries_with_size(input_csv, output_csv, attributes_df):
                 'array_size': entry.get('array_size', 1),
                 'array_indices': entry.get('array_indices', ''),
                 'type': entry['type'],
-                'register_size': 64,  # Default to 64-bit
+                'register_size': register_sizes.get(entry['name'], 64),  # Use pre-calculated size, default to 64-bit
                 'description': entry['description']
             }
-            
-            # Determine register size if attributes are available
-            if attributes_df is not None:
-                new_row['register_size'] = determine_register_size(entry['name'], attributes_df)
             
             all_rows.append(new_row)
     
@@ -547,8 +597,15 @@ def main():
     print("L2 CSV Optimization")
     print("=" * 60)
     
-    # Process register attributes first (needed for size detection)
+    # First, calculate register sizes from L1 attributes (INCLUDING Reserved fields)
     attributes_input = input_dir / "all_register_attributes.csv"
+    register_sizes = {}
+    if attributes_input.exists():
+        register_sizes = calculate_register_sizes_from_l1(attributes_input)
+    else:
+        print(f"Warning: {attributes_input} not found")
+    
+    # Process register attributes (this filters out Reserved fields)
     attributes_output = output_dir / "register_attributes_optimized.csv"
     
     attributes_df = None
@@ -562,7 +619,7 @@ def main():
     summaries_output = output_dir / "register_summaries_optimized.csv"
     
     if summaries_input.exists():
-        optimize_register_summaries_with_size(summaries_input, summaries_output, attributes_df)
+        optimize_register_summaries_with_size(summaries_input, summaries_output, register_sizes)
     else:
         print(f"Warning: {summaries_input} not found")
     
