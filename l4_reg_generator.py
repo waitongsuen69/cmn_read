@@ -92,10 +92,25 @@ def generate_field_cpp(l2_df, output_dir):
     
     print(f"Generating {output_file}...")
     
+    # Load L3 JSON to get all register names for conflict detection
+    try:
+        l3_data = load_l3_json()
+        all_register_names = set()
+        for block_data in l3_data['register_blocks'].values():
+            for register in block_data['registers']:
+                # Store sanitized uppercase register names for comparison
+                reg_name_sanitized = sanitize_name(register['name'].upper())
+                all_register_names.add(reg_name_sanitized)
+        print(f"Loaded {len(all_register_names)} register names for conflict detection")
+    except Exception as e:
+        print(f"Warning: Could not load register names for conflict detection: {e}")
+        all_register_names = set()
+    
     with open(output_file, 'w') as f:
         # Process each field in original L2 CSV order (no grouping)
         field_count = 0
         current_register = ""
+        conflict_count = 0
         
         for _, row in l2_df.iterrows():
             register_name = str(row['register_name'])
@@ -120,6 +135,14 @@ def generate_field_cpp(l2_df, output_dir):
             
             # Generate field variable name
             field_var_name = f"{register_cpp_name}_{field_cpp_name.upper()}"
+            
+            # Check for naming conflict with register names
+            # Check both the full field variable name and just the field name part
+            field_name_sanitized = sanitize_name(field_name.upper())
+            if field_var_name in all_register_names or field_name_sanitized in all_register_names:
+                field_var_name = field_var_name + "_"
+                conflict_count += 1
+                print(f"  Resolved naming conflict: {register_name}.{field_name} -> {field_var_name}")
             
             # Store for register generator
             field_variables[field_name] = field_var_name
@@ -148,6 +171,8 @@ def generate_field_cpp(l2_df, output_dir):
         f.write(f"\n// Total fields generated: {field_count}\n")
     
     print(f"Generated {field_count} field definitions in {output_file}")
+    if conflict_count > 0:
+        print(f"  Resolved {conflict_count} naming conflicts by appending underscore")
     return field_variables
 
 # ============================================================================
