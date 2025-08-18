@@ -1084,6 +1084,157 @@ def split_concatenated_registers(rows: list) -> list:
     
     return expanded_rows
 
+# ------------------ Fix for missing high-order Reserved fields ------------------
+def determine_64bit_registers(df_regs):
+    """
+    Analyze register offsets to determine which registers are 64-bit.
+    64-bit registers have 8-byte aligned offsets (0x8 difference).
+    32-bit registers have 4-byte aligned offsets (0x4 difference).
+    
+    Returns: dict mapping register_name -> bit_width (32 or 64)
+    """
+    register_sizes = {}
+    
+    # Group by table to analyze offset patterns within each table
+    for table_name in df_regs['table'].unique():
+        table_regs = df_regs[df_regs['table'] == table_name].copy()
+        
+        # Parse offsets to numeric values for analysis
+        offsets = []
+        names = []
+        for _, row in table_regs.iterrows():
+            offset_str = str(row['offset'])
+            name = row['name']
+            
+            # Handle simple offset format (0xNNNN)
+            if offset_str.startswith('0x') and ':' not in offset_str:
+                try:
+                    offset_val = int(offset_str, 16)
+                    offsets.append(offset_val)
+                    names.append(name)
+                except:
+                    continue
+            # Handle array format ({N-M} 0xSTART : 0xEND)
+            elif ':' in offset_str:
+                # Extract the start offset
+                match = re.search(r'0x([0-9A-Fa-f]+)', offset_str)
+                if match:
+                    try:
+                        offset_val = int(match.group(1), 16)
+                        offsets.append(offset_val)
+                        names.append(name)
+                    except:
+                        continue
+        
+        # Analyze offset differences to determine register sizes
+        if len(offsets) > 1:
+            # Sort by offset to analyze sequential registers
+            sorted_pairs = sorted(zip(offsets, names))
+            
+            for i in range(len(sorted_pairs) - 1):
+                curr_offset, curr_name = sorted_pairs[i]
+                next_offset, next_name = sorted_pairs[i + 1]
+                
+                diff = next_offset - curr_offset
+                
+                # Common patterns:
+                # 4 = 32-bit register
+                # 8 = 64-bit register
+                # Larger differences may indicate arrays or gaps
+                
+                if diff == 8:
+                    # Strong evidence of 64-bit register
+                    register_sizes[curr_name] = 64
+                elif diff == 4:
+                    # Evidence of 32-bit register
+                    register_sizes[curr_name] = 32
+                elif diff % 8 == 0 and diff > 8:
+                    # Likely 64-bit with gap or array
+                    register_sizes[curr_name] = 64
+                elif diff % 4 == 0 and diff > 4:
+                    # Could be 32-bit with gap
+                    if curr_name not in register_sizes:
+                        register_sizes[curr_name] = 32
+            
+            # Handle the last register in sequence
+            # If previous registers in the block were 64-bit, assume last is too
+            if sorted_pairs:
+                last_name = sorted_pairs[-1][1]
+                if last_name not in register_sizes:
+                    # Check if most registers in this table are 64-bit
+                    sizes_in_table = [register_sizes.get(n, 0) for n in names if n in register_sizes]
+                    if sizes_in_table and sum(s == 64 for s in sizes_in_table) > sum(s == 32 for s in sizes_in_table):
+                        register_sizes[last_name] = 64
+    
+    return register_sizes
+
+def add_missing_highorder_reserved_fields(df_attrs, register_sizes):
+    """
+    Add missing high-order Reserved fields for 64-bit registers.
+    
+    For 64-bit registers, if the highest bit is < 63, add a Reserved field
+    for the missing high-order bits.
+    """
+    new_rows = []
+    
+    # First, process existing rows
+    for _, row in df_attrs.iterrows():
+        new_rows.append(row.to_dict())
+    
+    # Group by table and register name to analyze bit coverage
+    for table_name in df_attrs['table'].unique():
+        table_attrs = df_attrs[df_attrs['table'] == table_name]
+        
+        # Extract register name from table name
+        # e.g., "Table 8-17: por_ccg_ha_cfg_ctl attributes" -> "por_ccg_ha_cfg_ctl"
+        match = re.search(r':\s*([a-zA-Z0-9_]+)\s+attributes', table_name, re.IGNORECASE)
+        if not match:
+            continue
+            
+        register_name = match.group(1)
+        
+        # Check if this is a 64-bit register
+        if register_sizes.get(register_name) != 64:
+            continue
+        
+        # Find the highest bit position for this register
+        max_bit = -1
+        for _, row in table_attrs.iterrows():
+            bits_str = str(row['bits'])
+            # Extract all numbers from the bits string
+            numbers = re.findall(r'\d+', bits_str)
+            if numbers:
+                current_max = max(int(n) for n in numbers)
+                max_bit = max(max_bit, current_max)
+        
+        # If max_bit < 63, add Reserved field for high-order bits
+        if 0 <= max_bit < 63:
+            # Create Reserved field for [63:max_bit+1]
+            reserved_start = max_bit + 1
+            reserved_bits = f"63:{reserved_start}" if reserved_start < 63 else "63"
+            
+            new_row = {
+                'table': table_name,
+                'bits': reserved_bits,
+                'name': 'Reserved',
+                'description': 'Reserved for future use',
+                'type': 'RO',
+                'reset': '-'
+            }
+            
+            # Check if this Reserved field already exists
+            exists = False
+            for _, existing in table_attrs.iterrows():
+                if str(existing['bits']) == reserved_bits and existing['name'] == 'Reserved':
+                    exists = True
+                    break
+            
+            if not exists:
+                new_rows.append(new_row)
+                print(f"[INFO] Added {reserved_bits} Reserved field for {register_name}")
+    
+    return pd.DataFrame(new_rows)
+
 # ------------------ Driver ------------------
 def extract(pdf_path: str, out_dir: str = "L1_pdf_analysis"):
     lines = get_all_lines(pdf_path)
@@ -1107,6 +1258,14 @@ def extract(pdf_path: str, out_dir: str = "L1_pdf_analysis"):
         df_regs = df_regs.drop_duplicates(subset=["table","offset","name"], keep="first")
     if not df_attrs.empty:
         df_attrs = df_attrs.drop_duplicates()
+    
+    # Fix missing high-order Reserved fields for 64-bit registers
+    if not df_regs.empty and not df_attrs.empty:
+        print("[INFO] Analyzing register offsets to identify 64-bit registers...")
+        register_sizes = determine_64bit_registers(df_regs)
+        
+        print("[INFO] Adding missing high-order Reserved fields...")
+        df_attrs = add_missing_highorder_reserved_fields(df_attrs, register_sizes)
 
     # Ensure output directory exists
     out_dir_path = Path(out_dir)
