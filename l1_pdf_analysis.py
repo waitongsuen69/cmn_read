@@ -251,6 +251,33 @@ def clean_pdf_text(input_path: str, output_path: str):
                         final_lines.append(line)
                         continue
         
+        # Handle registers with double offset ranges
+        # Pattern: "{0-4} 0xF80 : 0xFA0       cmn_hns_cml_port_aggr_grp0-4_add_mask ..."
+        # Next line(s): blank
+        # Next line: "{5-31} 0x6028 : 0x60F8"
+        if re.match(r'^\{[\d-]+\}\s+0x[0-9A-Fa-f]+\s*:\s*0x[0-9A-Fa-f]+\s+\w+', line):
+            # Look ahead for a continuation offset pattern
+            found_continuation = False
+            j = i + 1
+            while j < len(cleaned_lines) and j <= i + 3:
+                lookahead = cleaned_lines[j].strip()
+                # Check if this is a continuation offset (just the offset, no register name)
+                if re.match(r'^\{[\d-]+\}\s+0x[0-9A-Fa-f]+\s*:\s*0x[0-9A-Fa-f]+$', lookahead):
+                    # This is a continuation offset - append it to the current line
+                    line = line.rstrip('\n') + f"; {lookahead}\n"
+                    i = j + 1
+                    found_continuation = True
+                    break
+                elif lookahead and not lookahead.startswith('{'):
+                    # Hit a non-blank, non-offset line - stop looking
+                    break
+                j += 1
+            
+            if not found_continuation:
+                i += 1
+            final_lines.append(line)
+            continue
+        
         # Handle offset range splits (colon on separate line)
         # Pattern: "0x2240 register_name..."
         # Next line: ":"
