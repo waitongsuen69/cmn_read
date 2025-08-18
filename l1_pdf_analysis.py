@@ -1282,6 +1282,122 @@ def add_missing_highorder_reserved_fields(df_attrs, register_sizes):
     
     return pd.DataFrame(new_rows)
 
+# ------------------ Fix for missing attribute tables ------------------
+def inject_missing_hdm_decoder_fields(df_attrs, df_regs):
+    """
+    Inject known missing fields for hdm_decoder registers that have no attributes.
+    This is a workaround for PDF extraction failures on specific tables.
+    """
+    new_rows = []
+    injected_count = 0
+    
+    # Known missing hdm_decoder field definitions based on CXL specification
+    missing_definitions = {
+        'por_ccla_cxl_hdm_decoder_0-7_base_high': [
+            {'bits': '31:0', 'name': 'Memory_Base_High_#{index}', 
+             'description': 'Corresponds to bits 63:32 of the base of the address range covered by HDM decoder', 
+             'type': 'RWL', 'reset': '0x0'}
+        ],
+        'por_cxlapb_cxl_hdm_decoder_0-7_base_high': [
+            {'bits': '31:0', 'name': 'Memory_Base_High_#{index}', 
+             'description': 'Corresponds to bits 63:32 of the base of the address range covered by HDM decoder', 
+             'type': 'RWL', 'reset': '0x0'}
+        ],
+        'por_ccla_dvsec_cxl_range_1_base_high': [
+            {'bits': '31:0', 'name': 'Memory_Base_High', 
+             'description': 'Memory Base High', 
+             'type': 'RW', 'reset': '0x0'}
+        ],
+        'por_ccla_dvsec_cxl_range_2_base_high': [
+            {'bits': '31:0', 'name': 'Memory_Base_High', 
+             'description': 'Memory Base High', 
+             'type': 'RW', 'reset': '0x0'}
+        ],
+        'por_cxlapb_dvsec_cxl_range_1_base_high': [
+            {'bits': '31:0', 'name': 'Memory_Base_High', 
+             'description': 'Memory Base High', 
+             'type': 'RW', 'reset': '0x0'}
+        ],
+        'por_cxlapb_dvsec_cxl_range_2_base_high': [
+            {'bits': '31:0', 'name': 'Memory_Base_High', 
+             'description': 'Memory Base High', 
+             'type': 'RW', 'reset': '0x0'}
+        ]
+    }
+    
+    # Check which registers have no attributes
+    registers_with_attrs = set(df_attrs['table'].str.extract(r':\s*([a-zA-Z0-9_\-]+)\s+attributes', expand=False).dropna())
+    all_registers = set(df_regs['name'])
+    registers_without_attrs = all_registers - registers_with_attrs
+    
+    print(f"[INFO] Found {len(registers_without_attrs)} registers without attributes")
+    
+    # Inject known missing fields
+    for reg_name, fields in missing_definitions.items():
+        if reg_name in registers_without_attrs:
+            # Find the table name from register summaries
+            reg_info = df_regs[df_regs['name'] == reg_name]
+            if not reg_info.empty:
+                table_name = reg_info.iloc[0]['table']
+                # Extract table number
+                table_match = re.match(r'(Table\s+\d+-\d+):', table_name)
+                if table_match:
+                    # Create attribute table name (guess the table number)
+                    # For hdm_decoder, we know the pattern
+                    if 'hdm_decoder_0-7_base_high' in reg_name:
+                        if 'por_ccla' in reg_name:
+                            attr_table = f"Table 8-121: {reg_name} attributes"
+                        elif 'por_cxlapb' in reg_name:
+                            attr_table = f"Table 8-281: {reg_name} attributes"
+                    else:
+                        # Generic pattern - use next table number
+                        base_num = int(re.search(r'Table\s+\d+-(\d+):', table_name).group(1))
+                        attr_table = f"Table 8-{base_num + 1}: {reg_name} attributes"
+                    
+                    for field in fields:
+                        new_row = {
+                            'table': attr_table,
+                            'bits': field['bits'],
+                            'name': field['name'],
+                            'description': field['description'],
+                            'type': field['type'],
+                            'reset': field['reset']
+                        }
+                        new_rows.append(new_row)
+                        injected_count += 1
+                    
+                    print(f"[INFO] Injected {len(fields)} fields for {reg_name}")
+    
+    # Add fallback fields for any remaining registers without attributes
+    for reg_name in registers_without_attrs:
+        if reg_name not in missing_definitions:
+            reg_info = df_regs[df_regs['name'] == reg_name]
+            if not reg_info.empty:
+                table_name = reg_info.iloc[0]['table']
+                # Determine register size based on offset pattern or name
+                reg_size = 32  # Default
+                if any(pattern in reg_name for pattern in ['_high', '_low', 'base', 'size', 'control']):
+                    reg_size = 32  # These are typically 32-bit parts of 64-bit values
+                
+                # Create a generic data field
+                attr_table = f"Table X-X: {reg_name} attributes (generated)"
+                new_row = {
+                    'table': attr_table,
+                    'bits': f'{reg_size-1}:0',
+                    'name': 'data',
+                    'description': f'{reg_name} data (fallback field - original attributes missing)',
+                    'type': reg_info.iloc[0].get('type', 'RW'),
+                    'reset': '0x0'
+                }
+                new_rows.append(new_row)
+                injected_count += 1
+                print(f"[WARNING] Added fallback field for {reg_name} (no known definition)")
+    
+    if injected_count > 0:
+        print(f"[INFO] Total fields injected: {injected_count}")
+    
+    return new_rows
+
 # ------------------ Driver ------------------
 def extract(pdf_path: str, out_dir: str = "L1_pdf_analysis"):
     lines = get_all_lines(pdf_path)
@@ -1313,6 +1429,13 @@ def extract(pdf_path: str, out_dir: str = "L1_pdf_analysis"):
         
         print("[INFO] Adding missing high-order Reserved fields...")
         df_attrs = add_missing_highorder_reserved_fields(df_attrs, register_sizes)
+        
+        # Inject missing fields for registers that have no attributes
+        print("[INFO] Checking for registers with missing attribute tables...")
+        missing_fields = inject_missing_hdm_decoder_fields(df_attrs, df_regs)
+        if missing_fields:
+            # Append the injected fields to the attributes dataframe
+            df_attrs = pd.concat([df_attrs, pd.DataFrame(missing_fields)], ignore_index=True)
 
     # Ensure output directory exists
     out_dir_path = Path(out_dir)
