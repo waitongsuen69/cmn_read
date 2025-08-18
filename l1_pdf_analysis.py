@@ -231,6 +231,26 @@ def clean_pdf_text(input_path: str, output_path: str):
                     final_lines.append(line)
                     continue
         
+        # Handle array offset splits where ending offset is on next line
+        # Pattern: "{0-31} 0x3000 :    ra_rnsam_hashed_tgt_grp_cfg1_region0-31 ..."
+        # Next line: "0x30F8"
+        if re.match(r'^\{[\d-]+\}\s+0x[0-9A-Fa-f]+\s*:', line):
+            if i + 1 < len(cleaned_lines):
+                next_line = cleaned_lines[i + 1].strip()
+                # Check if next line is just a hex offset
+                if re.match(r'^0x[0-9A-Fa-f]+$', next_line):
+                    # Join the lines properly
+                    # Extract parts from the first line
+                    match = re.match(r'^(\{[\d-]+\}\s+0x[0-9A-Fa-f]+\s*:)\s*(.*)', line)
+                    if match:
+                        offset_part = match.group(1)
+                        rest_of_line = match.group(2)
+                        # Create the joined line with proper format
+                        line = f"{offset_part} {next_line} {rest_of_line}\n"
+                        i += 2
+                        final_lines.append(line)
+                        continue
+        
         # Handle offset range splits (colon on separate line)
         # Pattern: "0x2240 register_name..."
         # Next line: ":"
