@@ -217,10 +217,17 @@ def clean_pdf_text(input_path: str, output_path: str):
     while i < len(cleaned_lines):
         line = cleaned_lines[i]
         
-        # Handle offset range splits (colon on separate line)
-        # Pattern: "0x2240"
-        # Next line: ":"
-        # Next line: "0x2248"
+        # Handle offset range splits (two patterns)
+        # Pattern 1: "0x2240 :" followed by "0x2248" (colon on first line)
+        if re.match(r'^0x[0-9A-Fa-f]+\s*:$', line.strip()):
+            if i + 1 < len(cleaned_lines) and re.match(r'^0x[0-9A-Fa-f]+$', cleaned_lines[i + 1].strip()):
+                # Join the two lines into an offset range
+                combined = f"{line.strip()} {cleaned_lines[i + 1].strip()}\n"
+                pass2_lines.append(combined)
+                i += 2
+                continue
+        
+        # Pattern 2: "0x2240" followed by ":" followed by "0x2248" (colon on separate line)
         if re.match(r'^0x[0-9A-Fa-f]+$', line.strip()):
             if i + 1 < len(cleaned_lines) and cleaned_lines[i + 1].strip() == ':':
                 if i + 2 < len(cleaned_lines) and re.match(r'^0x[0-9A-Fa-f]+$', cleaned_lines[i + 2].strip()):
@@ -293,33 +300,52 @@ def clean_pdf_text(input_path: str, output_path: str):
                         # Combine array index with offset
                         combined_line = f"{array_idx} {next_line} {rest_of_line}\n"
                         
-                        # Look for additional continuation patterns
+                        # Look for additional continuation patterns (enhanced for multi-segment arrays)
                         j = i + 2
-                        while j < len(pass2_lines) and j <= i + 6:
+                        continuation_found = True
+                        while j < len(pass2_lines) and j <= i + 15 and continuation_found:  # Expanded range
                             lookahead = pass2_lines[j].strip()
                             if not lookahead:  # Skip blank lines
                                 j += 1
                                 continue
-                            next_lookahead = pass2_lines[j + 1].strip() if j + 1 < len(pass2_lines) else ""
                             
                             # Check for another array+offset pair
                             if re.match(r'^\{[\d-]+\}$', lookahead):
-                                # Found another array index - look for its offset
+                                # Found another array index - look for its offset in wider range
+                                array_idx = lookahead
+                                offset_found = False
                                 k = j + 1
-                                while k < len(pass2_lines) and k <= j + 3:
+                                while k < len(pass2_lines) and k <= j + 8:  # Expanded nested range
                                     offset_candidate = pass2_lines[k].strip()
+                                    if not offset_candidate:  # Skip blank lines
+                                        k += 1
+                                        continue
                                     if re.match(r'^0x[0-9A-Fa-f]+\s*:\s*0x[0-9A-Fa-f]+\s*$', offset_candidate):
-                                        combined_line = combined_line.rstrip('\n') + f"; {lookahead} {offset_candidate}\n"
+                                        combined_line = combined_line.rstrip('\n') + f"; {array_idx} {offset_candidate}\n"
                                         j = k + 1
+                                        offset_found = True
                                         break
-                                    elif not offset_candidate:  # Skip blank lines
+                                    elif re.match(r'^0x[0-9A-Fa-f]+$', offset_candidate):
+                                        # Handle split offset (start only, look for end)
+                                        if k + 2 < len(pass2_lines):
+                                            if pass2_lines[k + 1].strip() == ':' and re.match(r'^0x[0-9A-Fa-f]+$', pass2_lines[k + 2].strip()):
+                                                full_offset = f"{offset_candidate} : {pass2_lines[k + 2].strip()}"
+                                                combined_line = combined_line.rstrip('\n') + f"; {array_idx} {full_offset}\n"
+                                                j = k + 3
+                                                offset_found = True
+                                                break
                                         k += 1
                                     else:
+                                        # Hit a non-offset line, stop searching for this array's offset
                                         break
-                                else:
+                                
+                                if not offset_found:
+                                    # No offset found for this array index, stop looking for more continuations
+                                    continuation_found = False
                                     break
                             else:
-                                # Hit a non-continuation line
+                                # Hit a non-array line, stop looking for continuations
+                                continuation_found = False
                                 break
                         
                         final_lines.append(combined_line)
