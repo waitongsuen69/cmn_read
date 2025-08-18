@@ -1,5 +1,5 @@
 # file_spider_fixed.py
-# Python 3.8+ (tested on Windows). Requires: pip install pymupdf pandas
+# Python 3.8+ (tested on Windows). Requires: poppler-utils (pdftotext) and pandas
 
 """
 Known PDF Extraction Issues:
@@ -9,9 +9,11 @@ Known PDF Extraction Issues:
 """
 
 import re, json
-import fitz  # PyMuPDF
+import subprocess
 import pandas as pd
 from pathlib import Path
+import sys
+import os
 
 # ------------------ Regexes / token classes ------------------
 heading_re = re.compile(r'^Table\s+\d+-\d+:\s+.*$', re.IGNORECASE)
@@ -136,16 +138,58 @@ def is_addr_token(s: str) -> bool:
     return is_offset_token(s) or is_range_token(s) or is_addr_sep(s)
 
 def get_all_lines(pdf_path: str):
-    """Return the entire PDF as a single logical list of lines, skipping boilerplate."""
-    doc = fitz.open(pdf_path)
+    """Extract text from PDF using pdftotext and return as list of lines."""
+    # Create output directory if it doesn't exist
+    output_dir = Path("L1_pdf_analysis")
+    output_dir.mkdir(exist_ok=True)
+    
+    output_txt = output_dir / "output.txt"
+    
+    # Run pdftotext with -layout option to preserve table structure
+    try:
+        result = subprocess.run(
+            ["pdftotext", "-layout", pdf_path, str(output_txt)],
+            capture_output=True,
+            text=True,
+            check=True
+        )
+        print(f"[INFO] Successfully extracted text from PDF to {output_txt}")
+    except subprocess.CalledProcessError as e:
+        print(f"[ERROR] Failed to run pdftotext: {e}")
+        print(f"[ERROR] Make sure poppler-utils is installed (brew install poppler on macOS)")
+        sys.exit(1)
+    except FileNotFoundError:
+        print("[ERROR] pdftotext command not found. Please install poppler-utils:")
+        print("  macOS: brew install poppler")
+        print("  Ubuntu/Debian: sudo apt-get install poppler-utils")
+        print("  RHEL/CentOS: sudo yum install poppler-utils")
+        sys.exit(1)
+    
+    # Read the extracted text file
+    return get_lines_from_text(str(output_txt))
+
+def get_lines_from_text(text_path: str):
+    """Read text file and return as list of lines, skipping boilerplate."""
     lines = []
-    for pi in range(len(doc)):
-        for raw in doc[pi].get_text().splitlines():
-            s = clean_line(raw)
-            if not s or is_noise(s):
-                continue
-            lines.append(s)
-        lines.append(f"__PAGE_BREAK_{pi}__")
+    
+    try:
+        with open(text_path, 'r', encoding='utf-8') as f:
+            page_num = 0
+            for raw in f:
+                # Detect page breaks (form feed character or specific patterns)
+                if '\f' in raw or 'Page ' in raw and re.match(r'^\s*Page\s+\d+', raw):
+                    lines.append(f"__PAGE_BREAK_{page_num}__")
+                    page_num += 1
+                    continue
+                
+                s = clean_line(raw)
+                if not s or is_noise(s):
+                    continue
+                lines.append(s)
+    except Exception as e:
+        print(f"[ERROR] Failed to read text file {text_path}: {e}")
+        sys.exit(1)
+    
     return lines
 
 def is_probable_name(s: str) -> bool:
@@ -1491,17 +1535,30 @@ def test_name_type_separation():
         print(f"  '{name}' -> name:'{clean_name}', type:'{extracted_type}'")
 
 if __name__ == "__main__":
-    import sys
     if len(sys.argv) < 2:
-        print("Usage: python file_spider_hot_fix.py <pdf_path> [out_dir]")
-        print("       python file_spider_hot_fix.py --test  (to test the fix)")
+        print("Usage: python l1_pdf_analysis.py <pdf_path> [out_dir]")
+        print("       python l1_pdf_analysis.py --test  (to test the fix)")
+        print("       python l1_pdf_analysis.py --from-text <text_path> [out_dir]  (to use existing text file)")
         print("Default output directory: L1_pdf_analysis/")
         sys.exit(1)
     
     if sys.argv[1] == "--test":
         test_name_type_separation()
         sys.exit(0)
-        
-    pdf_path = sys.argv[1]
-    out_dir = sys.argv[2] if len(sys.argv) >= 3 else "L1_pdf_analysis"
-    print(json.dumps(extract(pdf_path, out_dir)))
+    
+    if sys.argv[1] == "--from-text":
+        # Allow processing from existing text file
+        if len(sys.argv) < 3:
+            print("Usage: python l1_pdf_analysis.py --from-text <text_path> [out_dir]")
+            sys.exit(1)
+        text_path = sys.argv[2]
+        out_dir = sys.argv[3] if len(sys.argv) >= 4 else "L1_pdf_analysis"
+        # Temporarily replace get_all_lines to use text file directly
+        original_get_all_lines = globals()['get_all_lines']
+        globals()['get_all_lines'] = lambda _: get_lines_from_text(text_path)
+        print(json.dumps(extract("dummy.pdf", out_dir)))
+        globals()['get_all_lines'] = original_get_all_lines
+    else:
+        pdf_path = sys.argv[1]
+        out_dir = sys.argv[2] if len(sys.argv) >= 3 else "L1_pdf_analysis"
+        print(json.dumps(extract(pdf_path, out_dir)))

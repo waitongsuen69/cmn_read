@@ -4,6 +4,20 @@
 # Runs the complete L1 -> L2 -> L3 -> L4 processing pipeline
 # Usage: ./run_pipeline.sh <path_to_pdf>
 
+# Check dependencies
+if ! command -v pdftotext &> /dev/null; then
+    echo "Error: pdftotext is not installed. Please install poppler-utils:"
+    echo "  macOS: brew install poppler"
+    echo "  Ubuntu/Debian: sudo apt-get install poppler-utils"
+    echo "  RHEL/CentOS: sudo yum install poppler-utils"
+    exit 1
+fi
+
+if ! command -v python3 &> /dev/null; then
+    echo "Error: python3 is not installed."
+    exit 1
+fi
+
 # Check if PDF path is provided
 if [ $# -eq 0 ]; then
     echo "Usage: $0 <path_to_pdf>"
@@ -26,11 +40,13 @@ echo "============================================================"
 echo "ARM CMN Register Extraction Pipeline"
 echo "============================================================"
 echo "Input PDF: $PDF_PATH"
+echo "Using pdftotext for text extraction"
 
 # Clean build: Remove generated files (keep L1 PDF source)
 echo "Cleaning previous outputs..."
 rm -f L1_pdf_analysis/all_register_summaries.csv
 rm -f L1_pdf_analysis/all_register_attributes.csv
+rm -f L1_pdf_analysis/output.txt
 rm -rf L2_csv_optimize/
 rm -rf L3_cpp_generator/
 rm -rf L4_Reg_generator/
@@ -93,7 +109,8 @@ echo "============================================================"
 echo "Pipeline completed successfully!"
 echo "============================================================"
 echo "Output files:"
-echo "  L1: L1_pdf_analysis/all_register_summaries.csv"
+echo "  L1: L1_pdf_analysis/output.txt (extracted text)"
+echo "      L1_pdf_analysis/all_register_summaries.csv"
 echo "      L1_pdf_analysis/all_register_attributes.csv"
 echo "  L2: L2_csv_optimize/register_summaries_optimized.csv"
 echo "      L2_csv_optimize/register_attributes_optimized.csv"
