@@ -297,8 +297,8 @@ def clean_pdf_text(input_path: str, output_path: str):
                     if match:
                         array_idx = match.group(1)
                         rest_of_line = match.group(2).rstrip('\n')
-                        # Combine array index with offset
-                        combined_line = f"{array_idx} {next_line} {rest_of_line}\n"
+                        # Build offset part separately from rest of line
+                        offset_part = f"{array_idx} {next_line}"
                         
                         # Look for additional continuation patterns (enhanced for multi-segment arrays)
                         j = i + 2
@@ -312,7 +312,7 @@ def clean_pdf_text(input_path: str, output_path: str):
                             # Check for another array+offset pair
                             if re.match(r'^\{[\d-]+\}$', lookahead):
                                 # Found another array index - look for its offset in wider range
-                                array_idx = lookahead
+                                continuation_array_idx = lookahead
                                 offset_found = False
                                 k = j + 1
                                 while k < len(pass2_lines) and k <= j + 8:  # Expanded nested range
@@ -321,7 +321,8 @@ def clean_pdf_text(input_path: str, output_path: str):
                                         k += 1
                                         continue
                                     if re.match(r'^0x[0-9A-Fa-f]+\s*:\s*0x[0-9A-Fa-f]+\s*$', offset_candidate):
-                                        combined_line = combined_line.rstrip('\n') + f"; {array_idx} {offset_candidate}\n"
+                                        # Add to offset part, not end of line
+                                        offset_part += f"; {continuation_array_idx} {offset_candidate}"
                                         j = k + 1
                                         offset_found = True
                                         break
@@ -330,7 +331,8 @@ def clean_pdf_text(input_path: str, output_path: str):
                                         if k + 2 < len(pass2_lines):
                                             if pass2_lines[k + 1].strip() == ':' and re.match(r'^0x[0-9A-Fa-f]+$', pass2_lines[k + 2].strip()):
                                                 full_offset = f"{offset_candidate} : {pass2_lines[k + 2].strip()}"
-                                                combined_line = combined_line.rstrip('\n') + f"; {array_idx} {full_offset}\n"
+                                                # Add to offset part, not end of line
+                                                offset_part += f"; {continuation_array_idx} {full_offset}"
                                                 j = k + 3
                                                 offset_found = True
                                                 break
@@ -348,34 +350,47 @@ def clean_pdf_text(input_path: str, output_path: str):
                                 continuation_found = False
                                 break
                         
+                        # Construct final combined line with proper CSV column placement
+                        combined_line = f"{offset_part} {rest_of_line}\n"
+                        
                         final_lines.append(combined_line)
                         i = j
                         continue
         
-        # Handle registers with double offset ranges
+        # Handle registers with double offset ranges that already have register names
         # Pattern: "{0-4} 0xF80 : 0xFA0       cmn_hns_cml_port_aggr_grp0-4_add_mask ..."
         # Next line(s): blank
         # Next line: "{5-31} 0x6028 : 0x60F8"
         if re.match(r'^\{[\d-]+\}\s+0x[0-9A-Fa-f]+\s*:\s*0x[0-9A-Fa-f]+\s+\w+', line):
-            # Look ahead for a continuation offset pattern
-            found_continuation = False
-            j = i + 1
-            while j < len(pass2_lines) and j <= i + 3:
-                lookahead = pass2_lines[j].strip()
-                # Check if this is a continuation offset (just the offset, no register name)
-                if re.match(r'^\{[\d-]+\}\s+0x[0-9A-Fa-f]+\s*:\s*0x[0-9A-Fa-f]+$', lookahead):
-                    # This is a continuation offset - append it to the current line
-                    line = line.rstrip('\n') + f"; {lookahead}\n"
-                    i = j + 1
-                    found_continuation = True
-                    break
-                elif lookahead and not lookahead.startswith('{'):
-                    # Hit a non-blank, non-offset line - stop looking
-                    break
-                j += 1
+            # Extract components from current line  
+            match = re.match(r'^(\{[\d-]+\}\s+0x[0-9A-Fa-f]+\s*:\s*0x[0-9A-Fa-f]+)\s+(.*)', line)
+            if match:
+                offset_part = match.group(1)
+                rest_of_line = match.group(2).rstrip('\n')
+                
+                # Look ahead for continuation offset pattern
+                found_continuation = False
+                j = i + 1
+                while j < len(pass2_lines) and j <= i + 3:
+                    lookahead = pass2_lines[j].strip()
+                    # Check if this is a continuation offset (just the offset, no register name)
+                    if re.match(r'^\{[\d-]+\}\s+0x[0-9A-Fa-f]+\s*:\s*0x[0-9A-Fa-f]+$', lookahead):
+                        # Add to offset part, not end of line
+                        offset_part += f"; {lookahead}"
+                        i = j + 1
+                        found_continuation = True
+                        break
+                    elif lookahead and not lookahead.startswith('{'):
+                        # Hit a non-blank, non-offset line - stop looking
+                        break
+                    j += 1
+                
+                if not found_continuation:
+                    i += 1
+                
+                # Construct final line with proper CSV column placement
+                line = f"{offset_part} {rest_of_line}\n"
             
-            if not found_continuation:
-                i += 1
             final_lines.append(line)
             continue
         
@@ -584,7 +599,30 @@ def parse_register_tables(lines):
             continue
         
         # NEW: Handle pdftotext format with space-separated columns
-        # Pattern 1: Array format "{0-31} 0x3000 : 0x31F8    register_name    RW    description"
+        # Pattern 1: Multi-segment array format "{0-15} 0xD80 : 0xDF8; {16-47} 0x2880 : 0x2978 register_name RW description"
+        multi_segment_match = re.match(r'^(\{[\d-]+\}\s+0x[0-9A-Fa-f]+\s*:\s*0x[0-9A-Fa-f]+(?:\s*;\s*\{[\d-]+\}\s+0x[0-9A-Fa-f]+\s*:\s*0x[0-9A-Fa-f]+)+)\s+(\S+)\s+(\S+)?\s*(.*)?', s)
+        if multi_segment_match:
+            offset = multi_segment_match.group(1).strip()
+            name = multi_segment_match.group(2).strip()
+            type_token = multi_segment_match.group(3).strip() if multi_segment_match.group(3) else "-"
+            desc = multi_segment_match.group(4).strip() if multi_segment_match.group(4) else name
+            
+            # Validate type token
+            if not is_type_token(type_token):
+                desc = type_token + " " + desc if type_token != "-" else desc
+                type_token = "-"
+            
+            rows.append({
+                "table": current_table,
+                "offset": offset,
+                "name": name,
+                "type": type_token,
+                "description": desc,
+            })
+            i += 1
+            continue
+            
+        # Pattern 2: Single array format "{0-31} 0x3000 : 0x31F8    register_name    RW    description"
         array_match = re.match(r'^(\{\d+-\d+\}\s+0x[0-9A-Fa-f]+\s*:\s*0x[0-9A-Fa-f]+)\s+(\S+)\s+(\S+)?\s*(.*)?', s)
         if array_match:
             offset = array_match.group(1).strip()
@@ -607,7 +645,7 @@ def parse_register_tables(lines):
             i += 1
             continue
         
-        # Pattern 2: Range format "0x100 : 0x200    register_name    RW    description"
+        # Pattern 3: Range format "0x100 : 0x200    register_name    RW    description"
         range_match = re.match(r'^(0x[0-9A-Fa-f]+\s*:\s*0x[0-9A-Fa-f]+)\s+(\S+)\s+(\S+)?\s*(.*)?', s)
         if range_match:
             offset = range_match.group(1).strip()
@@ -630,7 +668,7 @@ def parse_register_tables(lines):
             i += 1
             continue
         
-        # Pattern 3: Offset+Size format "0x100 + 0x80    register_name    RW    description"
+        # Pattern 4: Offset+Size format "0x100 + 0x80    register_name    RW    description"
         offset_plus_match = re.match(r'^(0x[0-9A-Fa-f]+\s*\+\s*0x[0-9A-Fa-f]+)\s+(\S+)\s+(\S+)?\s*(.*)?', s)
         if offset_plus_match:
             offset = offset_plus_match.group(1).strip()
@@ -655,7 +693,7 @@ def parse_register_tables(lines):
             i += 1
             continue
         
-        # Pattern 4: Simple format "0x100    register_name    RW    description"
+        # Pattern 5: Simple format "0x100    register_name    RW    description"
         simple_match = re.match(r'^(0x[0-9A-Fa-f]+)\s+(\S+)\s+(\S+)?\s*(.*)?', s)
         if simple_match:
             offset = simple_match.group(1).strip()

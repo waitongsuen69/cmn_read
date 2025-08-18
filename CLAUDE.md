@@ -40,7 +40,7 @@ python3 l4_reg_generator.py
 # Test name/type separation fix in L1
 python3 l1_pdf_analysis.py --test
 
-# Check register count (target: ~1045 registers)
+# Check register count (current: 1043 registers from cmn437-2072.pdf)
 wc -l L1_pdf_analysis/all_register_summaries.csv
 
 # Find concatenated entries (lines > 200 chars)
@@ -48,6 +48,9 @@ awk -F',' '{if(length($5) > 200) print NR ":" length($5)}' L1_pdf_analysis/all_r
 
 # Verify no boilerplate in output
 grep -i "non-confidential\|arm limited\|technical reference" L1_pdf_analysis/all_register_summaries.csv
+
+# Check for multi-segment array registers (should find entries with semicolons)
+grep "; {" L1_pdf_analysis/all_register_summaries.csv
 ```
 
 ### Dependencies
@@ -110,10 +113,12 @@ pip install pandas
 - Register columns: `table_name, Offset, Name, Type, Description`
 - Bit field columns: `table_name, Bits, Name, Description, Type, Reset`
 - Handles 21 type token variants (RO, RW, WO, R/W, R/W1C, RWL, etc.)
+- **Complex offset formats**: Supports ranges (`0x100 : 0x200`), arrays (`{0-31} 0x3000 : 0x30F8`), offset+size (`0xC00 + 0x80`), and multi-segment arrays
+- **Multi-pass text processing**: Three-phase approach for handling split patterns across lines
 - **Sub-bit filtering**: Skips sub-bit definitions (e.g., `[4]`, `[3]`) within multi-bit field descriptions to prevent false field detection
 - **Reserved concatenation artifacts**: Filters PDF extraction artifacts where "Reserved" concatenates with following content without spaces
-- **Gap detection**: Automatically injects Reserved fields for uncovered bit ranges in 64-bit registers
 - **Boilerplate filtering**: Removes document metadata and header/footer noise using multiple pattern sets
+- **Multi-segment array parsing**: Handles complex patterns like `{0-23} 0xCC0 : 0xD78; {24-151} 0x24C0 : 0x28B8`
 
 ### L2 Array Register Detection
 - Pattern: `{start-end} 0xSTART : 0xEND` indicates array
@@ -185,6 +190,7 @@ The pipeline performs a clean build by default, removing:
 - Check L2 `check_contiguous_segments()`
 - Verify stride calculation logic
 - Review multi-segment offset patterns
+- Ensure L1 `clean_pdf_text()` properly joins split array patterns
 
 **Duplicate field conflicts**
 - Review L3 deduplication logs
@@ -200,14 +206,14 @@ The pipeline performs a clean build by default, removing:
 
 ### L1: PDF Analysis
 - `get_all_lines()`: Extract text from PDF using pdftotext command
-- `get_lines_from_text()`: Read and process extracted text file
-- `parse_register_tables()`: Find register summary tables
+- `clean_pdf_text()`: Three-pass text cleaning for complex patterns (split offsets, multi-segment arrays, wrapped lines)
+- `parse_register_tables()`: Find register summary tables with enhanced pattern detection
 - `parse_attribute_tables()`: Find bit field tables with sub-bit detection
 - `split_concatenated_registers()`: Recover merged entries
 - `clean_rows()`: Remove boilerplate and artifacts
 - `is_probable_name()`: Validate field names (rejects "1-" patterns)
 - `is_reserved_concatenation_artifact()`: Filter Reserved concatenation artifacts
-- `inject_reserved_fields()`: Add Reserved fields for bit gaps
+- `remove_spurious_reserved_entries()`: Post-process to remove false Reserved entries
 
 ### L2: CSV Optimization
 - `extract_reg_block_name()`: Parse table headers
@@ -233,11 +239,11 @@ The pipeline performs a clean build by default, removing:
 ## Quality Metrics & Validation
 
 ### Expected Outputs
-- ~1045 registers (based on manual verification)
+- 1043 registers from cmn437-2072.pdf (includes complex multi-segment arrays)
 - Zero boilerplate entries in final output
 - All names follow C++ identifier conventions
 - No concatenated entries over 200 characters
-- Complete bit coverage for all 64-bit registers
+- Support for all offset formats (ranges, arrays, offset+size, multi-segment)
 - Clean text extraction in `L1_pdf_analysis/output.txt`
 
 ### Validation Points
