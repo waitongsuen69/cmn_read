@@ -22,6 +22,10 @@ offset_re  = re.compile(r'^0x[0-9A-Fa-f]+$')
 bits_re    = re.compile(r'^\[\d+(?::\d+)?\]$')
 range_re   = re.compile(r'^\{\s*\d+(?:\s*-\s*\d+)?\s*\}$')
 
+# New patterns for pdftotext format with ligatures
+array_offset_re = re.compile(r'^\{\d+-\d+\}\s+0x[0-9A-Fa-f]+\s*:\s*0x[0-9A-Fa-f]+')  # {0-31} 0x3000 : 0x31F8
+simple_offset_re = re.compile(r'^0x[0-9A-Fa-f]+(?:\s*:\s*0x[0-9A-Fa-f]+)?')  # 0x100 or 0x100 : 0x200
+
 footer_noise = re.compile(r'^(Page\b|Copyright|Arm\s+Limited|ARM\s+Limited)', re.IGNORECASE)
 
 # Pattern to detect document boilerplate that gets mixed into descriptions and names
@@ -137,6 +141,82 @@ def is_addr_line(s: str) -> bool: return bool(addr_line_re.match(s))
 def is_addr_token(s: str) -> bool:
     return is_offset_token(s) or is_range_token(s) or is_addr_sep(s)
 
+def clean_pdf_text(input_path: str, output_path: str):
+    """Remove page footers/headers that break tables across pages."""
+    print(f"[INFO] Cleaning PDF text to remove page breaks...")
+    
+    with open(input_path, 'r', encoding='utf-8') as f:
+        lines = f.readlines()
+    
+    cleaned_lines = []
+    i = 0
+    seen_table_headers = set()  # Track which table headers we've seen
+    current_table = None
+    
+    while i < len(lines):
+        line = lines[i]
+        
+        # Check for footer pattern (Copyright line)
+        if 'Copyright ©' in line and 'Arm Limited' in line:
+            # Skip footer (3 lines) and header (3 lines) and empty lines
+            # Footer: Copyright, Non-Confidential, Page X of Y
+            # Header: Product name, Technical Reference Manual, Section
+            skip_count = 0
+            while i < len(lines) and skip_count < 9:  # Max lines to skip
+                if i + 1 < len(lines):
+                    next_line = lines[i + 1]
+                    if 'Non-Confidential' in next_line or 'Non-Conﬁdential' in next_line:
+                        i += 1  # Skip Non-Confidential
+                        skip_count += 1
+                    elif 'Page ' in next_line and ' of ' in next_line:
+                        i += 1  # Skip Page line
+                        skip_count += 1
+                    elif 'Arm®' in next_line or 'Neoverse™' in next_line:
+                        i += 1  # Skip product name
+                        skip_count += 1
+                    elif 'Technical Reference Manual' in next_line:
+                        i += 1  # Skip manual line
+                        skip_count += 1
+                    elif 'Programmers model' in next_line or 'Issue' in next_line:
+                        i += 1  # Skip section line
+                        skip_count += 1
+                    elif next_line.strip() == '':
+                        i += 1  # Skip empty lines
+                        skip_count += 1
+                    else:
+                        break
+                else:
+                    break
+            i += 1
+            continue
+        
+        # Check for Table header to track current table
+        if line.startswith('Table ') and ':' in line:
+            table_match = re.match(r'^(Table \d+-\d+:.*)', line)
+            if table_match:
+                current_table = table_match.group(1)
+        
+        # Check for repeated column headers and skip if duplicate
+        if re.match(r'^Oﬀset\s+Name\s+', line) or re.match(r'^Bits\s+Name\s+', line):
+            # Create a key for this table's header
+            header_key = f"{current_table}:{line.strip()}"
+            if header_key in seen_table_headers:
+                # Skip this duplicate header
+                i += 1
+                continue
+            else:
+                seen_table_headers.add(header_key)
+        
+        cleaned_lines.append(line)
+        i += 1
+    
+    # Write cleaned text
+    with open(output_path, 'w', encoding='utf-8') as f:
+        f.writelines(cleaned_lines)
+    
+    print(f"[INFO] Cleaned text saved to {output_path}")
+    print(f"[INFO] Reduced from {len(lines)} to {len(cleaned_lines)} lines")
+
 def get_all_lines(pdf_path: str):
     """Extract text from PDF using pdftotext and return as list of lines."""
     # Create output directory if it doesn't exist
@@ -144,6 +224,7 @@ def get_all_lines(pdf_path: str):
     output_dir.mkdir(exist_ok=True)
     
     output_txt = output_dir / "output.txt"
+    cleaned_txt = output_dir / "output_cleaned.txt"
     
     # Run pdftotext with -layout option to preserve table structure
     try:
@@ -165,8 +246,11 @@ def get_all_lines(pdf_path: str):
         print("  RHEL/CentOS: sudo yum install poppler-utils")
         sys.exit(1)
     
-    # Read the extracted text file
-    return get_lines_from_text(str(output_txt))
+    # Clean the extracted text to remove page breaks
+    clean_pdf_text(str(output_txt), str(cleaned_txt))
+    
+    # Read the cleaned text file
+    return get_lines_from_text(str(cleaned_txt))
 
 def get_lines_from_text(text_path: str):
     """Read text file and return as list of lines, skipping boilerplate."""
@@ -314,8 +398,80 @@ def parse_register_tables(lines):
             i += 1
             continue
 
-        # Skip page breaks / column headers
-        if s.startswith("__PAGE_BREAK_") or s.lower() in HEADER_LABELS:
+        # Skip page breaks / column headers with ligatures
+        if s.startswith("__PAGE_BREAK_") or s.lower() in HEADER_LABELS or re.match(r'^Oﬀset\s+Name\s+', s):
+            i += 1
+            continue
+        
+        # NEW: Handle pdftotext format with space-separated columns
+        # Pattern 1: Array format "{0-31} 0x3000 : 0x31F8    register_name    RW    description"
+        array_match = re.match(r'^(\{\d+-\d+\}\s+0x[0-9A-Fa-f]+\s*:\s*0x[0-9A-Fa-f]+)\s+(\S+)\s+(\S+)?\s*(.*)?', s)
+        if array_match:
+            offset = array_match.group(1).strip()
+            name = array_match.group(2).strip()
+            type_token = array_match.group(3).strip() if array_match.group(3) else "-"
+            desc = array_match.group(4).strip() if array_match.group(4) else name
+            
+            # Validate type token
+            if not is_type_token(type_token):
+                desc = type_token + " " + desc if type_token != "-" else desc
+                type_token = "-"
+            
+            rows.append({
+                "table": current_table,
+                "offset": offset,
+                "name": name,
+                "type": type_token,
+                "description": desc,
+            })
+            i += 1
+            continue
+        
+        # Pattern 2: Range format "0x100 : 0x200    register_name    RW    description"
+        range_match = re.match(r'^(0x[0-9A-Fa-f]+\s*:\s*0x[0-9A-Fa-f]+)\s+(\S+)\s+(\S+)?\s*(.*)?', s)
+        if range_match:
+            offset = range_match.group(1).strip()
+            name = range_match.group(2).strip()
+            type_token = range_match.group(3).strip() if range_match.group(3) else "-"
+            desc = range_match.group(4).strip() if range_match.group(4) else name
+            
+            # Validate type token
+            if not is_type_token(type_token):
+                desc = type_token + " " + desc if type_token != "-" else desc
+                type_token = "-"
+            
+            rows.append({
+                "table": current_table,
+                "offset": offset,
+                "name": name,
+                "type": type_token,
+                "description": desc,
+            })
+            i += 1
+            continue
+        
+        # Pattern 3: Simple format "0x100    register_name    RW    description"
+        simple_match = re.match(r'^(0x[0-9A-Fa-f]+)\s+(\S+)\s+(\S+)?\s*(.*)?', s)
+        if simple_match:
+            offset = simple_match.group(1).strip()
+            name = simple_match.group(2).strip()
+            type_token = simple_match.group(3).strip() if simple_match.group(3) else "-"
+            desc = simple_match.group(4).strip() if simple_match.group(4) else name
+            
+            # Validate type token
+            if not is_type_token(type_token):
+                desc = type_token + " " + desc if type_token != "-" else desc
+                type_token = "-"
+            
+            # Validate name is not noise
+            if is_probable_name(name):
+                rows.append({
+                    "table": current_table,
+                    "offset": offset,
+                    "name": name,
+                    "type": type_token,
+                    "description": desc,
+                })
             i += 1
             continue
 
@@ -521,6 +677,7 @@ def parse_attribute_tables(lines):
     current_table = None
     in_attr_mode = False
     attribute_tables = []  # Track attribute tables found
+    current_reg_name = None
 
     i = 0
     N = len(lines)
@@ -532,6 +689,11 @@ def parse_attribute_tables(lines):
             in_attr_mode = ('attribute' in s.lower())
             if in_attr_mode:
                 attribute_tables.append(s)
+                # Extract register name from table header
+                # e.g., "Table 8-24: por_ccg_ha_rcr attributes" -> "por_ccg_ha_rcr"
+                match = re.match(r'^Table\s+\d+-\d+:\s+(\S+)\s+attributes', s, re.IGNORECASE)
+                if match:
+                    current_reg_name = match.group(1)
             i += 1
             continue
 
@@ -539,10 +701,69 @@ def parse_attribute_tables(lines):
             i += 1
             continue
 
-        if s.startswith("__PAGE_BREAK_") or s.lower() in HEADER_LABELS:
+        # Skip column headers including those with ligatures
+        if s.startswith("__PAGE_BREAK_") or s.lower() in HEADER_LABELS or re.match(r'^Bits\s+Name\s+', s):
+            i += 1
+            continue
+        
+        # NEW: Handle pdftotext format for attributes
+        # Pattern: "[63:32]    Reserved    Reserved    RO    -"
+        # Or: "[15:0]    field_name    Description text    RW    0x00"
+        bits_match = re.match(r'^(\[\d+(?::\d+)?\])\s+(\S+)(?:\s+(.*?))?$', s)
+        if bits_match:
+            bits = bits_match.group(1)
+            field_name = bits_match.group(2)
+            remaining = bits_match.group(3).strip() if bits_match.group(3) else ""
+            
+            # Skip sub-bit definitions
+            bits_val = bits.strip('[]')
+            if ':' not in bits_val and bits_val.isdigit():
+                # Single bit like [0], [1] - likely sub-bit definition
+                # Check if field name looks like a sub-bit description
+                if re.match(r'^\d+-', field_name) or field_name.lower() in ('snoop', 'allocate', 'cacheable', 'device', 'ewa'):
+                    i += 1
+                    continue
+            
+            # Parse remaining text for description, type, and reset
+            desc = ""
+            typ = "-"
+            reset = "-"
+            
+            if remaining:
+                # Split remaining text and look for type tokens
+                tokens = remaining.split()
+                type_idx = -1
+                
+                for j, token in enumerate(tokens):
+                    if is_type_token(token):
+                        typ = token
+                        type_idx = j
+                        # Description is everything before type
+                        desc = " ".join(tokens[:j]) if j > 0 else ""
+                        # Reset is after type
+                        reset = tokens[j+1] if j+1 < len(tokens) else "-"
+                        break
+                
+                # If no type found, treat all as description
+                if type_idx == -1:
+                    desc = remaining
+            
+            # Don't add if field_name is clearly noise
+            if field_name and is_probable_name(field_name) and not is_reserved_concatenation_artifact(field_name):
+                rows.append({
+                    "table": current_table,
+                    "register_name": current_reg_name or "",
+                    "bits": bits,
+                    "field_name": field_name,
+                    "description": desc,
+                    "type": typ,
+                    "reset": reset
+                })
+            
             i += 1
             continue
 
+        # OLD: Original parsing logic for non-bits lines
         if is_bits_token(s):
             bits = s.strip('[]')
             
