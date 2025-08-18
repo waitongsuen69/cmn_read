@@ -119,6 +119,7 @@ pip install pandas
 - **Reserved concatenation artifacts**: Filters PDF extraction artifacts where "Reserved" concatenates with following content without spaces
 - **Boilerplate filtering**: Removes document metadata and header/footer noise using multiple pattern sets
 - **Multi-segment array parsing**: Handles complex patterns like `{0-23} 0xCC0 : 0xD78; {24-151} 0x24C0 : 0x28B8`
+- **Wrapped register pattern handling**: Fixes cases where array indices and partial register names appear first, with offset information on subsequent lines (e.g., `{0-1} partial_name...` followed by `0x37E0 cfg_reg0-1`, `:`, `0x37E8`)
 
 ### L2 Array Register Detection
 - Pattern: `{start-end} 0xSTART : 0xEND` indicates array
@@ -244,7 +245,7 @@ The pipeline performs a clean build by default, removing:
 - All names follow C++ identifier conventions
 - No concatenated entries over 200 characters
 - Support for all offset formats (ranges, arrays, offset+size, multi-segment)
-- Clean text extraction in `L1_pdf_analysis/output.txt`
+- Clean text extraction in `L1_pdf_analysis/output.txt` and `output_cleaned.txt`
 
 ### Validation Points
 1. **L1 Output**: Check for boilerplate, concatenations, and count

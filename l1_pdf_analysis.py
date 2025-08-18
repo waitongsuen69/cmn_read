@@ -247,6 +247,48 @@ def clean_pdf_text(input_path: str, output_path: str):
     while i < len(pass2_lines):
         line = pass2_lines[i]
         
+        # Handle special case where array indices and partial register name appear first,
+        # followed by offset information on subsequent lines
+        # Pattern: "{0-1}  hashed_target_grp_hnf_target_type_override_          RW hashed_target_grp_hnf_target_type_override_cfg_reg0-1"
+        # Next line: "0x37E0 cfg_reg0-1"
+        # Next line: ":"
+        # Next line: "0x37E8"
+        if (re.match(r'^\{[\d-]+\}\s+\w+.*?\s+(RW|RO|WO|RWL|W1C|W1S|R/W)', line) and 
+            i + 3 < len(pass2_lines)):
+            
+            # Check if this matches the pattern where offset comes after
+            line1 = pass2_lines[i + 1].strip()
+            line2 = pass2_lines[i + 2].strip() 
+            line3 = pass2_lines[i + 3].strip()
+            
+            # Look for: "0x37E0 cfg_reg0-1", ":", "0x37E8"
+            if (re.match(r'^0x[0-9A-Fa-f]+\s+\w+', line1) and 
+                line2 == ':' and 
+                re.match(r'^0x[0-9A-Fa-f]+$', line3)):
+                
+                # Extract components
+                array_match = re.match(r'^(\{[\d-]+\})\s+(.*?)\s+(RW|RO|WO|RWL|W1C|W1S|R/W)\s+(.*)', line)
+                offset_match = re.match(r'^(0x[0-9A-Fa-f]+)\s+(.*)', line1)
+                
+                if array_match and offset_match:
+                    array_indices = array_match.group(1)
+                    partial_name = array_match.group(2)
+                    reg_type = array_match.group(3)
+                    description = array_match.group(4)
+                    
+                    offset_start = offset_match.group(1)
+                    name_completion = offset_match.group(2)
+                    offset_end = line3
+                    
+                    # Construct the proper line format
+                    full_offset = f"{offset_start} : {offset_end}"
+                    full_name = f"{partial_name}{name_completion}"
+                    
+                    combined_line = f"{array_indices} {full_offset} {full_name} {reg_type} {description}\n"
+                    final_lines.append(combined_line)
+                    i += 4  # Skip all 4 lines we just processed
+                    continue
+        
         # Handle wrapped register names (name ends with _ and has continuation)
         # Pattern: "0x2080 por_c2capb_c2c_port_ingressid_route_table_                RW     por_c2capb_c2c_port_ingressid_route_table_control_and_status"
         # Next line: "       control_and_status"
@@ -2071,9 +2113,22 @@ if __name__ == "__main__":
             sys.exit(1)
         text_path = sys.argv[2]
         out_dir = sys.argv[3] if len(sys.argv) >= 4 else "L1_pdf_analysis"
+        
+        # Check if we have a cleaned version and use it
+        text_dir = os.path.dirname(text_path)
+        cleaned_path = os.path.join(text_dir, "output_cleaned.txt")
+        
+        if os.path.exists(cleaned_path):
+            print(f"[INFO] Using cleaned text file: {cleaned_path}")
+            final_text_path = cleaned_path
+        else:
+            print(f"[INFO] Cleaning text file first...")
+            clean_pdf_text(text_path, cleaned_path)
+            final_text_path = cleaned_path
+        
         # Temporarily replace get_all_lines to use text file directly
         original_get_all_lines = globals()['get_all_lines']
-        globals()['get_all_lines'] = lambda _: get_lines_from_text(text_path)
+        globals()['get_all_lines'] = lambda _: get_lines_from_text(final_text_path)
         print(json.dumps(extract("dummy.pdf", out_dir)))
         globals()['get_all_lines'] = original_get_all_lines
     else:
