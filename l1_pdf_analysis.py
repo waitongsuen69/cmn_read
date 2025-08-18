@@ -449,8 +449,8 @@ def normalize_addr(expr: str) -> str:
     expr = re.sub(r'\s*:\s*', ' : ', expr)
     expr = re.sub(r'\s*,\s*', ', ', expr)
     expr = re.sub(r'\s+', ' ', expr)
-    # normalize "A + B" to "A : B" (helps match manual notation)
-    expr = re.sub(r'(0x[0-9A-Fa-f]+)\s*\+\s*(0x[0-9A-Fa-f]+)', r'\1 : \2', expr)
+    # Keep "A + B" format as-is for offset+size notation (don't convert to range)
+    # expr = re.sub(r'(0x[0-9A-Fa-f]+)\s*\+\s*(0x[0-9A-Fa-f]+)', r'\1 : \2', expr)
     return expr
 
 # ------------------ Parsers ------------------
@@ -548,7 +548,32 @@ def parse_register_tables(lines):
             i += 1
             continue
         
-        # Pattern 3: Simple format "0x100    register_name    RW    description"
+        # Pattern 3: Offset+Size format "0x100 + 0x80    register_name    RW    description"
+        offset_plus_match = re.match(r'^(0x[0-9A-Fa-f]+\s*\+\s*0x[0-9A-Fa-f]+)\s+(\S+)\s+(\S+)?\s*(.*)?', s)
+        if offset_plus_match:
+            offset = offset_plus_match.group(1).strip()
+            name = offset_plus_match.group(2).strip()
+            type_token = offset_plus_match.group(3).strip() if offset_plus_match.group(3) else "-"
+            desc = offset_plus_match.group(4).strip() if offset_plus_match.group(4) else name
+            
+            # Validate type token
+            if not is_type_token(type_token):
+                desc = type_token + " " + desc if type_token != "-" else desc
+                type_token = "-"
+            
+            # Validate name is not noise
+            if is_probable_name(name):
+                rows.append({
+                    "table": current_table,
+                    "offset": offset,
+                    "name": name,
+                    "type": type_token,
+                    "description": desc,
+                })
+            i += 1
+            continue
+        
+        # Pattern 4: Simple format "0x100    register_name    RW    description"
         simple_match = re.match(r'^(0x[0-9A-Fa-f]+)\s+(\S+)\s+(\S+)?\s*(.*)?', s)
         if simple_match:
             offset = simple_match.group(1).strip()
