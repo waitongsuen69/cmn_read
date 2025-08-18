@@ -210,12 +210,35 @@ def clean_pdf_text(input_path: str, output_path: str):
         cleaned_lines.append(line)
         i += 1
     
-    # Second pass: Join wrapped lines
-    final_lines = []
+    # Second pass: Join split offset ranges (must be done BEFORE array index handling)
+    pass2_lines = []
     i = 0
     
     while i < len(cleaned_lines):
         line = cleaned_lines[i]
+        
+        # Handle offset range splits (colon on separate line)
+        # Pattern: "0x2240"
+        # Next line: ":"
+        # Next line: "0x2248"
+        if re.match(r'^0x[0-9A-Fa-f]+$', line.strip()):
+            if i + 1 < len(cleaned_lines) and cleaned_lines[i + 1].strip() == ':':
+                if i + 2 < len(cleaned_lines) and re.match(r'^0x[0-9A-Fa-f]+$', cleaned_lines[i + 2].strip()):
+                    # Join the three lines into an offset range
+                    combined = f"{line.strip()} : {cleaned_lines[i + 2].strip()}\n"
+                    pass2_lines.append(combined)
+                    i += 3
+                    continue
+        
+        pass2_lines.append(line)
+        i += 1
+    
+    # Third pass: Join wrapped lines and handle other patterns
+    final_lines = []
+    i = 0
+    
+    while i < len(pass2_lines):
+        line = pass2_lines[i]
         
         # Handle wrapped register names (name ends with _ and has continuation)
         # Pattern: "0x2080 por_c2capb_c2c_port_ingressid_route_table_                RW     por_c2capb_c2c_port_ingressid_route_table_control_and_status"
@@ -251,6 +274,58 @@ def clean_pdf_text(input_path: str, output_path: str):
                         final_lines.append(line)
                         continue
         
+        # Handle registers where array index and offset are split
+        # Pattern: "{0-3}  cml_port_aggr_mode_ctrl_reg1-12  RW ..."
+        # Next line: "0x11A0 : 0x11B8"
+        # Possibly more: "{4-19}"
+        # And: "0x2A20 : 0x2A98"
+        if re.match(r'^\{[\d-]+\}\s+\w+', line) and not re.match(r'^\{[\d-]+\}\s+0x', line):
+            # This line starts with array index but no offset - check if offset is on next line
+            if i + 1 < len(pass2_lines):
+                next_line = pass2_lines[i + 1].strip()
+                if re.match(r'^0x[0-9A-Fa-f]+\s*:\s*0x[0-9A-Fa-f]+\s*$', next_line):
+                    # Found offset on next line - merge them
+                    # Extract the array index from current line
+                    match = re.match(r'^(\{[\d-]+\})\s+(.*)', line)
+                    if match:
+                        array_idx = match.group(1)
+                        rest_of_line = match.group(2).rstrip('\n')
+                        # Combine array index with offset
+                        combined_line = f"{array_idx} {next_line} {rest_of_line}\n"
+                        
+                        # Look for additional continuation patterns
+                        j = i + 2
+                        while j < len(pass2_lines) and j <= i + 6:
+                            lookahead = pass2_lines[j].strip()
+                            if not lookahead:  # Skip blank lines
+                                j += 1
+                                continue
+                            next_lookahead = pass2_lines[j + 1].strip() if j + 1 < len(pass2_lines) else ""
+                            
+                            # Check for another array+offset pair
+                            if re.match(r'^\{[\d-]+\}$', lookahead):
+                                # Found another array index - look for its offset
+                                k = j + 1
+                                while k < len(pass2_lines) and k <= j + 3:
+                                    offset_candidate = pass2_lines[k].strip()
+                                    if re.match(r'^0x[0-9A-Fa-f]+\s*:\s*0x[0-9A-Fa-f]+\s*$', offset_candidate):
+                                        combined_line = combined_line.rstrip('\n') + f"; {lookahead} {offset_candidate}\n"
+                                        j = k + 1
+                                        break
+                                    elif not offset_candidate:  # Skip blank lines
+                                        k += 1
+                                    else:
+                                        break
+                                else:
+                                    break
+                            else:
+                                # Hit a non-continuation line
+                                break
+                        
+                        final_lines.append(combined_line)
+                        i = j
+                        continue
+        
         # Handle registers with double offset ranges
         # Pattern: "{0-4} 0xF80 : 0xFA0       cmn_hns_cml_port_aggr_grp0-4_add_mask ..."
         # Next line(s): blank
@@ -259,8 +334,8 @@ def clean_pdf_text(input_path: str, output_path: str):
             # Look ahead for a continuation offset pattern
             found_continuation = False
             j = i + 1
-            while j < len(cleaned_lines) and j <= i + 3:
-                lookahead = cleaned_lines[j].strip()
+            while j < len(pass2_lines) and j <= i + 3:
+                lookahead = pass2_lines[j].strip()
                 # Check if this is a continuation offset (just the offset, no register name)
                 if re.match(r'^\{[\d-]+\}\s+0x[0-9A-Fa-f]+\s*:\s*0x[0-9A-Fa-f]+$', lookahead):
                     # This is a continuation offset - append it to the current line
@@ -278,26 +353,7 @@ def clean_pdf_text(input_path: str, output_path: str):
             final_lines.append(line)
             continue
         
-        # Handle offset range splits (colon on separate line)
-        # Pattern: "0x2240 register_name..."
-        # Next line: ":"
-        # Next line: "0x2240"
-        if i + 1 < len(cleaned_lines) and cleaned_lines[i + 1].strip() == ':':
-            if i + 2 < len(cleaned_lines) and re.match(r'^0x[0-9A-Fa-f]+', cleaned_lines[i + 2].strip()):
-                # Check if current line starts with hex offset
-                if re.match(r'^0x[0-9A-Fa-f]+', line):
-                    # Join the three lines into an offset range
-                    hex_end = cleaned_lines[i + 2].strip()
-                    # Extract the rest of the first line after the offset
-                    match = re.match(r'^(0x[0-9A-Fa-f]+)\s+(.*)', line)
-                    if match:
-                        offset_start = match.group(1)
-                        rest_of_line = match.group(2)
-                        # Create the joined line with range format
-                        line = f"{offset_start} : {hex_end} {rest_of_line}\n"
-                        i += 3
-                        final_lines.append(line)
-                        continue
+        # Note: Offset range splits are now handled in the second pass
         
         final_lines.append(line)
         i += 1
