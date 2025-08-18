@@ -247,6 +247,38 @@ def clean_pdf_text(input_path: str, output_path: str):
     while i < len(pass2_lines):
         line = pass2_lines[i]
         
+        # Handle wrapped attribute field names
+        # Pattern: "[31:29] htg#{index*4 +                         configuration to map..."
+        # Next line: "        1}_hnf_cal_override_map_11"
+        if re.match(r'^\[[\d:]+\]\s+.*\+\s+', line) and i + 1 < len(pass2_lines):
+            next_line = pass2_lines[i + 1]
+            # Check if next line is the field name continuation
+            if re.match(r'^\s+.*\}_', next_line):
+                # Extract components from first line
+                # Pattern: [bits] incomplete_field_name+ description type reset
+                bits_match = re.match(r'^(\[[\d:]+\])\s+(\S+\s*\+)\s+(.*)', line)
+                if bits_match:
+                    bits = bits_match.group(1)
+                    incomplete_name = bits_match.group(2).rstrip()  # Remove trailing spaces after +
+                    remaining = bits_match.group(3)
+                    
+                    # Extract field name continuation from next line
+                    continuation_match = re.match(r'^\s+(\S+)', next_line)
+                    if continuation_match:
+                        name_continuation = continuation_match.group(1)
+                        
+                        # Combine field name - add space after + if needed
+                        if incomplete_name.endswith('+'):
+                            complete_name = incomplete_name + ' ' + name_continuation
+                        else:
+                            complete_name = incomplete_name + name_continuation
+                        
+                        # Reconstruct the line
+                        combined_line = f"{bits} {complete_name} {remaining}\n"
+                        final_lines.append(combined_line)
+                        i += 2  # Skip both lines
+                        continue
+        
         # Handle special case where array indices and partial register name appear first,
         # followed by offset information on subsequent lines
         # Pattern: "{0-1}  hashed_target_grp_hnf_target_type_override_          RW hashed_target_grp_hnf_target_type_override_cfg_reg0-1"

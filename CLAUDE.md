@@ -120,6 +120,7 @@ pip install pandas
 - **Boilerplate filtering**: Removes document metadata and header/footer noise using multiple pattern sets
 - **Multi-segment array parsing**: Handles complex patterns like `{0-23} 0xCC0 : 0xD78; {24-151} 0x24C0 : 0x28B8`
 - **Wrapped register pattern handling**: Fixes cases where array indices and partial register names appear first, with offset information on subsequent lines (e.g., `{0-1} partial_name...` followed by `0x37E0 cfg_reg0-1`, `:`, `0x37E8`)
+- **Wrapped attribute field names**: Joins bit field names split across lines in attribute tables (e.g., `[63:61] htg#{index*4 +` followed by `3}_hnf_cal_override_map_11`)
 
 ### L2 Array Register Detection
 - Pattern: `{start-end} 0xSTART : 0xEND` indicates array
