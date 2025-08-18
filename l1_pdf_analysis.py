@@ -1293,9 +1293,19 @@ def inject_missing_hdm_decoder_fields(df_attrs, df_regs):
     
     # Known missing hdm_decoder field definitions based on CXL specification
     missing_definitions = {
+        'por_ccla_cxl_hdm_decoder_0-7_base_low': [
+            {'bits': '31:28', 'name': 'Memory_Base_Low_#{index}', 
+             'description': 'Corresponds to bits 31:28 of the base of the address range covered by HDM decoder', 
+             'type': 'RWL', 'reset': '0x0'}
+        ],
         'por_ccla_cxl_hdm_decoder_0-7_base_high': [
             {'bits': '31:0', 'name': 'Memory_Base_High_#{index}', 
              'description': 'Corresponds to bits 63:32 of the base of the address range covered by HDM decoder', 
+             'type': 'RWL', 'reset': '0x0'}
+        ],
+        'por_cxlapb_cxl_hdm_decoder_0-7_base_low': [
+            {'bits': '31:28', 'name': 'Memory_Base_Low_#{index}', 
+             'description': 'Corresponds to bits 31:28 of the base of the address range covered by HDM decoder', 
              'type': 'RWL', 'reset': '0x0'}
         ],
         'por_cxlapb_cxl_hdm_decoder_0-7_base_high': [
@@ -1325,16 +1335,29 @@ def inject_missing_hdm_decoder_fields(df_attrs, df_regs):
         ]
     }
     
-    # Check which registers have no attributes
+    # Check which registers have no attributes or only Reserved fields
     registers_with_attrs = set(df_attrs['table'].str.extract(r':\s*([a-zA-Z0-9_\-]+)\s+attributes', expand=False).dropna())
     all_registers = set(df_regs['name'])
     registers_without_attrs = all_registers - registers_with_attrs
     
+    # Also check for registers that only have Reserved fields (need real fields)
+    registers_needing_fields = set(registers_without_attrs)
+    for reg_name in registers_with_attrs:
+        reg_fields = df_attrs[df_attrs['table'].str.contains(f'{reg_name}\\s+attributes', regex=True, na=False)]
+        if not reg_fields.empty:
+            # Check if all fields are Reserved
+            non_reserved = reg_fields[~reg_fields['name'].str.lower().str.contains('reserved', na=False)]
+            if non_reserved.empty:
+                # Only has Reserved fields, needs real fields
+                if reg_name in missing_definitions:
+                    registers_needing_fields.add(reg_name)
+    
     print(f"[INFO] Found {len(registers_without_attrs)} registers without attributes")
+    print(f"[INFO] Found {len(registers_needing_fields)} registers needing field injection")
     
     # Inject known missing fields
     for reg_name, fields in missing_definitions.items():
-        if reg_name in registers_without_attrs:
+        if reg_name in registers_needing_fields:
             # Find the table name from register summaries
             reg_info = df_regs[df_regs['name'] == reg_name]
             if not reg_info.empty:

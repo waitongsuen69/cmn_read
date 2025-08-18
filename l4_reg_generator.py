@@ -81,6 +81,11 @@ def get_access_and_write_effect(field_type):
     if field_type_upper in ['W1P', 'R/W1P']:
         return "vlab::Access::read_write", "vlab::WriteEffect::one_to_pulse"
     
+    # RWL (Read-Write Lock) - treat as normal read-write
+    # RWL fields can be locked but are initially read-write
+    if field_type_upper in ['RWL']:
+        return None, None  # Default RW access
+    
     # Default read-write (no extra parameters needed)
     # This covers: RW, R/W, WO, etc.
     return None, None
