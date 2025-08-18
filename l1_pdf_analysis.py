@@ -142,7 +142,7 @@ def is_addr_token(s: str) -> bool:
     return is_offset_token(s) or is_range_token(s) or is_addr_sep(s)
 
 def clean_pdf_text(input_path: str, output_path: str):
-    """Remove page footers/headers that break tables across pages."""
+    """Remove page footers/headers that break tables across pages and join wrapped lines."""
     print(f"[INFO] Cleaning PDF text to remove page breaks...")
     
     with open(input_path, 'r', encoding='utf-8') as f:
@@ -210,12 +210,57 @@ def clean_pdf_text(input_path: str, output_path: str):
         cleaned_lines.append(line)
         i += 1
     
-    # Write cleaned text
+    # Second pass: Join wrapped lines
+    final_lines = []
+    i = 0
+    
+    while i < len(cleaned_lines):
+        line = cleaned_lines[i]
+        
+        # Handle wrapped register names (name ends with _ and has continuation)
+        # Pattern: "0x2080 por_c2capb_c2c_port_ingressid_route_table_                RW     por_c2capb_c2c_port_ingressid_route_table_control_and_status"
+        # Next line: "       control_and_status"
+        if re.match(r'^0x[0-9A-Fa-f]+.*_\s+(RW|RO|WO|RWL|W1C|W1S|R/W)', line):
+            # This register name ends with underscore before the type
+            if i + 1 < len(cleaned_lines):
+                next_line = cleaned_lines[i + 1]
+                # Check if next line is the continuation (indented lowercase text)
+                if re.match(r'^\s+[a-z_]+\s*$', next_line.rstrip('\n')):
+                    # Skip the continuation line - we already have the full name in description
+                    i += 2  # Skip both current and continuation
+                    final_lines.append(line)
+                    continue
+        
+        # Handle offset range splits (colon on separate line)
+        # Pattern: "0x2240 register_name..."
+        # Next line: ":"
+        # Next line: "0x2240"
+        if i + 1 < len(cleaned_lines) and cleaned_lines[i + 1].strip() == ':':
+            if i + 2 < len(cleaned_lines) and re.match(r'^0x[0-9A-Fa-f]+', cleaned_lines[i + 2].strip()):
+                # Check if current line starts with hex offset
+                if re.match(r'^0x[0-9A-Fa-f]+', line):
+                    # Join the three lines into an offset range
+                    hex_end = cleaned_lines[i + 2].strip()
+                    # Extract the rest of the first line after the offset
+                    match = re.match(r'^(0x[0-9A-Fa-f]+)\s+(.*)', line)
+                    if match:
+                        offset_start = match.group(1)
+                        rest_of_line = match.group(2)
+                        # Create the joined line with range format
+                        line = f"{offset_start} : {hex_end} {rest_of_line}\n"
+                        i += 3
+                        final_lines.append(line)
+                        continue
+        
+        final_lines.append(line)
+        i += 1
+    
+    # Write cleaned and joined text
     with open(output_path, 'w', encoding='utf-8') as f:
-        f.writelines(cleaned_lines)
+        f.writelines(final_lines)
     
     print(f"[INFO] Cleaned text saved to {output_path}")
-    print(f"[INFO] Reduced from {len(lines)} to {len(cleaned_lines)} lines")
+    print(f"[INFO] Reduced from {len(lines)} to {len(final_lines)} lines")
 
 def get_all_lines(pdf_path: str):
     """Extract text from PDF using pdftotext and return as list of lines."""
