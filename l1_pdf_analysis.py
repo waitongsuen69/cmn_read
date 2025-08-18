@@ -448,6 +448,12 @@ def parse_register_tables(lines):
             i += 1
             continue
         
+        # Check for section header (e.g., "8.3.1.1 por_apb_node_info") which marks end of table
+        if re.match(r'^\s*8\.3\.', s):
+            # This is a detailed register description section, not part of the summary table
+            in_register_mode = False
+            continue
+        
         # NEW: Handle pdftotext format with space-separated columns
         # Pattern 1: Array format "{0-31} 0x3000 : 0x31F8    register_name    RW    description"
         array_match = re.match(r'^(\{\d+-\d+\}\s+0x[0-9A-Fa-f]+\s*:\s*0x[0-9A-Fa-f]+)\s+(\S+)\s+(\S+)?\s*(.*)?', s)
@@ -1731,6 +1737,55 @@ def inject_missing_hdm_decoder_fields(df_attrs, df_regs):
     
     return new_rows
 
+def remove_spurious_reserved_entries(df):
+    """
+    Remove spurious Reserved entries that come from bit diagrams.
+    These typically appear at the same offset as legitimate registers.
+    """
+    if df.empty:
+        return df
+    
+    # Track rows to remove
+    spurious_rows = []
+    
+    # Group by table and offset to find duplicates at same address
+    for (table, offset), group in df.groupby(['table', 'offset']):
+        if len(group) > 1:
+            # Multiple registers at same offset - check for Reserved
+            for idx, row in group.iterrows():
+                name = str(row['name']).strip()
+                # Mark spurious if name starts with "Reserved" and there's another register at same offset
+                if name.lower().startswith('reserved'):
+                    # Check if there's a non-Reserved entry at same offset
+                    other_names = [str(r['name']).strip() for i, r in group.iterrows() if i != idx]
+                    if any(not n.lower().startswith('reserved') for n in other_names):
+                        spurious_rows.append(idx)
+        elif len(group) == 1:
+            # Single register - remove if it's just "Reserved" variants at common offsets
+            row = group.iloc[0]
+            name = str(row['name']).strip()
+            offset_val = str(row['offset']).strip()
+            
+            # Remove standalone Reserved entries that are clearly from diagrams
+            # These patterns come from bit field diagrams in register detail sections
+            if (name.lower() == 'reserved' or 
+                'reserved logical_id' in name.lower() or
+                'reserveddtc_domain' in name.lower() or
+                'reserved mem_data_credits' in name.lower() or
+                (name.lower().startswith('reserved') and ('mem_data_credits' in name.lower() or
+                                                           'logical_id' in name.lower() or
+                                                           'dtc_domain' in name.lower() or
+                                                           'num_device_port' in name.lower()))):
+                # These are from bit field diagrams, not real registers
+                spurious_rows.append(row.name)
+    
+    # Drop the spurious rows
+    if spurious_rows:
+        print(f"[INFO] Removing {len(spurious_rows)} spurious Reserved entries")
+        df = df.drop(index=spurious_rows)
+    
+    return df
+
 # ------------------ Driver ------------------
 def extract(pdf_path: str, out_dir: str = "L1_pdf_analysis"):
     lines = get_all_lines(pdf_path)
@@ -1751,6 +1806,10 @@ def extract(pdf_path: str, out_dir: str = "L1_pdf_analysis"):
     if not df_regs.empty:
         # hard filter: drop rows whose name contains reset-noise
         df_regs = df_regs[~df_regs['name'].str.contains(RESET_NOISE_RE, na=False, regex=True)]
+        
+        # Remove spurious Reserved entries from bit diagrams
+        df_regs = remove_spurious_reserved_entries(df_regs)
+        
         df_regs = df_regs.drop_duplicates(subset=["table","offset","name"], keep="first")
     if not df_attrs.empty:
         df_attrs = df_attrs.drop_duplicates()
