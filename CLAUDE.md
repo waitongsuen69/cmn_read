@@ -241,7 +241,8 @@ The pipeline performs a clean build by default, removing:
 ## Quality Metrics & Validation
 
 ### Expected Outputs
-- 1043 registers from cmn437-2072.pdf (includes complex multi-segment arrays)
+- ~1043 registers from cmn437-2072.pdf (includes complex multi-segment arrays)
+- ~7704 attribute fields with complete field name extraction
 - Zero boilerplate entries in final output
 - All names follow C++ identifier conventions
 - No concatenated entries over 200 characters
