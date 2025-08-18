@@ -1862,19 +1862,20 @@ def extract(pdf_path: str, out_dir: str = "L1_pdf_analysis"):
         df_attrs = df_attrs.drop_duplicates()
     
     # Fix missing high-order Reserved fields for 64-bit registers
-    if not df_regs.empty and not df_attrs.empty:
-        print("[INFO] Analyzing register offsets to identify 64-bit registers...")
-        register_sizes = determine_64bit_registers(df_regs)
-        
-        print("[INFO] Adding missing high-order Reserved fields...")
-        df_attrs = add_missing_highorder_reserved_fields(df_attrs, register_sizes)
-        
-        # Inject missing fields for registers that have no attributes
-        print("[INFO] Checking for registers with missing attribute tables...")
-        missing_fields = inject_missing_hdm_decoder_fields(df_attrs, df_regs)
-        if missing_fields:
-            # Append the injected fields to the attributes dataframe
-            df_attrs = pd.concat([df_attrs, pd.DataFrame(missing_fields)], ignore_index=True)
+    # DISABLED: Field injection features - no longer adding Reserved fields or fallback fields
+    # if not df_regs.empty and not df_attrs.empty:
+    #     print("[INFO] Analyzing register offsets to identify 64-bit registers...")
+    #     register_sizes = determine_64bit_registers(df_regs)
+    #     
+    #     print("[INFO] Adding missing high-order Reserved fields...")
+    #     df_attrs = add_missing_highorder_reserved_fields(df_attrs, register_sizes)
+    #     
+    #     # Inject missing fields for registers that have no attributes
+    #     print("[INFO] Checking for registers with missing attribute tables...")
+    #     missing_fields = inject_missing_hdm_decoder_fields(df_attrs, df_regs)
+    #     if missing_fields:
+    #         # Append the injected fields to the attributes dataframe
+    #         df_attrs = pd.concat([df_attrs, pd.DataFrame(missing_fields)], ignore_index=True)
 
     # Ensure output directory exists
     out_dir_path = Path(out_dir)
