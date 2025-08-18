@@ -1170,12 +1170,13 @@ def determine_64bit_registers(df_regs):
 
 def add_missing_highorder_reserved_fields(df_attrs, register_sizes):
     """
-    Add missing high-order Reserved fields for 64-bit registers.
+    Add missing Reserved fields for 64-bit registers.
     
-    For 64-bit registers, if the highest bit is < 63, add a Reserved field
-    for the missing high-order bits.
+    For 64-bit registers, detect and fill ALL gaps in bit coverage,
+    not just high-order bits.
     """
     new_rows = []
+    added_count = 0
     
     # First, process existing rows
     for _, row in df_attrs.iterrows():
@@ -1187,51 +1188,97 @@ def add_missing_highorder_reserved_fields(df_attrs, register_sizes):
         
         # Extract register name from table name
         # e.g., "Table 8-17: por_ccg_ha_cfg_ctl attributes" -> "por_ccg_ha_cfg_ctl"
-        match = re.search(r':\s*([a-zA-Z0-9_]+)\s+attributes', table_name, re.IGNORECASE)
+        # Include hyphens to match names like "por_ccg_ha_link0-2_cache_id_ctl"
+        match = re.search(r':\s*([a-zA-Z0-9_\-]+)\s+attributes', table_name, re.IGNORECASE)
         if not match:
             continue
             
         register_name = match.group(1)
         
         # Check if this is a 64-bit register
-        if register_sizes.get(register_name) != 64:
+        reg_size = register_sizes.get(register_name)
+        if reg_size != 64 and reg_size != 32:
             continue
         
-        # Find the highest bit position for this register
-        max_bit = -1
+        # Determine the expected max bit (31 for 32-bit, 63 for 64-bit)
+        expected_max_bit = 63 if reg_size == 64 else 31
+        
+        # Build a bit coverage map
+        covered_bits = set()
         for _, row in table_attrs.iterrows():
             bits_str = str(row['bits'])
-            # Extract all numbers from the bits string
-            numbers = re.findall(r'\d+', bits_str)
-            if numbers:
-                current_max = max(int(n) for n in numbers)
-                max_bit = max(max_bit, current_max)
+            
+            # Parse different bit formats
+            if ':' in bits_str:
+                # Range format like "31:16" or "63:32"
+                parts = bits_str.split(':')
+                if len(parts) == 2:
+                    try:
+                        high = int(parts[0])
+                        low = int(parts[1])
+                        for bit in range(low, high + 1):
+                            covered_bits.add(bit)
+                    except ValueError:
+                        continue
+            else:
+                # Single bit format like "0" or "31"
+                try:
+                    bit = int(bits_str)
+                    covered_bits.add(bit)
+                except ValueError:
+                    continue
         
-        # If max_bit < 63, add Reserved field for high-order bits
-        if 0 <= max_bit < 63:
-            # Create Reserved field for [63:max_bit+1]
-            reserved_start = max_bit + 1
-            reserved_bits = f"63:{reserved_start}" if reserved_start < 63 else "63"
+        # Find gaps in bit coverage
+        gaps = []
+        if covered_bits:
+            min_covered = min(covered_bits)
+            max_covered = max(covered_bits)
             
-            new_row = {
-                'table': table_name,
-                'bits': reserved_bits,
-                'name': 'Reserved',
-                'description': 'Reserved for future use',
-                'type': 'RO',
-                'reset': '-'
-            }
+            # Check for gaps between covered bits
+            for bit in range(0, expected_max_bit + 1):
+                if bit not in covered_bits:
+                    # Start of a gap
+                    if not gaps or bit != gaps[-1][1] + 1:
+                        gaps.append([bit, bit])
+                    else:
+                        # Extend current gap
+                        gaps[-1][1] = bit
             
+            # Consolidate gaps into ranges
+            reserved_ranges = []
+            for gap_start, gap_end in gaps:
+                if gap_start == gap_end:
+                    reserved_ranges.append(str(gap_start))
+                else:
+                    reserved_ranges.append(f"{gap_end}:{gap_start}")
+        else:
+            # No bits covered at all - add full range
+            reserved_ranges = [f"{expected_max_bit}:0"]
+        
+        # Add Reserved fields for all gaps
+        for reserved_bits in reserved_ranges:
             # Check if this Reserved field already exists
             exists = False
             for _, existing in table_attrs.iterrows():
-                if str(existing['bits']) == reserved_bits and existing['name'] == 'Reserved':
+                if str(existing['bits']) == reserved_bits and 'reserved' in str(existing['name']).lower():
                     exists = True
                     break
             
             if not exists:
+                new_row = {
+                    'table': table_name,
+                    'bits': reserved_bits,
+                    'name': 'Reserved',
+                    'description': 'Reserved for future use',
+                    'type': 'RO',
+                    'reset': '-'
+                }
                 new_rows.append(new_row)
-                print(f"[INFO] Added {reserved_bits} Reserved field for {register_name}")
+                added_count += 1
+                print(f"[INFO] Added [{reserved_bits}] Reserved field for {register_name}")
+    
+    if added_count > 0:
+        print(f"[INFO] Total Reserved fields added: {added_count}")
     
     return pd.DataFrame(new_rows)
 
