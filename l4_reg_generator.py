@@ -34,10 +34,13 @@ def parse_bits_range(bits_str):
     """
     Parse bit range string to get start bit and size.
     Examples:
-        "31" -> (31, 1)
-        "31:16" -> (16, 16)  # start=16, size=16
-        "0:15" -> (0, 16)    # start=0, size=16
+        "[31]" or "31" -> (31, 1)
+        "[31:16]" or "31:16" -> (16, 16)  # start=16, size=16
+        "[0:15]" or "0:15" -> (0, 16)    # start=0, size=16
     """
+    # Strip square brackets if present
+    bits_str = bits_str.strip('[]')
+    
     if ':' in bits_str:
         parts = bits_str.split(':')
         bit1 = int(parts[0])
