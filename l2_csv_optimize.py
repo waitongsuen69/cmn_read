@@ -522,12 +522,197 @@ def convert_reset_value(reset_str):
     # Return other formats as-is
     return reset_str
 
+def fix_reset_value(row):
+    """
+    Fix common reset value issues from L1 parsing.
+    Returns a copy of the row with corrected reset value.
+    """
+    row = row.copy()
+    reset = str(row['reset']).strip() if pd.notna(row['reset']) else '-'
+    
+    # Auto-correct incomplete values
+    if reset == 'Configuration':
+        row['reset'] = 'Configuration dependent'
+    elif reset == 'Implementation':
+        row['reset'] = 'Implementation defined'
+    elif reset in ['dependent', 'defined', 'and', 'fields', 'attribute', 'value', 'values']:
+        # These are fragments - likely from split descriptions
+        row['reset'] = '-'
+    elif reset and reset != '-':
+        # Validate reset value format
+        valid_pattern = r'^(0x[0-9a-fA-F]+|0b[01]+|\d+|Configuration dependent|Implementation defined|-)$'
+        if not re.match(valid_pattern, reset):
+            # Invalid reset value - likely description text
+            # Append to description if it looks like text
+            if re.match(r'^[a-zA-Z]', reset) and len(reset) > 2:
+                if row['description'] and not pd.isna(row['description']):
+                    row['description'] = str(row['description']) + ' ' + reset
+            row['reset'] = '-'
+    
+    return row
+
+def remove_duplicate_fields(df):
+    """
+    Remove duplicate register/bits combinations, keeping the most complete one.
+    """
+    # Define valid types for scoring
+    valid_types = {'RO','RW','WO','R/W','R/W1C','R/W1S','R/W1P','R/WC',
+                   'R/W0C','R/W0S','R/W0P','R/W0','R/W1','R/WS','R/WP',
+                   'R/C','R/S','R0','W1C','W1S','W1P','RWL'}
+    
+    # Group by register_name and bits
+    grouped = df.groupby(['register_name', 'bits'], as_index=False)
+    
+    # For each group, keep the best row
+    def select_best_row(group):
+        if len(group) == 1:
+            return group.iloc[0]
+        
+        # Score each row
+        best_row = None
+        best_score = -1
+        
+        for _, row in group.iterrows():
+            score = 0
+            
+            # Valid type gets high score
+            if row['type'] in valid_types:
+                score += 100
+            elif row['type'] == '-':
+                score += 10
+            
+            # Valid reset value
+            if pd.notna(row['reset']) and row['reset'] != '-':
+                score += 50
+            
+            # Longer, more complete description
+            if pd.notna(row['description']):
+                desc_len = len(str(row['description']))
+                score += min(desc_len, 200)  # Cap at 200 to avoid outliers
+            
+            # Valid field name
+            if pd.notna(row['field_name']) and row['field_name'] != '':
+                score += 20
+            
+            if score > best_score:
+                best_score = score
+                best_row = row
+        
+        return best_row if best_row is not None else group.iloc[0]
+    
+    # Apply selection to each group
+    result = grouped.apply(select_best_row, include_groups=False).reset_index(drop=True)
+    
+    return result
+
+def preprocess_attributes(df):
+    """
+    Pre-process attributes to fix L1 parsing issues before optimization.
+    Handles split descriptions, misaligned columns, and duplicates.
+    """
+    valid_types = {'RO','RW','WO','R/W','R/W1C','R/W1S','R/W1P','R/WC',
+                   'R/W0C','R/W0S','R/W0P','R/W0','R/W1','R/WS','R/WP',
+                   'R/C','R/S','R0','W1C','W1S','W1P','RWL','-'}
+    
+    cleaned_rows = []
+    skip_next = False
+    
+    for i in range(len(df)):
+        if skip_next:
+            skip_next = False
+            continue
+        
+        row = df.iloc[i].copy()
+        
+        # Check if type column contains valid type
+        if pd.notna(row['type']) and row['type'] not in valid_types:
+            # Type column likely contains description text
+            # Try to find type token in the text
+            type_text = str(row['type'])
+            type_found = None
+            
+            # Search for valid type tokens (longest first to match R/W1C before RW)
+            for vtype in sorted(valid_types, key=len, reverse=True):
+                if vtype != '-' and re.search(r'\b' + re.escape(vtype) + r'\b', type_text):
+                    type_found = vtype
+                    break
+            
+            if type_found:
+                # Reconstruct the row
+                # Find position of type token
+                type_pos = type_text.find(type_found)
+                
+                # Text before type is part of description
+                desc_addition = type_text[:type_pos].strip()
+                if desc_addition and pd.notna(row['description']):
+                    row['description'] = str(row['description']) + ' ' + desc_addition
+                elif desc_addition:
+                    row['description'] = desc_addition
+                
+                # Text after type might be reset value
+                after_type = type_text[type_pos + len(type_found):].strip()
+                if after_type:
+                    # If current reset is invalid, use this
+                    if pd.isna(row['reset']) or row['reset'] == '-':
+                        row['reset'] = after_type
+                    else:
+                        # Append to existing reset
+                        row['reset'] = after_type + ' ' + str(row['reset'])
+                
+                row['type'] = type_found
+            else:
+                # No valid type found in type column
+                # Check if next row might be a continuation
+                if i + 1 < len(df):
+                    next_row = df.iloc[i + 1]
+                    
+                    # If next row has same register and valid type, might be continuation
+                    if (row['register_name'] == next_row['register_name'] and 
+                        pd.notna(next_row['type']) and 
+                        next_row['type'] in valid_types):
+                        
+                        # Merge description from type column
+                        if pd.notna(row['description']):
+                            row['description'] = str(row['description']) + ' ' + str(row['type'])
+                        else:
+                            row['description'] = str(row['type'])
+                        
+                        # Use type and reset from next row
+                        row['type'] = next_row['type']
+                        row['reset'] = next_row['reset']
+                        skip_next = True
+                else:
+                    # Can't fix - treat type column content as description
+                    if pd.notna(row['description']):
+                        row['description'] = str(row['description']) + ' ' + str(row['type'])
+                    else:
+                        row['description'] = str(row['type'])
+                    row['type'] = '-'
+        
+        # Fix reset value issues
+        row = fix_reset_value(row)
+        
+        cleaned_rows.append(row)
+    
+    cleaned_df = pd.DataFrame(cleaned_rows)
+    
+    # Remove duplicates
+    cleaned_df = remove_duplicate_fields(cleaned_df)
+    
+    return cleaned_df
+
 def optimize_register_attributes(input_csv, output_csv):
     """
     Transform register attributes CSV with proper structure.
     """
     print(f"\nProcessing {input_csv}...")
     df = pd.read_csv(input_csv)
+    
+    # Pre-process to fix L1 parsing issues
+    print("  Pre-processing to fix L1 parsing issues...")
+    original_count = len(df)
+    df = preprocess_attributes(df)
+    print(f"  After pre-processing: {len(df)} rows (removed {original_count - len(df)} duplicates/invalid rows)")
     
     # Process each row
     all_rows = []
