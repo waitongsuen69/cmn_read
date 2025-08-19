@@ -188,11 +188,18 @@ def parse_offset(offset_str):
         "0xF80 : 0xFA0" -> 3968 (takes 0xF80)
         "{0-15} 0x7580" -> 30080 (takes 0x7580, ignoring array indices)
         "{0-15} 0x7580 : 0x75F8" -> 30080 (takes start of range after indices)
+        "0xC00 + 0x80" -> 3072 (takes 0xC00, ignoring size notation)
     """
     if not offset_str:
         return 0
     
     offset_str = str(offset_str).strip()
+    
+    # Handle offset+size format like "0xC00 + 0x80"
+    if '+' in offset_str:
+        # Take just the base offset before the +
+        base = offset_str.split('+')[0].strip()
+        return int(base, 16) if base.startswith('0x') else int(base)
     
     # Handle array index format like "{0-15} 0x7580" or "{0-15} 0x7580 : 0x75F8"
     if '{' in offset_str and '}' in offset_str:
@@ -212,7 +219,15 @@ def parse_offset(offset_str):
     if ':' in offset_str:
         # Take the first part
         start = offset_str.split(':')[0].strip()
-        return int(start, 16) if start.startswith('0x') else int(start)
+        if start:  # Make sure start is not empty
+            return int(start, 16) if start.startswith('0x') else int(start)
+        else:
+            # If start is empty, try the second part
+            parts = offset_str.split(':')
+            if len(parts) > 1 and parts[1].strip():
+                end = parts[1].strip()
+                return int(end, 16) if end.startswith('0x') else int(end)
+            return 0
     
     # Handle simple offset
     if offset_str.startswith('0x'):
@@ -226,11 +241,16 @@ def parse_bits(bits_str):
     ARM notation can use either [high:low] or [low:high] format depending on context.
     We need to determine which is which based on the values.
     Examples:
-        "31:0" -> (0, 31)   # bits 0 to 31 (high:low format)
-        "0:15" -> (0, 15)   # bits 0 to 15 (low:high format)
-        "32:47" -> (32, 47) # bits 32 to 47 (low:high format)
-        "7" -> (7, 7)       # single bit 7
+        "[31:0]" -> (0, 31)   # bits 0 to 31 (high:low format)
+        "31:0" -> (0, 31)     # bits 0 to 31 (high:low format)
+        "0:15" -> (0, 15)     # bits 0 to 15 (low:high format)
+        "32:47" -> (32, 47)   # bits 32 to 47 (low:high format)
+        "[7]" -> (7, 7)       # single bit 7
+        "7" -> (7, 7)         # single bit 7
     """
+    # Remove brackets if present
+    bits_str = bits_str.strip('[]')
+    
     if ':' in bits_str:
         parts = bits_str.split(':')
         val1 = int(parts[0])

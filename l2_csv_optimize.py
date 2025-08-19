@@ -533,7 +533,7 @@ def optimize_register_attributes(input_csv, output_csv):
     all_rows = []
     for _, row in df.iterrows():
         # Get field name and clean it from embedded descriptions
-        raw_field_name = str(row['name']) if pd.notna(row['name']) else ''
+        raw_field_name = str(row['field_name']) if pd.notna(row['field_name']) else ''
         field_name, extracted_desc = separate_field_name_from_description(raw_field_name)
         
         # Use existing description column if available, otherwise use extracted description

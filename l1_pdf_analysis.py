@@ -1070,6 +1070,80 @@ def parse_attribute_tables(lines):
                 if type_idx == -1:
                     desc = remaining
             
+            # Check for multi-line continuations
+            # If reset value is "Configuration" or similar, check if next line continues it
+            if reset in ["Configuration", "Implementation"] and i + 1 < N:
+                next_line = lines[i + 1].strip()
+                # Check if next line is likely a continuation (starts with space/tab and contains "dependent" or "defined")
+                if next_line and not next_line.startswith('[') and not is_heading(next_line):
+                    # Check if this is a continuation line (indented or contains expected continuation words)
+                    if "dependent" in next_line or "defined" in next_line:
+                        # This is a continuation - extract the relevant part
+                        # The line might contain more description text too
+                        continuation_tokens = next_line.split()
+                        if continuation_tokens and continuation_tokens[0] in ["dependent", "defined"]:
+                            reset = reset + " " + continuation_tokens[0]
+                            # Add remaining text to description if any
+                            if len(continuation_tokens) > 1:
+                                desc = desc + " " + " ".join(continuation_tokens[1:]) if desc else " ".join(continuation_tokens[1:])
+                            i += 1  # Skip the continuation line
+                        elif any(word in ["dependent", "defined"] for word in continuation_tokens):
+                            # The continuation word is embedded in the line
+                            for idx, word in enumerate(continuation_tokens):
+                                if word in ["dependent", "defined"]:
+                                    reset = reset + " " + word
+                                    # Add text before as part of description continuation
+                                    if idx > 0:
+                                        desc = desc + " " + " ".join(continuation_tokens[:idx]) if desc else " ".join(continuation_tokens[:idx])
+                                    # Add text after as description continuation
+                                    if idx + 1 < len(continuation_tokens):
+                                        desc = desc + " " + " ".join(continuation_tokens[idx+1:]) if desc else " ".join(continuation_tokens[idx+1:])
+                                    break
+                            i += 1  # Skip the continuation line
+            
+            # Also check for wrapped descriptions (lines that continue the description)
+            # These are lines that don't start with [ and aren't table headers
+            while i + 1 < N:
+                next_line = lines[i + 1].strip()
+                # Check if this looks like a continuation of the description
+                if (next_line and 
+                    not next_line.startswith('[') and 
+                    not is_heading(next_line) and
+                    not is_type_token(next_line) and
+                    not re.match(r'^Bits\s+Name\s+', next_line) and
+                    not next_line.startswith("__PAGE_BREAK_") and
+                    next_line.lower() not in HEADER_LABELS):
+                    # Check if line is indented (continuation) or looks like description text
+                    orig_next = lines[i + 1]  # Get original with leading spaces
+                    if orig_next.startswith(' ' * 20) or orig_next.startswith('\t'):  # Significantly indented
+                        # This is likely a description continuation
+                        desc = desc + " " + next_line if desc else next_line
+                        i += 1
+                    else:
+                        # Not a continuation, stop
+                        break
+                else:
+                    # Hit a clear boundary, stop
+                    break
+            
+            # Validate and clean up reset value
+            # Remove any trailing text that shouldn't be part of reset
+            if reset and reset not in ["-", "0", "1"]:
+                # Check for valid reset patterns
+                if not (reset.startswith("0x") or reset.startswith("0b") or 
+                        reset in ["Configuration dependent", "Implementation defined", "-"]):
+                    # This might be grabbing wrong text as reset
+                    # Common patterns that are valid: 0x..., 0b..., Configuration dependent, Implementation defined
+                    # If it doesn't match, it's likely wrong
+                    if "Configuration" in reset and "dependent" not in reset:
+                        reset = "Configuration dependent"  # Fix incomplete value
+                    elif "Implementation" in reset and "defined" not in reset:
+                        reset = "Implementation defined"  # Fix incomplete value
+                    elif not re.match(r'^(0x[0-9a-fA-F]+|0b[01]+|\d+|Configuration dependent|Implementation defined|-)$', reset):
+                        # Invalid reset value - likely grabbed description text
+                        desc = desc + " " + reset if desc else reset
+                        reset = "-"
+            
             # Don't add if field_name is clearly noise
             if field_name and is_probable_name(field_name) and not is_reserved_concatenation_artifact(field_name):
                 rows.append({
@@ -1209,8 +1283,9 @@ def parse_attribute_tables(lines):
             
             rows.append({
                 "table": current_table,
+                "register_name": current_reg_name or "",
                 "bits": bits,
-                "name": field_name if field_name else name,
+                "field_name": field_name if field_name else name,
                 "description": final_description,
                 "type": final_type,
                 "reset": final_reset
@@ -1524,40 +1599,43 @@ def clean_rows(rows: list, is_attr: bool = False) -> list:
     """
     cleaned = []
     for row in rows:
+        # Determine which column contains the name based on whether this is an attribute row
+        name_key = 'field_name' if is_attr else 'name'
+        
         # ENHANCED: Skip invalid register entries that are actually noise/junk data
-        if 'name' in row:
-            name_lower = row['name'].lower()
+        if name_key in row:
+            name_lower = row[name_key].lower()
             # Skip entries that are clearly document boilerplate/metadata
             if name_lower in ['non-confidential', 'usage constraints', 'usage constraint']:
                 continue
             # Skip entries that contain document boilerplate patterns
-            if document_boilerplate_re.search(row['name']):
+            if document_boilerplate_re.search(row[name_key]):
                 continue
             # ENHANCED: Skip entries that match boilerplate sentence patterns
-            if boilerplate_sentence_re.match(row['name']):
+            if boilerplate_sentence_re.match(row[name_key]):
                 continue
             # CRITICAL FIX: Explicit filtering for remaining boilerplate entries
-            name_stripped = row['name'].strip('"').strip()  # Remove quotes and whitespace
+            name_stripped = row[name_key].strip('"').strip()  # Remove quotes and whitespace
             if name_stripped in EXPLICIT_BOILERPLATE_STRINGS:
                 continue
             if name_stripped.startswith("This register is owned in the Non-secure space"):
                 continue
             # ENHANCED: Skip entries with extremely long names (paragraph-length boilerplate)
-            if len(row['name']) > 120:
+            if len(row[name_key]) > 120:
                 continue
             # ENHANCED: Skip entries that contain multiple sentences
-            if re.search(r'\. [A-Z]', row['name']):
+            if re.search(r'\. [A-Z]', row[name_key]):
                 continue
             
             # CRITICAL FIX: Skip malformed "Reserved" entries with concatenated text
-            if is_reserved_concatenation_artifact(row['name']):
+            if is_reserved_concatenation_artifact(row[name_key]):
                 continue
         
         # FIXED: Separate type tokens that were accidentally concatenated to names
-        if 'name' in row:
-            original_name = row['name']
+        if name_key in row:
+            original_name = row[name_key]
             cleaned_name, extracted_type = separate_name_and_type(original_name)
-            row['name'] = clean_reserved_name(cleaned_name)
+            row[name_key] = clean_reserved_name(cleaned_name)
             
             # If we found a type in the name and the type field is empty, use the extracted type
             if extracted_type and ('type' not in row or not row['type'] or row['type'] == "-"):
@@ -1571,7 +1649,7 @@ def clean_rows(rows: list, is_attr: bool = False) -> list:
                 row[key] = "-"
         
         # Hot fix: For Reserved fields, ensure description is properly set
-        if 'name' in row and row['name'] == 'Reserved' and 'description' in row:
+        if name_key in row and row[name_key] == 'Reserved' and 'description' in row:
             if not row['description'] or row['description'] == "-":
                 row['description'] = "Reserved for future use"
         
