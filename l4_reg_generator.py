@@ -171,7 +171,7 @@ def generate_field_cpp(l2_df, output_dir):
             
             # Add register comment when register changes (preserve L2 order)
             if register_name != current_register:
-                f.write(f"\n// Fields for register: {register_name}\n")
+                f.write(f"\n    // Fields for register: {register_name}\n")
                 current_register = register_name
             
             # Determine field type based on register size
@@ -180,11 +180,11 @@ def generate_field_cpp(l2_df, output_dir):
             
             # Write field definition immediately (preserve L2 order)
             param_str = ", ".join(params)
-            f.write(f"vlab::{field_type_name} {field_var_name} {{{param_str}}};\n")
+            f.write(f"    vlab::{field_type_name} {field_var_name} {{{param_str}}};\n")
             
             field_count += 1
         
-        f.write(f"\n// Total fields generated: {field_count}\n")
+        f.write(f"\n    // Total fields generated: {field_count}\n")
     
     print(f"Generated {field_count} field definitions in {output_file}")
     if conflict_count > 0:
@@ -260,7 +260,7 @@ def generate_register_cpp(l3_data, l2_df, field_variables, output_dir):
         f.write("// Register Blocks\n")
         for block_name, block_data in l3_data['register_blocks'].items():
             size_hex = f"0x{block_data['size']:x}"
-            f.write(f"vlab::RegBlock {block_name} {{*this, \"{block_name}\", {size_hex}, 0x0, vlab::Endianness::little, 64}};\n")
+            f.write(f"    vlab::RegBlock {block_name} {{*this, \"{block_name}\", {size_hex}, 0x0, vlab::Endianness::little, 64}};\n")
         f.write("\n")
         
         # Generate registers (following L3 JSON order)
@@ -268,7 +268,7 @@ def generate_register_cpp(l3_data, l2_df, field_variables, output_dir):
         total_registers = 0
         
         for block_name, block_data in l3_data['register_blocks'].items():
-            f.write(f"\n// Registers for block: {block_name}\n")
+            f.write(f"\n    // Registers for block: {block_name}\n")
             
             # Process registers in L3 JSON array order
             for register in block_data['registers']:
@@ -293,15 +293,15 @@ def generate_register_cpp(l3_data, l2_df, field_variables, output_dir):
                 if array_size > 1:
                     # Register array with correct byte size
                     field_str = ", ".join(field_list) if field_list else ""
-                    f.write(f"vlab::{reg_type}Array {register_cpp_name} {{{block_name}, \"{register_name}\", {offset_hex}, {array_size}, {reset_simplified}, {{{field_str}}}, {byte_size}}};\n")
+                    f.write(f"    vlab::{reg_type}Array {register_cpp_name} {{{block_name}, \"{register_name}\", {offset_hex}, {array_size}, {reset_simplified}, {{{field_str}}}, {byte_size}}};\n")
                 else:
                     # Single register
                     field_str = ", ".join(field_list) if field_list else ""
-                    f.write(f"vlab::{reg_type} {register_cpp_name} {{{block_name}, \"{register_name}\", {offset_hex}, {reset_simplified}, {{{field_str}}}}};\n")
+                    f.write(f"    vlab::{reg_type} {register_cpp_name} {{{block_name}, \"{register_name}\", {offset_hex}, {reset_simplified}, {{{field_str}}}}};\n")
                 
                 total_registers += 1
         
-        f.write(f"\n// Total registers generated: {total_registers}\n")
+        f.write(f"\n    // Total registers generated: {total_registers}\n")
     
     print(f"Generated {total_registers} register definitions in {output_file}")
     return total_registers
