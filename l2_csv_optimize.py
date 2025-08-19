@@ -123,10 +123,11 @@ def calculate_register_sizes_from_l1(input_csv):
         
         # Get bit range and field name
         bits = str(row['bits'])
-        field_name = str(row.get('name', '')).lower()
+        field_name = str(row.get('field_name', '')).lower()  # Fixed: was 'name', should be 'field_name'
         
-        # Check if this is Reserved bit 21 (single bit)
-        if bits == '21' and 'reserved' in field_name:
+        # Check if this is Reserved bit 21 (single bit) 
+        # Note: bits are in format like '[21]' not just '21'
+        if (bits == '[21]' or bits == '21') and 'reserved' in field_name:
             register_has_reserved_21[register_name] = True
         
         # Extract all numbers from the bits string
@@ -554,14 +555,18 @@ def fix_reset_value(row):
 def remove_duplicate_fields(df):
     """
     Remove duplicate register/bits combinations, keeping the most complete one.
+    Preserves the original document order.
     """
     # Define valid types for scoring
     valid_types = {'RO','RW','WO','R/W','R/W1C','R/W1S','R/W1P','R/WC',
                    'R/W0C','R/W0S','R/W0P','R/W0','R/W1','R/WS','R/WP',
                    'R/C','R/S','R0','W1C','W1S','W1P','RWL'}
     
-    # Group by register_name and bits
-    grouped = df.groupby(['register_name', 'bits'], as_index=False)
+    # Add original index to preserve order
+    df['_original_order'] = range(len(df))
+    
+    # Group by register_name and bits, without sorting
+    grouped = df.groupby(['register_name', 'bits'], as_index=False, sort=False)
     
     # For each group, keep the best row
     def select_best_row(group):
@@ -602,6 +607,12 @@ def remove_duplicate_fields(df):
     
     # Apply selection to each group
     result = grouped.apply(select_best_row, include_groups=False).reset_index(drop=True)
+    
+    # Sort by original order to preserve document sequence
+    result = result.sort_values('_original_order').reset_index(drop=True)
+    
+    # Remove the temporary order column
+    result = result.drop('_original_order', axis=1)
     
     return result
 
