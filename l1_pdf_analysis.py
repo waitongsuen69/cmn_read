@@ -127,7 +127,14 @@ def clean_line(s: str) -> str:
     # Normalize common ligatures and whitespace
     s = s.replace('\uFB00', 'ff').replace('\uFB01', 'fi').replace('\uFB02', 'fl')
     s = s.replace('\uFB03', 'ffi').replace('\uFB04', 'ffl')
-    return re.sub(r'\s+', ' ', s).strip()
+    # Preserve leading spaces (important for continuation lines) but normalize internal spaces
+    # Strip only trailing whitespace
+    leading_spaces = len(s) - len(s.lstrip())
+    s_cleaned = re.sub(r'\s+', ' ', s.strip())
+    # Re-add leading spaces if there were any
+    if leading_spaces > 0 and s_cleaned:
+        return ' ' * leading_spaces + s_cleaned
+    return s_cleaned
 
 def is_heading(s: str) -> bool: return bool(heading_re.match(s))
 def is_section_heading(s: str) -> bool: return bool(section_re.match(s))
@@ -989,6 +996,27 @@ def parse_register_tables(lines):
 
     return rows
 
+def find_type_token_position(text):
+    """
+    Find the rightmost valid type token in text.
+    Returns (start_pos, end_pos, token) or (None, None, None) if not found.
+    """
+    best_match = (None, None, None)
+    
+    # Search for each type token (longest first to handle R/W1C before RW)
+    for token in SORTED_TYPE_TOKENS:
+        # Use word boundaries to avoid partial matches
+        pattern = r'\b' + re.escape(token) + r'\b'
+        matches = list(re.finditer(pattern, text))
+        if matches:
+            # Get the rightmost match
+            last_match = matches[-1]
+            # Update if this is further right than current best
+            if best_match[0] is None or last_match.start() > best_match[0]:
+                best_match = (last_match.start(), last_match.end(), token)
+    
+    return best_match
+
 def parse_attribute_tables(lines):
     rows = []
     current_table = None
@@ -1046,101 +1074,97 @@ def parse_attribute_tables(lines):
                     i += 1
                     continue
             
-            # Parse remaining text for description, type, and reset
+            # Collect full text including multi-line continuations first
+            full_text = remaining if remaining else ""
+            continuation_lines = []
+            
+            # Look ahead for continuation lines (indented lines that aren't new entries)
+            j = i + 1
+            while j < N:
+                next_line = lines[j]
+                next_stripped = next_line.strip()
+                
+                # Check if this is a continuation line
+                if (next_stripped and 
+                    not next_stripped.startswith('[') and 
+                    not is_heading(next_stripped) and
+                    not re.match(r'^Bits\s+Name\s+', next_stripped) and
+                    not next_stripped.startswith("__PAGE_BREAK_") and
+                    next_stripped.lower() not in HEADER_LABELS):
+                    
+                    # Check if significantly indented (at least 25 spaces typical for description column continuations)
+                    # Continuation lines in attribute tables are indented to align with description column
+                    # Different tables have different column alignments, so we use a lower threshold
+                    indent_len = len(next_line) - len(next_line.lstrip())
+                    if indent_len >= 25:
+                        continuation_lines.append(next_stripped)
+                        j += 1
+                    else:
+                        # Not indented enough, stop looking
+                        break
+                else:
+                    # Hit a clear boundary
+                    break
+            
+            # Combine all text for parsing
+            if continuation_lines:
+                full_text = full_text + " " + " ".join(continuation_lines) if full_text else " ".join(continuation_lines)
+                i = j - 1  # Update main index to skip processed continuation lines
+            
+            # Now use type token anchoring to parse the full text
             desc = ""
             typ = "-"
             reset = "-"
             
-            if remaining:
-                # Split remaining text and look for type tokens
-                tokens = remaining.split()
-                type_idx = -1
+            if full_text:
+                # Find the rightmost type token in the full text
+                type_start, type_end, type_token = find_type_token_position(full_text)
                 
-                for j, token in enumerate(tokens):
-                    if is_type_token(token):
-                        typ = token
-                        type_idx = j
-                        # Description is everything before type
-                        desc = " ".join(tokens[:j]) if j > 0 else ""
-                        # Reset is after type
-                        reset = tokens[j+1] if j+1 < len(tokens) else "-"
-                        break
-                
-                # If no type found, treat all as description
-                if type_idx == -1:
-                    desc = remaining
-            
-            # Check for multi-line continuations
-            # If reset value is "Configuration" or similar, check if next line continues it
-            if reset in ["Configuration", "Implementation"] and i + 1 < N:
-                next_line = lines[i + 1].strip()
-                # Check if next line is likely a continuation (starts with space/tab and contains "dependent" or "defined")
-                if next_line and not next_line.startswith('[') and not is_heading(next_line):
-                    # Check if this is a continuation line (indented or contains expected continuation words)
-                    if "dependent" in next_line or "defined" in next_line:
-                        # This is a continuation - extract the relevant part
-                        # The line might contain more description text too
-                        continuation_tokens = next_line.split()
-                        if continuation_tokens and continuation_tokens[0] in ["dependent", "defined"]:
-                            reset = reset + " " + continuation_tokens[0]
-                            # Add remaining text to description if any
-                            if len(continuation_tokens) > 1:
-                                desc = desc + " " + " ".join(continuation_tokens[1:]) if desc else " ".join(continuation_tokens[1:])
-                            i += 1  # Skip the continuation line
-                        elif any(word in ["dependent", "defined"] for word in continuation_tokens):
-                            # The continuation word is embedded in the line
-                            for idx, word in enumerate(continuation_tokens):
-                                if word in ["dependent", "defined"]:
-                                    reset = reset + " " + word
-                                    # Add text before as part of description continuation
-                                    if idx > 0:
-                                        desc = desc + " " + " ".join(continuation_tokens[:idx]) if desc else " ".join(continuation_tokens[:idx])
-                                    # Add text after as description continuation
-                                    if idx + 1 < len(continuation_tokens):
-                                        desc = desc + " " + " ".join(continuation_tokens[idx+1:]) if desc else " ".join(continuation_tokens[idx+1:])
-                                    break
-                            i += 1  # Skip the continuation line
-            
-            # Also check for wrapped descriptions (lines that continue the description)
-            # These are lines that don't start with [ and aren't table headers
-            while i + 1 < N:
-                next_line = lines[i + 1].strip()
-                # Check if this looks like a continuation of the description
-                if (next_line and 
-                    not next_line.startswith('[') and 
-                    not is_heading(next_line) and
-                    not is_type_token(next_line) and
-                    not re.match(r'^Bits\s+Name\s+', next_line) and
-                    not next_line.startswith("__PAGE_BREAK_") and
-                    next_line.lower() not in HEADER_LABELS):
-                    # Check if line is indented (continuation) or looks like description text
-                    orig_next = lines[i + 1]  # Get original with leading spaces
-                    if orig_next.startswith(' ' * 20) or orig_next.startswith('\t'):  # Significantly indented
-                        # This is likely a description continuation
-                        desc = desc + " " + next_line if desc else next_line
-                        i += 1
-                    else:
-                        # Not a continuation, stop
-                        break
+                if type_token:
+                    # Found a type token - use it to split the text
+                    typ = type_token
+                    
+                    # Description is everything before the type token
+                    desc = full_text[:type_start].strip()
+                    
+                    # Reset is everything after the type token
+                    reset_text = full_text[type_end:].strip()
+                    if reset_text:
+                        # Extract the first token as reset value
+                        reset_tokens = reset_text.split()
+                        if reset_tokens:
+                            reset = reset_tokens[0]
+                            # If there's more text after reset, it might be description continuation
+                            if len(reset_tokens) > 1:
+                                extra_desc = " ".join(reset_tokens[1:])
+                                # Only add if it doesn't look like a valid reset value
+                                if not re.match(r'^(0x[0-9a-fA-F]+|0b[01]+|\d+|-)$', extra_desc):
+                                    desc = desc + " " + extra_desc if desc else extra_desc
                 else:
-                    # Hit a clear boundary, stop
-                    break
+                    # No type token found - treat entire text as description
+                    desc = full_text
             
             # Validate and clean up reset value
-            # Remove any trailing text that shouldn't be part of reset
             if reset and reset not in ["-", "0", "1"]:
-                # Check for valid reset patterns
-                if not (reset.startswith("0x") or reset.startswith("0b") or 
-                        reset in ["Configuration dependent", "Implementation defined", "-"]):
-                    # This might be grabbing wrong text as reset
-                    # Common patterns that are valid: 0x..., 0b..., Configuration dependent, Implementation defined
-                    # If it doesn't match, it's likely wrong
-                    if "Configuration" in reset and "dependent" not in reset:
-                        reset = "Configuration dependent"  # Fix incomplete value
-                    elif "Implementation" in reset and "defined" not in reset:
-                        reset = "Implementation defined"  # Fix incomplete value
-                    elif not re.match(r'^(0x[0-9a-fA-F]+|0b[01]+|\d+|Configuration dependent|Implementation defined|-)$', reset):
-                        # Invalid reset value - likely grabbed description text
+                # Auto-correct common incomplete values
+                if reset == "Configuration":
+                    reset = "Configuration dependent"
+                elif reset == "Implementation":
+                    reset = "Implementation defined"
+                elif reset in ["dependent", "defined"]:
+                    # These are fragments - likely parsing error
+                    desc = desc + " " + reset if desc else reset
+                    reset = "-"
+                # Validate reset value format
+                elif not re.match(r'^(0x[0-9a-fA-F]+|0b[01]+|\d+|Configuration dependent|Implementation defined|-)$', reset):
+                    # Check if it might be a valid but unusual format
+                    if reset.startswith("0X"):  # Capital X
+                        reset = "0x" + reset[2:]  # Convert to lowercase x
+                    elif reset.startswith("0B"):  # Capital B
+                        reset = "0b" + reset[2:]  # Convert to lowercase b
+                    else:
+                        # Invalid reset value - likely grabbed wrong text
+                        # Common wrong values we've seen: "and", "fields", "attribute", etc.
                         desc = desc + " " + reset if desc else reset
                         reset = "-"
             

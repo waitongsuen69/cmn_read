@@ -6,6 +6,13 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ARM CMN (Coherent Mesh Network) register extraction pipeline that parses PDF documentation to extract register information, optimize it, and generate C++ code. The pipeline processes ARM technical documentation through four sequential stages (L1→L2→L3→L4) to produce production-ready C++ register definitions.
 
+## Working Directory Structure
+
+The pipeline expects to run from the root directory containing:
+- `l1_pdf_analysis.py`, `l2_csv_optimize.py`, `l3_cpp_generator.py`, `l4_reg_generator.py` - Pipeline stage scripts
+- `run_pipeline.sh` - Main pipeline runner
+- `cmn437-2072.pdf` - Example PDF for testing
+
 ## Key Commands
 
 ### Run Complete Pipeline
@@ -43,6 +50,9 @@ python3 l1_pdf_analysis.py --test
 # Check register count (current: 1043 registers from cmn437-2072.pdf)
 wc -l L1_pdf_analysis/all_register_summaries.csv
 
+# Check attribute count (current: 7704+ fields)
+wc -l L1_pdf_analysis/all_register_attributes.csv
+
 # Find concatenated entries (lines > 200 chars)
 awk -F',' '{if(length($5) > 200) print NR ":" length($5)}' L1_pdf_analysis/all_register_summaries.csv
 
@@ -51,6 +61,12 @@ grep -i "non-confidential\|arm limited\|technical reference" L1_pdf_analysis/all
 
 # Check for multi-segment array registers (should find entries with semicolons)
 grep "; {" L1_pdf_analysis/all_register_summaries.csv
+
+# Verify reset values are complete (should find "Configuration dependent" not just "Configuration")
+grep -E "Configuration$|dependent$" L1_pdf_analysis/all_register_attributes.csv
+
+# Check for incorrect single-word reset values (should be empty)
+grep -E ',\"(and|fields|attribute)\"$' L1_pdf_analysis/all_register_attributes.csv
 ```
 
 ### Dependencies
@@ -107,6 +123,12 @@ pip install pandas
 6. **JSON** → C++ code generation
 
 ## Critical Implementation Details
+
+### Command Line Arguments
+- **L1**: `python3 l1_pdf_analysis.py <pdf_file>` - Process PDF file
+- **L1**: `python3 l1_pdf_analysis.py --from-text <text_file>` - Process from existing text extraction
+- **L1**: `python3 l1_pdf_analysis.py --test` - Run name/type separation test
+- **L2-L4**: No command line arguments - read from previous stage outputs
 
 ### L1 PDF Parsing Patterns
 - Table headers: `Table X-Y: <name> register summary/attributes`
@@ -175,6 +197,23 @@ The pipeline performs a clean build by default, removing:
 - Previous CSV outputs from L1
 - All L2, L3, and L4 output directories
 - Preserves the source PDF in L1_pdf_analysis/
+
+### Known Issues (See FIX_PLAN.md for details)
+
+**L1 Multi-line Reset Values**
+- Issue: Reset values like "Configuration dependent" split across lines
+- Impact: 312+ fields affected
+- Symptom: Reset values showing as "Configuration" instead of "Configuration dependent"
+
+**L1 Wrong Reset Values from Line Wrapping**
+- Issue: Parser incorrectly extracts text fragments as reset values
+- Impact: 13+ fields affected
+- Symptom: Fields with reset values like "and", "fields", "attribute"
+
+**L2 Column Mapping**
+- Issue: L2 expects 'name' column but L1 provides 'field_name'
+- Location: l2_csv_optimize.py:536
+- Fix: Change `row['name']` to `row['field_name']`
 
 ### Common Issues & Solutions
 
@@ -254,3 +293,18 @@ The pipeline performs a clean build by default, removing:
 2. **L2 Output**: Verify array detection and contiguity
 3. **L3 Output**: Review deduplication logs and unmatched fields
 4. **L4 Output**: Compile generated C++ code for syntax validation
+
+## Development Workflow
+
+### Making Changes to Pipeline
+1. Always run clean build: `./run_pipeline.sh <pdf>`
+2. Test individual stages after changes
+3. Verify output counts match expected values
+4. Check for new warnings or errors in console output
+5. Review generated logs in each stage directory
+
+### Debugging Tips
+- L1 generates `output_cleaned.txt` showing text after multi-pass cleaning
+- L3 generates rename logs showing all deduplication actions
+- L3 `unmatched_fields.log` shows fields without matching registers
+- Use validation commands to quickly check for common issues
