@@ -1026,7 +1026,12 @@ def parse_attribute_tables(lines):
         # NEW: Handle pdftotext format for attributes
         # Pattern: "[63:32]    Reserved    Reserved    RO    -"
         # Or: "[15:0]    field_name    Description text    RW    0x00"
-        bits_match = re.match(r'^(\[\d+(?::\d+)?\])\s+(\S+)(?:\s+(.*?))?$', s)
+        # Enhanced to handle field names with spaces in template expressions like htg#{index*8 + 7}_num_hn
+        # First try to match field names with template expressions that may contain spaces
+        bits_match = re.match(r'^(\[\d+(?::\d+)?\])\s+([a-zA-Z_][a-zA-Z0-9_]*(?:#{[^}]+}[a-zA-Z0-9_]*)?)\s+(.*?)$', s)
+        if not bits_match:
+            # Fallback to original pattern for simpler field names
+            bits_match = re.match(r'^(\[\d+(?::\d+)?\])\s+(\S+)(?:\s+(.*?))?$', s)
         if bits_match:
             bits = bits_match.group(1)
             field_name = bits_match.group(2)
