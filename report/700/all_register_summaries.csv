@@ -1,0 +1,412 @@
+table,offset,name,type,description
+Table 4-2: APB register summary,16'h0,por_apb_node_info,RO,4.3.1.1 por_apb_node_info on page 284
+Table 4-2: APB register summary,16'h80,por_apb_child_info,RO,4.3.1.2 por_apb_child_info on page 285
+Table 4-2: APB register summary,16'h980,por_apb_only_access,RW,4.3.1.3 por_apb_only_access on page 286
+Table 4-2: APB register summary,16'h988,por-axu-control,RW,4.3.1.4 por_axu_control on page 287
+Table 4-3: CCG_HA register summary,16'h0,por_ccg_ha_node_info,RO,4.3.2.1 por_ccg_ha_node_info on page 289
+Table 4-3: CCG_HA register summary,16'h8,por_ccg_ha_id,RW,4.3.2.2 por_ccg_ha_id on page 289
+Table 4-3: CCG_HA register summary,16'h80,por_ccg_ha_child_info,RO,4.3.2.3 por_ccg_ha_child_info on page 290
+Table 4-3: CCG_HA register summary,16'hA00,por_ccg_ha_cfg_ctl,RW,4.3.2.4 por_ccg_ha_cfg_ctl on page 291
+Table 4-3: CCG_HA register summary,16'hA08,por_ccg_ha_aux_ctl,RW,4.3.2.5 por_ccg_ha_aux_ctl on page 292
+Table 4-3: CCG_HA register summary,16'hA10,por_ccg_ha_mpam_control_link0,RW,4.3.2.6 por_ccg_ha_mpam_control_link0 on page 294
+Table 4-3: CCG_HA register summary,16'hA18,por_ccg_ha_mpam_control_link1,RW,4.3.2.7 por_ccg_ha_mpam_control_link1 on page 295
+Table 4-3: CCG_HA register summary,16'hA20,por_ccg_ha_mpam_control_link2,RW,4.3.2.8 por_ccg_ha_mpam_control_link2 on page 297
+Table 4-3: CCG_HA register summary,16'h980,por_ccg_ha_secure_register_groups_override,RW,4.3.2.9 por_ccg_ha_secure_register_groups_override on page
+Table 4-3: CCG_HA register summary,16'h900,por_ccg_ha_unit_info,RO,4.3.2.10 por_ccg_ha_unit_info on page 299
+Table 4-3: CCG_HA register summary,16'h908,por_ccg_ha_unit_info2,RO,4.3.2.11 por_ccg_ha_unit_info2 on page 300
+Table 4-3: CCG_HA register summary,16'h910,por_ccg_ha_unit_info3,RO,4.3.2.12 por_ccg_ha_unit_info3 on page 301
+Table 4-3: CCG_HA register summary,16'h1F00,por_ccg_ha_agentid_to_linkid_reg0,RW,4.3.2.13 por_ccg_ha_agentid_to_linkid_reg0 on page 302
+Table 4-3: CCG_HA register summary,16'h1F08,por_ccg_ha_agentid_to_linkid_reg1,RW,4.3.2.14 por_ccg_ha_agentid_to_linkid_reg1 on page 303
+Table 4-3: CCG_HA register summary,16'h1F10,por_ccg_ha_agentid_to_linkid_reg2,RW,4.3.2.15 por_ccg_ha_agentid_to_linkid_reg2 on page 305
+Table 4-3: CCG_HA register summary,16'h1F18,por_ccg_ha_agentid_to_linkid_reg3,RW,4.3.2.16 por_ccg_ha_agentid_to_linkid_reg3 on page 306
+Table 4-3: CCG_HA register summary,16'h1F20,por_ccg_ha_agentid_to_linkid_reg4,RW,4.3.2.17 por_ccg_ha_agentid_to_linkid_reg4 on page 307
+Table 4-3: CCG_HA register summary,16'h1F28,por_ccg_ha_agentid_to_linkid_reg5,RW,4.3.2.18 por_ccg_ha_agentid_to_linkid_reg5 on page 309
+Table 4-3: CCG_HA register summary,16'h1F30,por_ccg_ha_agentid_to_linkid_reg6,RW,4.3.2.19 por_ccg_ha_agentid_to_linkid_reg6 on page 310
+Table 4-3: CCG_HA register summary,16'h1F38,por_ccg_ha_agentid_to_linkid_reg7,RW,4.3.2.20 por_ccg_ha_agentid_to_linkid_reg7 on page 311
+Table 4-3: CCG_HA register summary,16'h1FF8,por_ccg_ha_agentid_to_linkid_val,RW,4.3.2.21 por_ccg_ha_agentid_to_linkid_val on page 313
+Table 4-4: CCG_RA register summary,16'h0,por_ccg_ra_node_info,RO,4.3.3.1 por_ccg_ra_node_info on page 328
+Table 4-4: CCG_RA register summary,16'h80,por_ccg_ra_child_info,RO,4.3.3.2 por_ccg_ra_child_info on page 329
+Table 4-4: CCG_RA register summary,16'h980,por_ccg_ra_secure_register_groups_override,RW,4.3.3.3 por_ccg_ra_secure_register_groups_override on
+Table 4-4: CCG_RA register summary,16'hC38,page,-,338 page
+Table 4-4: CCG_RA register summary,16'hD00,por_ccg_ra_agentid_to_linkid_val,RW,4.3.3.9 por_ccg_ra_agentid_to_linkid_val on page 339
+Table 4-4: CCG_RA register summary,16'hD48,on,-,page 340
+Table 4-4: CCG_RA register summary,16'hEF8,por_ccg_ra_rn0-31_ld0-31d_to_exp_ra0-31d_reg0-31ndex,-,on page 341 16'hF00 : por_ccg_ra_rnd_ld0-31d_to_exp_ra0-31d_reg0-31ndex RW 4.3.3.12 16'hFF8 por_ccg_ra_rnd_ld0-31d_to_exp_ra0-31d_reg0-31ndex on                                                                              page 342 16'h1000 : por_ccg_ra_rnf_ld0-127d_to_exp_ra0-127d_reg0-127ndex RW 4.3.3.13 16'h13F8 por_ccg_ra_rnf_ld0-127d_to_exp_ra0-127d_reg0-127ndex                                                                              on page 343 16'h1400 : por_ccg_ra_ha_ld0-15d_to_exp_ra0-15d_reg0-15ndex RW 4.3.3.14 16'h1478 por_ccg_ra_ha_ld0-15d_to_exp_ra0-15d_reg0-15ndex on                                                                              page 345 16'h1480 : por_ccg_ra_hns_ld0-0d_to_exp_ra0-0d_reg0-0ndex RW 4.3.3.15 16'h1480 por_ccg_ra_hns_ld0-0d_to_exp_ra0-0d_reg0-0ndex on                                                                              page 346 16'h1500 : por_ccg_ra_rnf_ld0-127d_to_ovrd_ld0-127d_reg0-127ndex RW 4.3.3.16 16'h18F8 por_ccg_ra_rnf_ld0-127d_to_ovrd_ld0-127d_reg0-127ndex                                                                              on page 347 16'h2000 por_ccg_ra_pmu_event_sel RW 4.3.3.17 por_ccg_ra_pmu_event_sel on page 348 16'h1C00 por_ccg_ra_ccprtcl_link0_ctl RW 4.3.3.18 por_ccg_ra_ccprtcl_link0_ctl on page 350 16'h1C08 por_ccg_ra_ccprtcl_link0_status RO 4.3.3.19 por_ccg_ra_ccprtcl_link0_status on page 353 16'h1C10 por_ccg_ra_ccprtcl_link1_ctl RW 4.3.3.20 por_ccg_ra_ccprtcl_link1_ctl on page 354 16'h1C18 por_ccg_ra_ccprtcl_link1_status RO 4.3.3.21 por_ccg_ra_ccprtcl_link1_status on page 357 16'h1C20 por_ccg_ra_ccprtcl_link2_ctl RW 4.3.3.22 por_ccg_ra_ccprtcl_link2_ctl on page 358 16'h1C28 por_ccg_ra_ccprtcl_link2_status RO 4.3.3.23 por_ccg_ra_ccprtcl_link2_status on page 361            4.2.4 CCLA register summary            This section lists the CCLA registers used in CMN‑700.            CCLA register summary            The following table shows the CCLA registers in offset order from the base memory address
+Table 4-5: CCLA register summary,16'h0,por_ccla_node_info,RO,4.3.4.1 por_ccla_node_info on page 363
+Table 4-5: CCLA register summary,16'h80,por_ccla_child_info,RO,4.3.4.2 por_ccla_child_info on page 364
+Table 4-5: CCLA register summary,16'h988,por_ccla_secure_register_groups_override,RW,4.3.4.3 por_ccla_secure_register_groups_override on page 365
+Table 4-5: CCLA register summary,16'h910,por_ccla_unit_info,RO,4.3.4.4 por_ccla_unit_info on page 366
+Table 4-5: CCLA register summary,16'hB00,por_ccla_cfg_ctl,RW,4.3.4.5 por_ccla_cfg_ctl on page 367
+Table 4-5: CCLA register summary,16'hB08,por_ccla_aux_ctl,RW,4.3.4.6 por_ccla_aux_ctl on page 369
+Table 4-5: CCLA register summary,16'hC00,por_ccla_ccix_prop_capabilities,RO,4.3.4.7 por_ccla_ccix_prop_capabilities on page 370
+Table 4-5: CCLA register summary,16'hC08,por_ccla_cxs_attr_capabilities,RO,4.3.4.8 por_ccla_cxs_attr_capabilities on page 372
+Table 4-5: CCLA register summary,16'hD00,por_ccla_permsg_pyld_0_63,RW,4.3.4.9 por_ccla_permsg_pyld_0_63 on page 374
+Table 4-5: CCLA register summary,16'hD08,por_ccla_permsg_pyld_64_127,RW,4.3.4.10 por_ccla_permsg_pyld_64_127 on page 374
+Table 4-5: CCLA register summary,16'hD10,por_ccla_permsg_pyld_128_191,RW,4.3.4.11 por_ccla_permsg_pyld_128_191 on page 375
+Table 4-5: CCLA register summary,16'hD18,por_ccla_permsg_pyld_192_255,RW,4.3.4.12 por_ccla_permsg_pyld_192_255 on page 376
+Table 4-5: CCLA register summary,16'hD20,por_ccla_permsg_ctl,RW,4.3.4.13 por_ccla_permsg_ctl on page 377
+Table 4-5: CCLA register summary,16'hD28,por_ccla_err_agent_id,RW,4.3.4.14 por_ccla_err_agent_id on page 378
+Table 4-5: CCLA register summary,16'hD30,por_ccla_agentid_to_portid_reg0,RW,4.3.4.15 por_ccla_agentid_to_portid_reg0 on page 379
+Table 4-5: CCLA register summary,16'hD38,por_ccla_agentid_to_portid_reg1,RW,4.3.4.16 por_ccla_agentid_to_portid_reg1 on page 380
+Table 4-5: CCLA register summary,16'hD40,por_ccla_agentid_to_portid_reg2,RW,4.3.4.17 por_ccla_agentid_to_portid_reg2 on page 382
+Table 4-5: CCLA register summary,16'hD48,por_ccla_agentid_to_portid_reg3,RW,4.3.4.18 por_ccla_agentid_to_portid_reg3 on page 383
+Table 4-5: CCLA register summary,16'hD50,por_ccla_agentid_to_portid_reg4,RW,4.3.4.19 por_ccla_agentid_to_portid_reg4 on page 384
+Table 4-5: CCLA register summary,16'hD58,por_ccla_agentid_to_portid_reg5,RW,4.3.4.20 por_ccla_agentid_to_portid_reg5 on page 386
+Table 4-5: CCLA register summary,16'hD60,por_ccla_agentid_to_portid_reg6,RW,4.3.4.21 por_ccla_agentid_to_portid_reg6 on page 387
+Table 4-5: CCLA register summary,16'hD68,por_ccla_agentid_to_portid_reg7,RW,4.3.4.22 por_ccla_agentid_to_portid_reg7 on page 388
+Table 4-5: CCLA register summary,16'hD70,por_ccla_agentid_to_portid_val,RW,4.3.4.23 por_ccla_agentid_to_portid_val on page 390
+Table 4-5: CCLA register summary,16'hD78,por_ccla_portfwd_en,RW,4.3.4.24 por_ccla_portfwd_en on page 391
+Table 4-5: CCLA register summary,16'hD80,por_ccla_portfwd_status,RO,4.3.4.25 por_ccla_portfwd_status on page 391
+Table 4-5: CCLA register summary,16'hD88,por_ccla_portfwd_req,RW,4.3.4.26 por_ccla_portfwd_req on page 392
+Table 4-5: CCLA register summary,16'hD90,por_ccla_linkid_to_hops,RW,4.3.4.27 por_ccla_linkid_to_hops on page 393
+Table 4-5: CCLA register summary,16'hE00,por_ccla_cxl_link_rx_credit_ctl,RW,4.3.4.28 por_ccla_cxl_link_rx_credit_ctl on page 394
+Table 4-5: CCLA register summary,16'hE08,por_ccla_cxl_link_rx_credit_return_stat,RO,4.3.4.29 por_ccla_cxl_link_rx_credit_return_stat on page 395
+Table 4-5: CCLA register summary,16'hE10,por_ccla_cxl_link_tx_credit_stat,RO,4.3.4.30 por_ccla_cxl_link_tx_credit_stat on page 396
+Table 4-5: CCLA register summary,16'hE50,por_ccla_cxl_security_policy,RW,4.3.4.31 por_ccla_cxl_security_policy on page 397
+Table 4-5: CCLA register summary,16'hE78,por_ccla_cxl_hdm_decoder_capability,RO,4.3.4.32 por_ccla_cxl_hdm_decoder_capability on page 398
+Table 4-5: CCLA register summary,16'hE80,por_ccla_cxl_hdm_decoder_global_control,RW,4.3.4.33 por_ccla_cxl_hdm_decoder_global_control on page 400
+Table 4-5: CCLA register summary,16'hE88,por_ccla_cxl_hdm_decoder_0_base_low,RWL,4.3.4.34 por_ccla_cxl_hdm_decoder_0_base_low on page 401
+Table 4-5: CCLA register summary,16'hE90,por_ccla_cxl_hdm_decoder_0_base_high,RWL,4.3.4.35 por_ccla_cxl_hdm_decoder_0_base_high on page 402
+Table 4-5: CCLA register summary,16'hE98,por_ccla_cxl_hdm_decoder_0_size_low,RWL,4.3.4.36 por_ccla_cxl_hdm_decoder_0_size_low on page 403
+Table 4-5: CCLA register summary,16'hEA0,por_ccla_cxl_hdm_decoder_0_size_high,RWL,4.3.4.37 por_ccla_cxl_hdm_decoder_0_size_high on page 404
+Table 4-5: CCLA register summary,16'hEA8,por_ccla_cxl_hdm_decoder_0_control,RWL,4.3.4.38 por_ccla_cxl_hdm_decoder_0_control on page 405
+Table 4-5: CCLA register summary,16'hEC0,por_ccla_cxl_hdm_decoder_0_dpa_skip_low,RWL,4.3.4.39 por_ccla_cxl_hdm_decoder_0_dpa_skip_low on page 406
+Table 4-5: CCLA register summary,16'hEC8,por_ccla_cxl_hdm_decoder_0_dpa_skip_high,RWL,4.3.4.40 por_ccla_cxl_hdm_decoder_0_dpa_skip_high on page 407
+Table 4-5: CCLA register summary,16'hED0,por_ccla_snoop_filter_group_id,RW,4.3.4.41 por_ccla_snoop_filter_group_id on page 408
+Table 4-5: CCLA register summary,16'hED8,por_ccla_snoop_filter_effective_size,RW,4.3.4.42 por_ccla_snoop_filter_effective_size on page 409
+Table 4-5: CCLA register summary,16'hEE0,por_ccla_dvsec_cxl_range_1_base_high,RWL,4.3.4.43 por_ccla_dvsec_cxl_range_1_base_high on page 410
+Table 4-5: CCLA register summary,16'hEE8,por_ccla_dvsec_cxl_range_1_base_low,RWL,4.3.4.44 por_ccla_dvsec_cxl_range_1_base_low on page 411
+Table 4-5: CCLA register summary,16'hEF0,por_ccla_dvsec_cxl_range_2_base_high,RWL,4.3.4.45 por_ccla_dvsec_cxl_range_2_base_high on page 412
+Table 4-5: CCLA register summary,16'hEF8,por_ccla_dvsec_cxl_range_2_base_low,RWL,4.3.4.46 por_ccla_dvsec_cxl_range_2_base_low on page 413
+Table 4-5: CCLA register summary,16'hF00,por_ccla_dvsec_cxl_control,RWL,4.3.4.47 por_ccla_dvsec_cxl_control on page 414
+Table 4-5: CCLA register summary,16'hF08,por_ccla_dvsec_cxl_control2,RW,4.3.4.48 por_ccla_dvsec_cxl_control2 on page 415
+Table 4-5: CCLA register summary,16'hF10,por_ccla_dvsec_cxl_lock,RW,4.3.4.49 por_ccla_dvsec_cxl_lock on page 417
+Table 4-5: CCLA register summary,16'hF18,por_ccla_dvsec_flex_bus_port_control,RW,4.3.4.50 por_ccla_dvsec_flex_bus_port_control on page 418
+Table 4-5: CCLA register summary,16'hF40,por_ccla_err_capabilities_control,RW,4.3.4.51 por_ccla_err_capabilities_control on page 419
+Table 4-5: CCLA register summary,16'hF58,por_ccla_IDE_key_refresh_time_control,RW,4.3.4.52 por_ccla_IDE_key_refresh_time_control on page 420
+Table 4-5: CCLA register summary,16'hF60,por_ccla_IDE_truncation_transmit_delay_control,RW,4.3.4.53 por_ccla_IDE_truncation_transmit_delay_control on page
+Table 4-5: CCLA register summary,16'hF70,por_ccla_ll_to_ull_msg,RW,4.3.4.54 por_ccla_ll_to_ull_msg on page 422
+Table 4-5: CCLA register summary,16'hF80,por_ccla_cxl_timeout_isolation_control,RW,4.3.4.55 por_ccla_cxl_timeout_isolation_control on page 422
+Table 4-5: CCLA register summary,16'hF28,por_ccla_root_port_n_security_policy,RW,4.3.4.56 por_ccla_root_port_n_security_policy on page 424
+Table 4-5: CCLA register summary,16'hF30,por_ccla_root_port_n_id,RW,4.3.4.57 por_ccla_root_port_n_id on page 425
+Table 4-5: CCLA register summary,16'hE18,por_ccla_cxl_link_layer_defeature,RW,4.3.4.58 por_ccla_cxl_link_layer_defeature on page 426
+Table 4-5: CCLA register summary,16'hE20,por_ccla_ull_ctl,RW,4.3.4.59 por_ccla_ull_ctl on page 427
+Table 4-5: CCLA register summary,16'hE28,por_ccla_ull_status,RO,4.3.4.60 por_ccla_ull_status on page 428
+Table 4-5: CCLA register summary,16'hE30,por_ccla_cxl_ll_errinject_ctl,RW,4.3.4.61 por_ccla_cxl_ll_errinject_ctl on page 429
+Table 4-5: CCLA register summary,16'hE38,por_ccla_cxl_ll_errinject_stat,RO,4.3.4.62 por_ccla_cxl_ll_errinject_stat on page 430
+Table 4-5: CCLA register summary,16'hE40,por_ccla_cxl_viral_prop_en,RW,4.3.4.63 por_ccla_cxl_viral_prop_en on page 431
+Table 4-5: CCLA register summary,16'h2008,por_ccla_pmu_event_sel,RW,4.3.4.64 por_ccla_pmu_event_sel on page 432
+Table 4-5: CCLA register summary,16'h3000,por_ccla_errfr,RO,4.3.4.65 por_ccla_errfr on page 433
+Table 4-5: CCLA register summary,16'h3008,por_ccla_errctlr,RW,4.3.4.66 por_ccla_errctlr on page 435
+Table 4-5: CCLA register summary,16'h3010,por_ccla_errstatus,W1C,4.3.4.67 por_ccla_errstatus on page 436
+Table 4-5: CCLA register summary,16'h3018,por_ccla_erraddr,RW,4.3.4.68 por_ccla_erraddr on page 438
+Table 4-5: CCLA register summary,16'h3020,por_ccla_errmisc,RW,4.3.4.69 por_ccla_errmisc on page 439
+Table 4-5: CCLA register summary,16'h3100,por_ccla_errfr_NS,RO,4.3.4.70 por_ccla_errfr_NS on page 440
+Table 4-5: CCLA register summary,16'h3108,por_ccla_errctlr_NS,RW,4.3.4.71 por_ccla_errctlr_NS on page 441
+Table 4-5: CCLA register summary,16'h3110,por_ccla_errstatus_NS,W1C,4.3.4.72 por_ccla_errstatus_NS on page 442
+Table 4-5: CCLA register summary,16'h3118,por_ccla_erraddr_NS,RW,4.3.4.73 por_ccla_erraddr_NS on page 444
+Table 4-5: CCLA register summary,16'h3120,por_ccla_errmisc_NS,RW,4.3.4.74 por_ccla_errmisc_NS on page 445
+Table 4-6: CFGM register summary,16'h0,por_cfgm_node_info,RO,4.3.5.1 por_cfgm_node_info on page 446
+Table 4-6: CFGM register summary,16'h8,por_cfgm_periph_id_0_periph_id_1,RO,4.3.5.2 por_cfgm_periph_id_0_periph_id_1 on page 447
+Table 4-6: CFGM register summary,16'h10,por_cfgm_periph_id_2_periph_id_3,RO,4.3.5.3 por_cfgm_periph_id_2_periph_id_3 on page 448
+Table 4-6: CFGM register summary,16'h18,por_cfgm_periph_id_4_periph_id_5,RO,4.3.5.4 por_cfgm_periph_id_4_periph_id_5 on page 449
+Table 4-6: CFGM register summary,16'h20,por_cfgm_periph_id_6_periph_id_7,RO,4.3.5.5 por_cfgm_periph_id_6_periph_id_7 on page 450
+Table 4-6: CFGM register summary,16'h28,por_cfgm_component_id_0_component_id_1,RO,4.3.5.6 por_cfgm_component_id_0_component_id_1 on page
+Table 4-6: CFGM register summary,16'h30,por_cfgm_component_id_2_component_id_3,RO,4.3.5.7 por_cfgm_component_id_2_component_id_3 on page
+Table 4-6: CFGM register summary,16'h80,por_cfgm_child_info,RO,4.3.5.8 por_cfgm_child_info on page 453
+Table 4-6: CFGM register summary,16'h980,por_cfgm_secure_access,RW,4.3.5.9 por_cfgm_secure_access on page 454
+Table 4-6: CFGM register summary,16'h988,por_cfgm_secure_register_groups_override,RW,4.3.5.10 por_cfgm_secure_register_groups_override on page
+Table 4-6: CFGM register summary,16'h3FA8,por_cfgm_errdevaff,RO,4.3.5.23 por_cfgm_errdevaff on page 467
+Table 4-6: CFGM register summary,16'h3FB8,por_cfgm_errdevarch,RO,4.3.5.24 por_cfgm_errdevarch on page 468
+Table 4-6: CFGM register summary,16'h3FC8,por_cfgm_erridr,RO,4.3.5.25 por_cfgm_erridr on page 469
+Table 4-6: CFGM register summary,16'h3FD0,por_cfgm_errpidr45,RO,4.3.5.26 por_cfgm_errpidr45 on page 470
+Table 4-6: CFGM register summary,16'h3FD8,por_cfgm_errpidr67,RO,4.3.5.27 por_cfgm_errpidr67 on page 471
+Table 4-6: CFGM register summary,16'h3FE0,por_cfgm_errpidr01,RO,4.3.5.28 por_cfgm_errpidr01 on page 472
+Table 4-6: CFGM register summary,16'h3FE8,por_cfgm_errpidr23,RO,4.3.5.29 por_cfgm_errpidr23 on page 473
+Table 4-6: CFGM register summary,16'h3FF0,por_cfgm_errcidr01,RO,4.3.5.30 por_cfgm_errcidr01 on page 474
+Table 4-6: CFGM register summary,16'h3FF8,por_cfgm_errcidr23,RO,4.3.5.31 por_cfgm_errcidr23 on page 475
+Table 4-6: CFGM register summary,16'h900,por_info_global,RO,4.3.5.32 por_info_global on page 476
+Table 4-6: CFGM register summary,16'h908,por_info_global_1,RO,4.3.5.33 por_info_global_1 on page 478
+Table 4-6: CFGM register summary,16'h1C00,por_ppu_int_enable,RW,4.3.5.34 por_ppu_int_enable on page 479
+Table 4-6: CFGM register summary,16'h1C08,por_ppu_int_enable_1,RW,4.3.5.35 por_ppu_int_enable_1 on page 480
+Table 4-6: CFGM register summary,16'h1C10,por_ppu_int_status,W1C,4.3.5.36 por_ppu_int_status on page 481
+Table 4-6: CFGM register summary,16'h1C18,por_ppu_int_status_1,W1C,4.3.5.37 por_ppu_int_status_1 on page 482
+Table 4-6: CFGM register summary,16'h1C20,por_ppu_qactive_hyst,RW,4.3.5.38 por_ppu_qactive_hyst on page 483
+Table 4-6: CFGM register summary,16'h1C28,por_mpam_s_err_int_status,W1C,4.3.5.39 por_mpam_s_err_int_status on page 483
+Table 4-6: CFGM register summary,16'h1C30,por_mpam_s_err_int_status_1,W1C,4.3.5.40 por_mpam_s_err_int_status_1 on page 484
+Table 4-6: CFGM register summary,16'h1C38,por_mpam_ns_err_int_status,W1C,4.3.5.41 por_mpam_ns_err_int_status on page 485
+Table 4-6: CFGM register summary,16'h1C40,por_mpam_ns_err_int_status_1,W1C,4.3.5.42 por_mpam_ns_err_int_status_1 on page 486
+Table 4-6: CFGM register summary,16'h100 : 16'h8F8,por_cfgm_child_pointer_0-255,RO,4.3.5.43 por_cfgm_child_pointer_0-255 on page 487
+Table 4-6: CFGM register summary,16'h3038 16'h3078 16'h30B8 16'h30F8 16'h3138 16'h3178 16'h31B8 16'h31F8 16'h3238 16'h3278 16'h32B8 16'h32F8,4.2.6 CXLAPB register summary,-,-
+Table 4-7: por_cxlapb_cfg register summary,16'h1110,por_cxlapb_link_rx_credit_ctl,RW,4.3.6.1 por_cxlapb_link_rx_credit_ctl on page 488
+Table 4-7: por_cxlapb_cfg register summary,16'h1118,por_cxlapb_link_rx_credit_return_stat,RO,4.3.6.2 por_cxlapb_link_rx_credit_return_stat on page 489
+Table 4-7: por_cxlapb_cfg register summary,16'h1120,por_cxlapb_link_tx_credit_stat,RO,4.3.6.3 por_cxlapb_link_tx_credit_stat on page 490
+Table 4-7: por_cxlapb_cfg register summary,16'h1060,por_cxlapb_cxl_security_policy,RW,4.3.6.4 por_cxlapb_cxl_security_policy on page 491
+Table 4-7: por_cxlapb_cfg register summary,16'h1200,por_cxlapb_cxl_hdm_decoder_capability,RO,4.3.6.5 por_cxlapb_cxl_hdm_decoder_capability on page 492
+Table 4-7: por_cxlapb_cfg register summary,16'h1204,por_cxlapb_cxl_hdm_decoder_global_control,RW,4.3.6.6 por_cxlapb_cxl_hdm_decoder_global_control on page 494
+Table 4-7: por_cxlapb_cfg register summary,16'h1210,por_cxlapb_cxl_hdm_decoder_0_base_low,RWL,4.3.6.7 por_cxlapb_cxl_hdm_decoder_0_base_low on page 495
+Table 4-7: por_cxlapb_cfg register summary,16'h1214,por_cxlapb_cxl_hdm_decoder_0_base_high,RWL,4.3.6.8 por_cxlapb_cxl_hdm_decoder_0_base_high on page 495
+Table 4-7: por_cxlapb_cfg register summary,16'h1218,por_cxlapb_cxl_hdm_decoder_0_size_low,RWL,4.3.6.9 por_cxlapb_cxl_hdm_decoder_0_size_low on page 496
+Table 4-7: por_cxlapb_cfg register summary,16'h121C,por_cxlapb_cxl_hdm_decoder_0_size_high,RWL,4.3.6.10 por_cxlapb_cxl_hdm_decoder_0_size_high on page 497
+Table 4-7: por_cxlapb_cfg register summary,16'h1220,por_cxlapb_cxl_hdm_decoder_0_control,RWL,4.3.6.11 por_cxlapb_cxl_hdm_decoder_0_control on page 498
+Table 4-7: por_cxlapb_cfg register summary,16'h1224,por_cxlapb_cxl_hdm_decoder_0_dpa_skip_low,RWL,4.3.6.12 por_cxlapb_cxl_hdm_decoder_0_dpa_skip_low on page
+Table 4-7: por_cxlapb_cfg register summary,16'h1228,por_cxlapb_cxl_hdm_decoder_0_dpa_skip_high,RWL,4.3.6.13 por_cxlapb_cxl_hdm_decoder_0_dpa_skip_high on page
+Table 4-7: por_cxlapb_cfg register summary,16'h1800,por_cxlapb_snoop_filter_group_id,RO,4.3.6.14 por_cxlapb_snoop_filter_group_id on page 501
+Table 4-7: por_cxlapb_cfg register summary,16'h1804,por_cxlapb_snoop_filter_effective_size,RO,4.3.6.15 por_cxlapb_snoop_filter_effective_size on page 502
+Table 4-7: por_cxlapb_cfg register summary,16'h120,por_cxlapb_dvsec_cxl_range_1_base_high,RWL,4.3.6.16 por_cxlapb_dvsec_cxl_range_1_base_high on page 503
+Table 4-7: por_cxlapb_cfg register summary,16'h124,por_cxlapb_dvsec_cxl_range_1_base_low,RWL,4.3.6.17 por_cxlapb_dvsec_cxl_range_1_base_low on page 504
+Table 4-7: por_cxlapb_cfg register summary,16'h130,por_cxlapb_dvsec_cxl_range_2_base_high,RWL,4.3.6.18 por_cxlapb_dvsec_cxl_range_2_base_high on page 505
+Table 4-7: por_cxlapb_cfg register summary,16'h134,por_cxlapb_dvsec_cxl_range_2_base_low,RWL,4.3.6.19 por_cxlapb_dvsec_cxl_range_2_base_low on page 506
+Table 4-7: por_cxlapb_cfg register summary,16'h10C,por_cxlapb_dvsec_cxl_control,RWL,4.3.6.20 por_cxlapb_dvsec_cxl_control on page 507
+Table 4-7: por_cxlapb_cfg register summary,16'h110,por_cxlapb_dvsec_cxl_control2,RW,4.3.6.21 por_cxlapb_dvsec_cxl_control2 on page 508
+Table 4-7: por_cxlapb_cfg register summary,16'h114,por_cxlapb_dvsec_cxl_lock,RW,4.3.6.22 por_cxlapb_dvsec_cxl_lock on page 509
+Table 4-7: por_cxlapb_cfg register summary,16'h20C,por_cxlapb_dvsec_flex_bus_port_control,RW,4.3.6.23 por_cxlapb_dvsec_flex_bus_port_control on page 510
+Table 4-7: por_cxlapb_cfg register summary,16'h1014,por_cxlapb_err_capabilities_control,RW,4.3.6.24 por_cxlapb_err_capabilities_control on page 511
+Table 4-7: por_cxlapb_cfg register summary,16'h18,por_cxlapb_IDE_key_refresh_time_control,RW,4.3.6.25 por_cxlapb_IDE_key_refresh_time_control on page 512
+Table 4-7: por_cxlapb_cfg register summary,16'h24,por_cxlapb_IDE_truncation_transmit_delay_control,RW,4.3.6.26 por_cxlapb_IDE_truncation_transmit_delay_control on page
+Table 4-7: por_cxlapb_cfg register summary,16'h0,por_cxlapb_ll_to_ull_msg,RW,4.3.6.27 por_cxlapb_ll_to_ull_msg on page 514
+Table 4-7: por_cxlapb_cfg register summary,16'h8,por_cxlapb_cxl_timeout_isolation_control,RW,4.3.6.28 por_cxlapb_cxl_timeout_isolation_control on page 515
+Table 4-7: por_cxlapb_cfg register summary,16'h1130,por_cxlapb_link_layer_defeature,RW,4.3.6.29 por_cxlapb_link_layer_defeature on page 516
+Table 4-8: DT register summary,16'h0,por_dt_node_info,RO,4.3.7.1 por_dt_node_info on page 517
+Table 4-8: DT register summary,16'h80,por_dt_child_info,RO,4.3.7.2 por_dt_child_info on page 518
+Table 4-8: DT register summary,16'h980,por_dt_secure_access,RW,4.3.7.3 por_dt_secure_access on page 519
+Table 4-8: DT register summary,16'hA00,por_dt_dtc_ctl,RW,4.3.7.4 por_dt_dtc_ctl on page 520
+Table 4-8: DT register summary,16'hA10,por_dt_trigger_status,RO,4.3.7.5 por_dt_trigger_status on page 522
+Table 4-8: DT register summary,16'hA20,por_dt_trigger_status_clr,WO,4.3.7.6 por_dt_trigger_status_clr on page 522
+Table 4-8: DT register summary,16'hA30,por_dt_trace_control,RW,4.3.7.7 por_dt_trace_control on page 523
+Table 4-8: DT register summary,16'hA48,por_dt_traceid,RW,4.3.7.8 por_dt_traceid on page 524
+Table 4-8: DT register summary,16'h2000,por_dt_pmevcntAB,RW,4.3.7.9 por_dt_pmevcntAB on page 525
+Table 4-8: DT register summary,16'h2010,por_dt_pmevcntCD,RW,4.3.7.10 por_dt_pmevcntCD on page 526
+Table 4-8: DT register summary,16'h2020,por_dt_pmevcntEF,RW,4.3.7.11 por_dt_pmevcntEF on page 527
+Table 4-8: DT register summary,16'h2030,por_dt_pmevcntGH,RW,4.3.7.12 por_dt_pmevcntGH on page 528
+Table 4-8: DT register summary,16'h2040,por_dt_pmccntr,RW,4.3.7.13 por_dt_pmccntr on page 529
+Table 4-8: DT register summary,16'h2050,por_dt_pmevcntsrAB,RW,4.3.7.14 por_dt_pmevcntsrAB on page 529
+Table 4-8: DT register summary,16'h2060,por_dt_pmevcntsrCD,RW,4.3.7.15 por_dt_pmevcntsrCD on page 530
+Table 4-8: DT register summary,16'h2070,por_dt_pmevcntsrEF,RW,4.3.7.16 por_dt_pmevcntsrEF on page 531
+Table 4-8: DT register summary,16'h2080,por_dt_pmevcntsrGH,RW,4.3.7.17 por_dt_pmevcntsrGH on page 532
+Table 4-8: DT register summary,16'h2090,por_dt_pmccntrsr,RW,4.3.7.18 por_dt_pmccntrsr on page 533
+Table 4-8: DT register summary,16'h2100,por_dt_pmcr,RW,4.3.7.19 por_dt_pmcr on page 534
+Table 4-8: DT register summary,16'h2118,por_dt_pmovsr,RO,4.3.7.20 por_dt_pmovsr on page 535
+Table 4-8: DT register summary,16'h2120,por_dt_pmovsr_clr,WO,4.3.7.21 por_dt_pmovsr_clr on page 536
+Table 4-8: DT register summary,16'h2128,por_dt_pmssr,RO,4.3.7.22 por_dt_pmssr on page 537
+Table 4-8: DT register summary,16'h2130,por_dt_pmsrr,WO,4.3.7.23 por_dt_pmsrr on page 538
+Table 4-8: DT register summary,16'hFA0,por_dt_claim,RW,4.3.7.24 por_dt_claim on page 538
+Table 4-8: DT register summary,16'hFA8,por_dt_devaff,RO,4.3.7.25 por_dt_devaff on page 539
+Table 4-8: DT register summary,16'hFB0,por_dt_lsr,RO,4.3.7.26 por_dt_lsr on page 540
+Table 4-8: DT register summary,16'hFB8,por_dt_authstatus_devarch,RO,4.3.7.27 por_dt_authstatus_devarch on page 541
+Table 4-8: DT register summary,16'hFC0,por_dt_devid,RO,4.3.7.28 por_dt_devid on page 542
+Table 4-8: DT register summary,16'hFC8,por_dt_devtype,RO,4.3.7.29 por_dt_devtype on page 543
+Table 4-8: DT register summary,16'hFD0,por_dt_pidr45,RO,4.3.7.30 por_dt_pidr45 on page 544
+Table 4-8: DT register summary,16'hFD8,por_dt_pidr67,RO,4.3.7.31 por_dt_pidr67 on page 545
+Table 4-8: DT register summary,16'hFE0,por_dt_pidr01,RO,4.3.7.32 por_dt_pidr01 on page 546
+Table 4-8: DT register summary,16'hFE8,por_dt_pidr23,RO,4.3.7.33 por_dt_pidr23 on page 547
+Table 4-8: DT register summary,16'hFF0,por_dt_cidr01,RO,4.3.7.34 por_dt_cidr01 on page 548
+Table 4-8: DT register summary,16'hFF8,por_dt_cidr23,RO,4.3.7.35 por_dt_cidr23 on page 549
+Table 4-9: DN register summary,16'h0,por_dn_node_info,RO,4.3.8.1 por_dn_node_info on page 550
+Table 4-9: DN register summary,16'h80,por_dn_child_info,RO,4.3.8.2 por_dn_child_info on page 551
+Table 4-9: DN register summary,16'h900,por_dn_build_info,RO,4.3.8.3 por_dn_build_info on page 552
+Table 4-9: DN register summary,16'h980,por_dn_secure_register_groups_override,RW,4.3.8.4 por_dn_secure_register_groups_override on page
+Table 4-9: DN register summary,16'hA00,por_dn_cfg_ctl,RW,4.3.8.5 por_dn_cfg_ctl on page 554
+Table 4-9: DN register summary,16'hA08,por_dn_aux_ctl,RW,4.3.8.6 por_dn_aux_ctl on page 555
+Table 4-9: DN register summary,16'hC00,+,-,#{56*index} por_dn_vmf0-15_ctrl RW 4.3.8.7 por_dn_vmf0-15_ctrl on page 556
+Table 4-9: DN register summary,16'hF80 : 16'hF98,por_dn_domain_rnf0-3,RW,4.3.8.14 por_dn_domain_rnf0-3 on page 563
+Table 4-9: DN register summary,16'hFA0,por_dn_domain_rnd0,RW,4.3.8.15 por_dn_domain_rnd0 on page 564
+Table 4-9: DN register summary,16'hFA8,por_dn_domain_cxra,RW,4.3.8.16 por_dn_domain_cxra on page 565
+Table 4-9: DN register summary,16'hFB0 : 16'h1028,por_dn_vmf0-15_rnd1,RW,4.3.8.17 por_dn_vmf0-15_rnd1 on page 566
+Table 4-9: DN register summary,16'h1030,por_dn_domain_rnd1,RW,4.3.8.18 por_dn_domain_rnd1 on page 567
+Table 4-9: DN register summary,16'h2000,por_dn_pmu_event_sel,RW,4.3.8.19 por_dn_pmu_event_sel on page 568
+Table 4-10: HN-F register summary,16'h0,cmn_hns_node_info,RO,4.3.10.1 cmn_hns_node_info on page 599
+Table 4-10: HN-F register summary,16'h80,cmn_hns_child_info,RO,4.3.10.2 cmn_hns_child_info on page 600
+Table 4-10: HN-F register summary,16'h980,cmn_hns_secure_register_groups_override,RW,4.3.10.3 cmn_hns_secure_register_groups_override on
+Table 4-10: HN-F register summary,16'hFD0,cmn_hns_cml_port_aggr_ctrl_reg,RW,4.3.10.81 cmn_hns_cml_port_aggr_ctrl_reg on page 702
+Table 4-10: HN-F register summary,16'h6208 : 16'h6230,cmn_hns_cml_port_aggr_ctrl_reg1-6,RW,4.3.10.82 cmn_hns_cml_port_aggr_ctrl_reg1-6 on page
+Table 4-10: HN-F register summary,16'hF50,cmn_hns_abf_lo_addr,RW,4.3.10.83 cmn_hns_abf_lo_addr on page 707
+Table 4-10: HN-F register summary,16'hF58,cmn_hns_abf_hi_addr,RW,4.3.10.84 cmn_hns_abf_hi_addr on page 708
+Table 4-10: HN-F register summary,16'hF60,cmn_hns_abf_pr,RW,4.3.10.85 cmn_hns_abf_pr on page 709
+Table 4-10: HN-F register summary,16'hF68,cmn_hns_abf_sr,RO,4.3.10.86 cmn_hns_abf_sr on page 710
+Table 4-10: HN-F register summary,16'h1000,cmn_hns_cbusy_write_limit_ctl,RW,4.3.10.87 cmn_hns_cbusy_write_limit_ctl on page 711
+Table 4-10: HN-F register summary,16'h1008,cmn_hns_cbusy_resp_ctl,RW,4.3.10.88 cmn_hns_cbusy_resp_ctl on page 712
+Table 4-10: HN-F register summary,16'h1010,cmn_hns_cbusy_sn_ctl,RW,4.3.10.89 cmn_hns_cbusy_sn_ctl on page 714
+Table 4-10: HN-F register summary,16'h1018,cmn_hns_lbt_cbusy_ctl,RW,4.3.10.90 cmn_hns_lbt_cbusy_ctl on page 715
+Table 4-10: HN-F register summary,16'h1020,cmn_hns_pocq_alloc_class_dedicated,RW,4.3.10.91 cmn_hns_pocq_alloc_class_dedicated on page
+Table 4-10: HN-F register summary,16'h1028,cmn_hns_pocq_alloc_class_max_allowed,RW,4.3.10.92 cmn_hns_pocq_alloc_class_max_allowed on
+Table 4-10: HN-F register summary,{2-12} 16'h6110 : 16'h6160,page 718,-,16'h1048 cmn_hns_pocq_qos_class_ctl RW 4.3.10.96 cmn_hns_pocq_qos_class_ctl on page 722 16'h1050 cmn_hns_class_pocq_arb_weight_ctl RW 4.3.10.97 cmn_hns_class_pocq_arb_weight_ctl on page                                                                            723 16'h1058 cmn_hns_class_retry_weight_ctl RW 4.3.10.98 cmn_hns_class_retry_weight_ctl on page 724 16'h1060 cmn_hns_pocq_misc_retry_weight_ctl RW 4.3.10.99 cmn_hns_pocq_misc_retry_weight_ctl on page                                                                            725 16'hFE0 cmn_hns_partner_scratch_reg0 RW 4.3.10.100 cmn_hns_partner_scratch_reg0 on page 727 16'hFE8 cmn_hns_partner_scratch_reg1 RW 4.3.10.101 cmn_hns_partner_scratch_reg1 on page 728 16'hB80 cmn_hns_cfg_slcsf_dbgrd WO 4.3.10.102 cmn_hns_cfg_slcsf_dbgrd on page 729 16'hB88 cmn_hns_slc_cache_access_slc_tag RO 4.3.10.103 cmn_hns_slc_cache_access_slc_tag on page                                                                            730 16'hB90 cmn_hns_slc_cache_access_slc_tag1 RO 4.3.10.104 cmn_hns_slc_cache_access_slc_tag1 on page                                                                            731 16'hB98 cmn_hns_slc_cache_access_slc_data RO 4.3.10.105 cmn_hns_slc_cache_access_slc_data on page                                                                            732 16'hBC0 cmn_hns_slc_cache_access_slc_mte_tag RO 4.3.10.106 cmn_hns_slc_cache_access_slc_mte_tag on                                                                            page 733 16'hBA0 cmn_hns_slc_cache_access_sf_tag RO 4.3.10.107 cmn_hns_slc_cache_access_sf_tag on page                                                                            734 16'hBA8 cmn_hns_slc_cache_access_sf_tag1 RO 4.3.10.108 cmn_hns_slc_cache_access_sf_tag1 on page                                                                            735
+Table 4-10: HN-F register summary,16'hBB0,cmn_hns_slc_cache_access_sf_tag2,RO,4.3.10.109 cmn_hns_slc_cache_access_sf_tag2 on page
+Table 4-10: HN-F register summary,16'h2000,cmn_hns_pmu_event_sel,RW,4.3.10.110 cmn_hns_pmu_event_sel on page 737
+Table 4-10: HN-F register summary,16'h2008,cmn_hns_pmu_mpam_sel,RW,4.3.10.111 cmn_hns_pmu_mpam_sel on page 741
+Table 4-10: HN-F register summary,16'h2010 : 16'h2048,cmn_hns_pmu_mpam_pardid_mask0-7,RW,4.3.10.112 cmn_hns_pmu_mpam_pardid_mask0-7 on
+Table 4-11: HNF_MPAM_NS register summary,16'h0,cmn_hns_mpam_ns_node_info,RO,4.3.11.1 cmn_hns_mpam_ns_node_info on page 799
+Table 4-11: HNF_MPAM_NS register summary,16'h80,cmn_hns_mpam_ns_child_info,RO,4.3.11.2 cmn_hns_mpam_ns_child_info on page 800
+Table 4-11: HNF_MPAM_NS register summary,16'h1000,cmn_hns_mpam_idr,RO,4.3.11.3 cmn_hns_mpam_idr on page 801
+Table 4-11: HNF_MPAM_NS register summary,16'h1018,cmn_hns_mpam_iidr,RO,4.3.11.4 cmn_hns_mpam_iidr on page 802
+Table 4-11: HNF_MPAM_NS register summary,16'h1020,cmn_hns_mpam_aidr,RO,4.3.11.5 cmn_hns_mpam_aidr on page 803
+Table 4-11: HNF_MPAM_NS register summary,16'h1028,cmn_hns_mpam_impl_idr,RO,4.3.11.6 cmn_hns_mpam_impl_idr on page 804
+Table 4-11: HNF_MPAM_NS register summary,16'h1030,cmn_hns_mpam_cpor_idr,RO,4.3.11.7 cmn_hns_mpam_cpor_idr on page 805
+Table 4-11: HNF_MPAM_NS register summary,16'h1038,cmn_hns_mpam_ccap_idr,RO,4.3.11.8 cmn_hns_mpam_ccap_idr on page 806
+Table 4-11: HNF_MPAM_NS register summary,16'h1040,cmn_hns_mpam_mbw_idr,RO,4.3.11.9 cmn_hns_mpam_mbw_idr on page 807
+Table 4-11: HNF_MPAM_NS register summary,16'h1048,cmn_hns_mpam_pri_idr,RO,4.3.11.10 cmn_hns_mpam_pri_idr on page 808
+Table 4-11: HNF_MPAM_NS register summary,16'h1050,cmn_hns_mpam_partid_nrw_idr,RO,4.3.11.11 cmn_hns_mpam_partid_nrw_idr on page 810
+Table 4-11: HNF_MPAM_NS register summary,16'h1080,cmn_hns_mpam_msmon_idr,RO,4.3.11.12 cmn_hns_mpam_msmon_idr on page 811
+Table 4-11: HNF_MPAM_NS register summary,16'h1088,cmn_hns_mpam_csumon_idr,RO,4.3.11.13 cmn_hns_mpam_csumon_idr on page 812
+Table 4-11: HNF_MPAM_NS register summary,16'h1090,cmn_hns_mpam_mbwumon_idr,RO,4.3.11.14 cmn_hns_mpam_mbwumon_idr on page 813
+Table 4-11: HNF_MPAM_NS register summary,16'h10F0,cmn_hns_ns_mpam_ecr,RW,4.3.11.15 cmn_hns_ns_mpam_ecr on page 814
+Table 4-11: HNF_MPAM_NS register summary,16'h10F8,cmn_hns_ns_mpam_esr,RW,4.3.11.16 cmn_hns_ns_mpam_esr on page 815
+Table 4-11: HNF_MPAM_NS register summary,16'h1100,cmn_hns_ns_mpamcfg_part_sel,RW,4.3.11.17 cmn_hns_ns_mpamcfg_part_sel on page 816
+Table 4-11: HNF_MPAM_NS register summary,16'h1108,cmn_hns_ns_mpamcfg_cmax,RW,4.3.11.18 cmn_hns_ns_mpamcfg_cmax on page 817
+Table 4-11: HNF_MPAM_NS register summary,16'h1200,cmn_hns_ns_mpamcfg_mbw_min,RW,4.3.11.19 cmn_hns_ns_mpamcfg_mbw_min on page 818
+Table 4-11: HNF_MPAM_NS register summary,16'h1208,cmn_hns_ns_mpamcfg_mbw_max,RW,4.3.11.20 cmn_hns_ns_mpamcfg_mbw_max on page 819
+Table 4-11: HNF_MPAM_NS register summary,16'h1220,cmn_hns_ns_mpamcfg_mbw_winwd,RW,4.3.11.21 cmn_hns_ns_mpamcfg_mbw_winwd on page 820
+Table 4-11: HNF_MPAM_NS register summary,16'h1400,cmn_hns_ns_mpamcfg_pri,RW,4.3.11.22 cmn_hns_ns_mpamcfg_pri on page 821
+Table 4-11: HNF_MPAM_NS register summary,16'h1500,cmn_hns_ns_mpamcfg_mbw_prop,RW,4.3.11.23 cmn_hns_ns_mpamcfg_mbw_prop on page 823
+Table 4-11: HNF_MPAM_NS register summary,16'h1600,cmn_hns_ns_mpamcfg_intpartid,RW,4.3.11.24 cmn_hns_ns_mpamcfg_intpartid on page 824
+Table 4-11: HNF_MPAM_NS register summary,16'h1800,cmn_hns_ns_msmon_cfg_mon_sel,RW,4.3.11.25 cmn_hns_ns_msmon_cfg_mon_sel on page 825
+Table 4-11: HNF_MPAM_NS register summary,16'h1808,cmn_hns_ns_msmon_capt_evnt,RW,4.3.11.26 cmn_hns_ns_msmon_capt_evnt on page 826
+Table 4-11: HNF_MPAM_NS register summary,16'h1810,cmn_hns_ns_msmon_cfg_csu_flt,RW,4.3.11.27 cmn_hns_ns_msmon_cfg_csu_flt on page 827
+Table 4-11: HNF_MPAM_NS register summary,16'h1818,cmn_hns_ns_msmon_cfg_csu_ctl,RW,4.3.11.28 cmn_hns_ns_msmon_cfg_csu_ctl on page 828
+Table 4-11: HNF_MPAM_NS register summary,16'h1820,cmn_hns_ns_msmon_cfg_mbwu_flt,RW,4.3.11.29 cmn_hns_ns_msmon_cfg_mbwu_flt on page 830
+Table 4-11: HNF_MPAM_NS register summary,16'h1828,cmn_hns_ns_msmon_cfg_mbwu_ctl,RW,4.3.11.30 cmn_hns_ns_msmon_cfg_mbwu_ctl on page 831
+Table 4-11: HNF_MPAM_NS register summary,16'h1840,cmn_hns_ns_msmon_csu,RW,4.3.11.31 cmn_hns_ns_msmon_csu on page 833
+Table 4-11: HNF_MPAM_NS register summary,16'h1848,cmn_hns_ns_msmon_csu_capture,RW,4.3.11.32 cmn_hns_ns_msmon_csu_capture on page 834
+Table 4-11: HNF_MPAM_NS register summary,16'h1860,cmn_hns_ns_msmon_mbwu,RW,4.3.11.33 cmn_hns_ns_msmon_mbwu on page 835
+Table 4-11: HNF_MPAM_NS register summary,16'h1868,cmn_hns_ns_msmon_mbwu_capture,RW,4.3.11.34 cmn_hns_ns_msmon_mbwu_capture on page 836
+Table 4-11: HNF_MPAM_NS register summary,16'h2000,cmn_hns_ns_mpamcfg_cpbm,RW,4.3.11.35 cmn_hns_ns_mpamcfg_cpbm on page 837
+Table 4-12: HNF_MPAM_S register summary,16'h0,cmn_hns_mpam_s_node_info,RO,4.3.12.1 cmn_hns_mpam_s_node_info on page 838
+Table 4-12: HNF_MPAM_S register summary,16'h80,cmn_hns_mpam_s_child_info,RO,4.3.12.2 cmn_hns_mpam_s_child_info on page 839
+Table 4-12: HNF_MPAM_S register summary,16'h980,cmn_hns_mpam_s_secure_register_groups_override,RW,4.3.12.3 cmn_hns_mpam_s_secure_register_groups_override on
+Table 4-12: HNF_MPAM_S register summary,16'h1038,cmn_hns_s_mpam_ccap_idr,RO,4.3.12.10 cmn_hns_s_mpam_ccap_idr on page 847
+Table 4-12: HNF_MPAM_S register summary,16'h1040,cmn_hns_s_mpam_mbw_idr,RO,4.3.12.11 cmn_hns_s_mpam_mbw_idr on page 848
+Table 4-12: HNF_MPAM_S register summary,16'h1048,cmn_hns_s_mpam_pri_idr,RO,4.3.12.12 cmn_hns_s_mpam_pri_idr on page 849
+Table 4-12: HNF_MPAM_S register summary,16'h1050,cmn_hns_s_mpam_partid_nrw_idr,RO,4.3.12.13 cmn_hns_s_mpam_partid_nrw_idr on page 851
+Table 4-12: HNF_MPAM_S register summary,16'h1080,cmn_hns_s_mpam_msmon_idr,RO,4.3.12.14 cmn_hns_s_mpam_msmon_idr on page 852
+Table 4-12: HNF_MPAM_S register summary,16'h1088,cmn_hns_s_mpam_csumon_idr,RO,4.3.12.15 cmn_hns_s_mpam_csumon_idr on page 853
+Table 4-12: HNF_MPAM_S register summary,16'h1090,cmn_hns_s_mpam_mbwumon_idr,RO,4.3.12.16 cmn_hns_s_mpam_mbwumon_idr on page 854
+Table 4-12: HNF_MPAM_S register summary,16'h10F0,cmn_hns_s_mpam_ecr,RW,4.3.12.17 cmn_hns_s_mpam_ecr on page 855
+Table 4-12: HNF_MPAM_S register summary,16'h10F8,cmn_hns_s_mpam_esr,RW,4.3.12.18 cmn_hns_s_mpam_esr on page 856
+Table 4-12: HNF_MPAM_S register summary,16'h1100,cmn_hns_s_mpamcfg_part_sel,RW,4.3.12.19 cmn_hns_s_mpamcfg_part_sel on page 857
+Table 4-12: HNF_MPAM_S register summary,16'h1108,cmn_hns_s_mpamcfg_cmax,RW,4.3.12.20 cmn_hns_s_mpamcfg_cmax on page 858
+Table 4-12: HNF_MPAM_S register summary,16'h1200,cmn_hns_s_mpamcfg_mbw_min,RW,4.3.12.21 cmn_hns_s_mpamcfg_mbw_min on page 859
+Table 4-12: HNF_MPAM_S register summary,16'h1208,cmn_hns_s_mpamcfg_mbw_max,RW,4.3.12.22 cmn_hns_s_mpamcfg_mbw_max on page 861
+Table 4-12: HNF_MPAM_S register summary,16'h1220,cmn_hns_s_mpamcfg_mbw_winwd,RW,4.3.12.23 cmn_hns_s_mpamcfg_mbw_winwd on page 862
+Table 4-12: HNF_MPAM_S register summary,16'h1400,cmn_hns_s_mpamcfg_pri,RW,4.3.12.24 cmn_hns_s_mpamcfg_pri on page 863
+Table 4-12: HNF_MPAM_S register summary,16'h1500,cmn_hns_s_mpamcfg_mbw_prop,RW,4.3.12.25 cmn_hns_s_mpamcfg_mbw_prop on page 864
+Table 4-12: HNF_MPAM_S register summary,16'h1600,cmn_hns_s_mpamcfg_intpartid,RW,4.3.12.26 cmn_hns_s_mpamcfg_intpartid on page 865
+Table 4-12: HNF_MPAM_S register summary,16'h1800,cmn_hns_s_msmon_cfg_mon_sel,RW,4.3.12.27 cmn_hns_s_msmon_cfg_mon_sel on page 866
+Table 4-12: HNF_MPAM_S register summary,16'h1808,cmn_hns_s_msmon_capt_evnt,RW,4.3.12.28 cmn_hns_s_msmon_capt_evnt on page 867
+Table 4-12: HNF_MPAM_S register summary,16'h1810,cmn_hns_s_msmon_cfg_csu_flt,RW,4.3.12.29 cmn_hns_s_msmon_cfg_csu_flt on page 868
+Table 4-12: HNF_MPAM_S register summary,16'h1818,cmn_hns_s_msmon_cfg_csu_ctl,RW,4.3.12.30 cmn_hns_s_msmon_cfg_csu_ctl on page 870
+Table 4-12: HNF_MPAM_S register summary,16'h1820,cmn_hns_s_msmon_cfg_mbwu_flt,RW,4.3.12.31 cmn_hns_s_msmon_cfg_mbwu_flt on page 872
+Table 4-12: HNF_MPAM_S register summary,16'h1828,cmn_hns_s_msmon_cfg_mbwu_ctl,RW,4.3.12.32 cmn_hns_s_msmon_cfg_mbwu_ctl on page 873
+Table 4-12: HNF_MPAM_S register summary,16'h1840,cmn_hns_s_msmon_csu,RW,4.3.12.33 cmn_hns_s_msmon_csu on page 875
+Table 4-12: HNF_MPAM_S register summary,16'h1848,cmn_hns_s_msmon_csu_capture,RW,4.3.12.34 cmn_hns_s_msmon_csu_capture on page 876
+Table 4-12: HNF_MPAM_S register summary,16'h1860,cmn_hns_s_msmon_mbwu,RW,4.3.12.35 cmn_hns_s_msmon_mbwu on page 877
+Table 4-12: HNF_MPAM_S register summary,16'h1868,cmn_hns_s_msmon_mbwu_capture,RW,4.3.12.36 cmn_hns_s_msmon_mbwu_capture on page 878
+Table 4-12: HNF_MPAM_S register summary,16'h2000,cmn_hns_s_mpamcfg_cpbm,RW,4.3.12.37 cmn_hns_s_mpamcfg_cpbm on page 879
+Table 4-13: HN‑I register summary,16'h0,por_hni_node_info,RO,4.3.9.1 por_hni_node_info on page 570
+Table 4-13: HN‑I register summary,16'h80,por_hni_child_info,RO,4.3.9.2 por_hni_child_info on page 570
+Table 4-13: HN‑I register summary,16'h980,por_hni_secure_register_groups_override,RW,4.3.9.3 por_hni_secure_register_groups_override on page 571
+Table 4-13: HN‑I register summary,16'h900,por_hni_unit_info,RO,4.3.9.4 por_hni_unit_info on page 572
+Table 4-13: HN‑I register summary,16'h908,por_hni_unit_info_1,RO,4.3.9.5 por_hni_unit_info_1 on page 574
+Table 4-13: HN‑I register summary,16'hC00,por_hni_sam_addrregion0_cfg,RW,4.3.9.6 por_hni_sam_addrregion0_cfg on page 575
+Table 4-13: HN‑I register summary,16'hC08,por_hni_sam_addrregion1_cfg,RW,4.3.9.7 por_hni_sam_addrregion1_cfg on page 576
+Table 4-13: HN‑I register summary,16'hC10,por_hni_sam_addrregion2_cfg,RW,4.3.9.8 por_hni_sam_addrregion2_cfg on page 578
+Table 4-13: HN‑I register summary,16'hC18,por_hni_sam_addrregion3_cfg,RW,4.3.9.9 por_hni_sam_addrregion3_cfg on page 579
+Table 4-13: HN‑I register summary,16'hA00,por_hni_cfg_ctl,RW,4.3.9.10 por_hni_cfg_ctl on page 581
+Table 4-13: HN‑I register summary,16'hA08,por_hni_aux_ctl,RW,4.3.9.11 por_hni_aux_ctl on page 582
+Table 4-13: HN‑I register summary,16'h3000,por_hni_errfr,RO,4.3.9.12 por_hni_errfr on page 583
+Table 4-13: HN‑I register summary,16'h3008,por_hni_errctlr,RW,4.3.9.13 por_hni_errctlr on page 584
+Table 4-13: HN‑I register summary,16'h3010,por_hni_errstatus,W1C,4.3.9.14 por_hni_errstatus on page 585
+Table 4-13: HN‑I register summary,16'h3018,por_hni_erraddr,RW,4.3.9.15 por_hni_erraddr on page 587
+Table 4-13: HN‑I register summary,16'h3020,por_hni_errmisc,RW,4.3.9.16 por_hni_errmisc on page 588
+Table 4-13: HN‑I register summary,16'h3100,por_hni_errfr_NS,RO,4.3.9.17 por_hni_errfr_NS on page 590
+Table 4-13: HN‑I register summary,16'h3108,por_hni_errctlr_NS,RW,4.3.9.18 por_hni_errctlr_NS on page 591
+Table 4-13: HN‑I register summary,16'h3110,por_hni_errstatus_NS,W1C,4.3.9.19 por_hni_errstatus_NS on page 592
+Table 4-13: HN‑I register summary,16'h3118,por_hni_erraddr_NS,RW,4.3.9.20 por_hni_erraddr_NS on page 594
+Table 4-13: HN‑I register summary,16'h3120,por_hni_errmisc_NS,RW,4.3.9.21 por_hni_errmisc_NS on page 595
+Table 4-13: HN‑I register summary,16'h2000,por_hni_pmu_event_sel,RW,4.3.9.22 por_hni_pmu_event_sel on page 596
+Table 4-13: HN‑I register summary,16'h2008,por_hnp_pmu_event_sel,RW,4.3.9.23 por_hnp_pmu_event_sel on page 598
+Table 4-14: MXP register summary,16'h0,por_mxp_node_info,RO,4.3.13.1 por_mxp_node_info on page 880
+Table 4-14: MXP register summary,16'h8 : 16'h30,por_mxp_device_port_connect_info_p0-5,RO,4.3.13.2
+Table 4-14: MXP register summary,16'h48 : 16'h70,por_mxp_device_port_connect_ldid_info_p0-5,RO,4.3.13.5
+Table 4-14: MXP register summary,16'h2100,por_dtm_control,RW,4.3.13.33 por_dtm_control on page 920
+Table 4-14: MXP register summary,16'h2118,por_dtm_fifo_entry_ready,W1C,4.3.13.34 por_dtm_fifo_entry_ready on page
+Table 4-14: MXP register summary,16'h2120,+,-,#{24*index} por_dtm_fifo_entry0-3_0 RO 4.3.13.35 por_dtm_fifo_entry0-3_0 on page
+Table 4-14: MXP register summary,16'h2128,+,-,#{24*index} por_dtm_fifo_entry0-3_1 RO 4.3.13.36 por_dtm_fifo_entry0-3_1 on page
+Table 4-14: MXP register summary,16'h2130,+,-,#{24*index} por_dtm_fifo_entry0-3_2 RO 4.3.13.37 por_dtm_fifo_entry0-3_2 on page
+Table 4-14: MXP register summary,16'h21A0,+,-,#{24*index} por_dtm_wp0-3_config RW 4.3.13.38 por_dtm_wp0-3_config on page
+Table 4-14: MXP register summary,16'h21A8,+,-,#{24*index} por_dtm_wp0-3_val RW 4.3.13.39 por_dtm_wp0-3_val on page 926
+Table 4-14: MXP register summary,16'h21B0,+,-,#{24*index} por_dtm_wp0-3_mask RW 4.3.13.40 por_dtm_wp0-3_mask on page
+Table 4-14: MXP register summary,16'h2200,por_dtm_pmsicr,RW,4.3.13.41 por_dtm_pmsicr on page 928
+Table 4-14: MXP register summary,16'h2208,por_dtm_pmsirr,RW,4.3.13.42 por_dtm_pmsirr on page 929
+Table 4-14: MXP register summary,16'h2210,por_dtm_pmu_config,RW,4.3.13.43 por_dtm_pmu_config on page 930
+Table 4-14: MXP register summary,16'h2220,por_dtm_pmevcnt,RW,4.3.13.44 por_dtm_pmevcnt on page 934
+Table 4-14: MXP register summary,16'h2240,por_dtm_pmevcntsr,RW,4.3.13.45 por_dtm_pmevcntsr on page 935
+Table 4-14: MXP register summary,16'h2100,+,-,#{512*index} por_dtm_control_dt1-3 RW 4.3.13.46 por_dtm_control_dt1-3 on page
+Table 4-14: MXP register summary,16'h2118,+,-,#{512*index} por_dtm_fifo_entry_ready_dt1-3 W1C 4.3.13.47 por_dtm_fifo_entry_ready_dt1-3 on
+Table 4-15: RN-D register summary,16'h0,por_rnd_node_info,RO,4.3.14.1 por_rnd_node_info on page 966
+Table 4-15: RN-D register summary,16'h80,por_rnd_child_info,RO,4.3.14.2 por_rnd_child_info on page 967
+Table 4-15: RN-D register summary,16'h980,por_rnd_secure_register_groups_override,RW,4.3.14.3 por_rnd_secure_register_groups_override on page
+Table 4-15: RN-D register summary,16'h900,por_rnd_unit_info,RO,4.3.14.4 por_rnd_unit_info on page 969
+Table 4-15: RN-D register summary,16'h908,por_rnd_unit_info2,RO,4.3.14.5 por_rnd_unit_info2 on page 970
+Table 4-15: RN-D register summary,16'hA00,por_rnd_cfg_ctl,RW,4.3.14.6 por_rnd_cfg_ctl on page 971
+Table 4-15: RN-D register summary,16'hA08,por_rnd_aux_ctl,RW,4.3.14.7 por_rnd_aux_ctl on page 974
+Table 4-15: RN-D register summary,16'hA10 : 16'hA20,por_rnd_s0-2_port_control,RW,4.3.14.8 por_rnd_s0-2_port_control on page 977
+Table 4-15: RN-D register summary,16'hA28 : 16'hA38,por_rnd_s0-2_mpam_control,RW,4.3.14.9 por_rnd_s0-2_mpam_control on page 979
+Table 4-15: RN-D register summary,16'hA80,+,-,por_rnd_s0-2_qos_control RW 4.3.14.10 por_rnd_s0-2_qos_control on page 980
+Table 4-16: RN-I register summary,16'h0,por_rni_node_info,RO,4.3.15.1 por_rni_node_info on page 989
+Table 4-16: RN-I register summary,16'h80,por_rni_child_info,RO,4.3.15.2 por_rni_child_info on page 990
+Table 4-16: RN-I register summary,16'h980,por_rni_secure_register_groups_override,RW,4.3.15.3 por_rni_secure_register_groups_override on page 991
+Table 4-16: RN-I register summary,16'h900,por_rni_unit_info,RO,4.3.15.4 por_rni_unit_info on page 992
+Table 4-16: RN-I register summary,16'h908,por_rni_unit_info2,RO,4.3.15.5 por_rni_unit_info2 on page 993
+Table 4-16: RN-I register summary,16'hA00,por_rni_cfg_ctl,RW,4.3.15.6 por_rni_cfg_ctl on page 994
+Table 4-16: RN-I register summary,16'hA08,por_rni_aux_ctl,RW,4.3.15.7 por_rni_aux_ctl on page 997
+Table 4-16: RN-I register summary,16'hA10 : 16'hA20,por_rni_s0-2_port_control,RW,4.3.15.8 por_rni_s0-2_port_control on page 1000
+Table 4-16: RN-I register summary,16'hA28 : 16'hA38,por_rni_s0-2_mpam_control,RW,4.3.15.9 por_rni_s0-2_mpam_control on page 1002
+Table 4-16: RN-I register summary,16'hA80,+,-,#{index*32} por_rni_s0-2_qos_control RW 4.3.15.10 por_rni_s0-2_qos_control on page 1003
+Table 4-16: RN-I register summary,16'hA88,+,-,#{index*32} por_rni_s0-2_qos_lat_tgt RW 4.3.15.11 por_rni_s0-2_qos_lat_tgt on page 1005
+Table 4-16: RN-I register summary,16'hA90,+,-,#{index*32} por_rni_s0-2_qos_lat_scale RW 4.3.15.12 por_rni_s0-2_qos_lat_scale on page 1006
+Table 4-16: RN-I register summary,16'hA98,+,-,#{index*32} por_rni_s0-2_qos_lat_range RW 4.3.15.13 por_rni_s0-2_qos_lat_range on page 1007
+Table 4-16: RN-I register summary,16'h2000,por_rni_pmu_event_sel,RW,4.3.15.14 por_rni_pmu_event_sel on page 1008
+Table 4-17: RNSAM register summary,16'h0,por_rnsam_node_info,RO,4.3.16.1 por_rnsam_node_info on page 1010
+Table 4-17: RNSAM register summary,16'h80,por_rnsam_child_info,RO,4.3.16.2 por_rnsam_child_info on page 1011
+Table 4-17: RNSAM register summary,16'h980,por_rnsam_secure_register_groups_override,RW,4.3.16.3 por_rnsam_secure_register_groups_override on
+Table 4-17: RNSAM register summary,16'h11A0,cml_port_aggr_mode_ctrl_reg,RW,4.3.16.9 cml_port_aggr_mode_ctrl_reg on page 1020
+Table 4-17: RNSAM register summary,16'hD78 {24-63} 16'hDF8,{1-3} cml_port_aggr_mode_ctrl_reg1-6 RW 4.3.16.10 cml_port_aggr_mode_ctrl_reg1-6 on page,-,-
+Table 4-17: RNSAM register summary,16'h11B8 {4-6} 16'hE18,{4-7} hashed_tgt_grp_cfg1_region4-31 RW 4.3.16.12 hashed_tgt_grp_cfg1_region4-31 on page,-,-
+Table 4-17: RNSAM register summary,16'hE38 {8-31},16'h31F8 1027,-,-
+Table 4-17: RNSAM register summary,16'h33F8,page,-,1032 page
+Table 4-17: RNSAM register summary,16'hE78 {8-31},16'h34F8 1033,-,-
+Table 4-17: RNSAM register summary,16'hEC0,sys_cache_grp_nonhash_nodeid,RW,4.3.16.20 sys_cache_grp_nonhash_nodeid on page 1037
+Table 4-17: RNSAM register summary,{2-3},{0-5} hashed_target_grp_nonhash_nodeid_reg1-6 RW 4.3.16.21 hashed_target_grp_nonhash_nodeid_reg1-6 on,-,-
+Table 4-17: RNSAM register summary,16'hEE8 {6} 16'h3800,16'hF78 1039,-,{1-3} hashed_target_grp_cal_mode_reg1-7 RW 4.3.16.26 hashed_target_grp_cal_mode_reg1-7 on page 16'h1128 : 1045
+Table 4-17: RNSAM register summary,16'h1180,sys_cache_grp_hn_cpa_en_reg,RW,4.3.16.27 sys_cache_grp_hn_cpa_en_reg on page 1047
+Table 4-17: RNSAM register summary,16'h1188,hashed_target_grp_hnf_cpa_en_reg1-1,RW,4.3.16.28 hashed_target_grp_hnf_cpa_en_reg1-1 on page
+Table 4-17: RNSAM register summary,16'h3978,page,-,1049 page
+Table 4-17: RNSAM register summary,16'h1190,sys_cache_grp_hn_cpa_grp_reg,RW,4.3.16.30 sys_cache_grp_hn_cpa_grp_reg on page 1050
+Table 4-17: RNSAM register summary,16'h1138 {4-7},{1} hashed_target_grp_cpa_grp_reg1-7 RW 4.3.16.31 hashed_target_grp_cpa_grp_reg1-7 on page,-,-
+Table 4-17: RNSAM register summary,16'h37C8,on,-,page 1054
+Table 4-17: RNSAM register summary,16'h37E8,hashed_target_grp_hnf_target_type_override_cfg_reg0-1,-,on page 1054 16'h3A00 : hashed_target_grp_compact_cpag_ctrl0-31 RW 4.3.16.34 hashed_target_grp_compact_cpag_ctrl0-31 on 16'h3AF8 page 1055 16'h3B00 : hashed_target_grp_compact_hash_ctrl0-31 RW 4.3.16.35 hashed_target_grp_compact_hash_ctrl0-31 on 16'h3BF8 page 1057 16'hE80 rnsam_hash_addr_mask_reg RW 4.3.16.36 rnsam_hash_addr_mask_reg on page 1061 16'hE88 rnsam_hash_axi_id_mask_reg RW 4.3.16.37 rnsam_hash_axi_id_mask_reg on page 1062 16'hE90 rnsam_region_cmp_addr_mask_reg RW 4.3.16.38 rnsam_region_cmp_addr_mask_reg on page                                                                               1063
+Table 4-17: RNSAM register summary,{0-2} 16'h11F0 : 16'h1200,cml_port_aggr_grp_reg0-2,RW,4.3.16.41 cml_port_aggr_grp_reg0-12 on page 1066
+Table 4-17: RNSAM register summary,{3-12} 16'h2C18 : 16'h2C60,cml_port_aggr_grp_reg3-12,RW,4.3.16.41 cml_port_aggr_grp_reg0-12 on page 1066
+Table 4-17: RNSAM register summary,16'h1208,cml_port_aggr_ctrl_reg,RW,4.3.16.42 cml_port_aggr_ctrl_reg on page 1067
+Table 4-17: RNSAM register summary,16'hEB0,sys_cache_grp_sn_attr,RW,4.3.16.44 sys_cache_grp_sn_attr on page 1073
+Table 4-17: RNSAM register summary,16'hEB8,sys_cache_grp_sn_attr1,RW,4.3.16.45 sys_cache_grp_sn_attr1 on page 1076
+Table 4-17: RNSAM register summary,16'h11E8 {6-31} 16'h2B18 16'h1238 16'h1158 16'h12F8,16'h13B8 1082,-,16'h61F8 sam_scg0-63/8_prefetch_hashed_region_cfg1_reg0-63%8                                                                                on page 1086 16'h6200 : sam_scg0-63/8_prefetch_hashed_region_cfg2_reg0-63%8 RW 4.3.16.52 16'h63F8 sam_scg0-63/8_prefetch_hashed_region_cfg2_reg0-63%8                                                                                on page 1087 16'h6400 : sam_scg0-63/8_prefetch_hashed_region_cfg3_reg0-63%8 RW 4.3.16.53 16'h65F8 sam_scg0-63/8_prefetch_hashed_region_cfg3_reg0-63%8                                                                                on page 1088 16'h1000 : sys_cache_grp_sn_nodeid_reg0-31 RW 4.3.16.54 sys_cache_grp_sn_nodeid_reg0-31 on page 16'h10F8 1090 16'h1400 : sys_cache_grp_region0-63/32_sn_nodeid_reg0-63%32 RW 4.3.16.55 16'h15F8 sys_cache_grp_region0-63/32_sn_nodeid_reg0-63%32                                                                                on page 1091 16'h6600 : sys_cache_grp_hashed_regions_sn_nodeid_reg0-15 RW 4.3.16.56 16'h6678 sys_cache_grp_hashed_regions_sn_nodeid_reg0-15 on                                                                                page 1093 16'h1100 rnsam_status RW 4.3.16.57 rnsam_status on page 1094 16'h1108 gic_mem_region_reg RW 4.3.16.58 gic_mem_region_reg on page 1095
+Table 4-17: RNSAM register summary,16'h1638,4.2.17 SBSX register summary,-,-
+Table 4-18: SBSX register summary,16'h0,por_sbsx_node_info,RO,4.3.17.1 por_sbsx_node_info on page 1098
+Table 4-18: SBSX register summary,16'h80,por_sbsx_child_info,RO,4.3.17.2 por_sbsx_child_info on page 1099
+Table 4-18: SBSX register summary,16'h980,por_sbsx_secure_register_groups_override,RW,4.3.17.3 por_sbsx_secure_register_groups_override on page 1100
+Table 4-18: SBSX register summary,16'h900,por_sbsx_unit_info,RO,4.3.17.4 por_sbsx_unit_info on page 1101
+Table 4-18: SBSX register summary,16'hA00,por_sbsx_cfg_ctl,RW,4.3.17.5 por_sbsx_cfg_ctl on page 1102
+Table 4-18: SBSX register summary,16'hA08,por_sbsx_aux_ctl,RW,4.3.17.6 por_sbsx_aux_ctl on page 1104
+Table 4-18: SBSX register summary,16'hA18,por_sbsx_cbusy_limit_ctl,RW,4.3.17.7 por_sbsx_cbusy_limit_ctl on page 1105
+Table 4-18: SBSX register summary,16'h3000,por_sbsx_errfr,RO,4.3.17.8 por_sbsx_errfr on page 1106
+Table 4-18: SBSX register summary,16'h3008,por_sbsx_errctlr,RW,4.3.17.9 por_sbsx_errctlr on page 1107
+Table 4-18: SBSX register summary,16'h3010,por_sbsx_errstatus,W1C,4.3.17.10 por_sbsx_errstatus on page 1108
+Table 4-18: SBSX register summary,16'h3018,por_sbsx_erraddr,RW,4.3.17.11 por_sbsx_erraddr on page 1110
+Table 4-18: SBSX register summary,16'h3020,por_sbsx_errmisc,RW,4.3.17.12 por_sbsx_errmisc on page 1111
+Table 4-18: SBSX register summary,16'h3100,por_sbsx_errfr_NS,RO,4.3.17.13 por_sbsx_errfr_NS on page 1112
+Table 4-18: SBSX register summary,16'h3108,por_sbsx_errctlr_NS,RW,4.3.17.14 por_sbsx_errctlr_NS on page 1113
+Table 4-18: SBSX register summary,16'h3110,por_sbsx_errstatus_NS,W1C,4.3.17.15 por_sbsx_errstatus_NS on page 1114
+Table 4-18: SBSX register summary,16'h3118,por_sbsx_erraddr_NS,RW,4.3.17.16 por_sbsx_erraddr_NS on page 1116
+Table 4-18: SBSX register summary,16'h3120,por_sbsx_errmisc_NS,RW,4.3.17.17 por_sbsx_errmisc_NS on page 1117
+Table 4-18: SBSX register summary,16'h2000,por_sbsx_pmu_event_sel,RW,4.3.17.18 por_sbsx_pmu_event_sel on page 1118
+Table 4-18: SBSX register summary,16'h0,Type,-,-

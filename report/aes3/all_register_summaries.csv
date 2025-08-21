@@ -1,0 +1,1044 @@
+table,offset,name,type,description
+Table 8-6: por_apb_cfg register summary,0x0,por_apb_node_info,RO,por_apb_node_info
+Table 8-6: por_apb_cfg register summary,0x80,por_apb_child_info,RO,por_apb_child_info
+Table 8-6: por_apb_cfg register summary,0x990,por_apb_rcr,RW,por_apb_rcr
+Table 8-6: por_apb_cfg register summary,0x998,por_apb_scr,RW,por_apb_scr
+Table 8-6: por_apb_cfg register summary,0x980,por_apb_only_access,RW,por_apb_only_access
+Table 8-6: por_apb_cfg register summary,0x988,por_axu_control,RW,por_axu_control
+Table 8-13: por_ccg_ha_cfg register summary,0x0,por_ccg_ha_node_info,RO,por_ccg_ha_node_info
+Table 8-13: por_ccg_ha_cfg register summary,0x8,por_ccg_ha_id,RW,por_ccg_ha_id
+Table 8-13: por_ccg_ha_cfg register summary,0x80,por_ccg_ha_child_info,RO,por_ccg_ha_child_info
+Table 8-13: por_ccg_ha_cfg register summary,0xA00,por_ccg_ha_cfg_ctl,RW,por_ccg_ha_cfg_ctl
+Table 8-13: por_ccg_ha_cfg register summary,0xA08,por_ccg_ha_aux_ctl,RW,por_ccg_ha_aux_ctl
+Table 8-13: por_ccg_ha_cfg register summary,0xA10,por_ccg_ha_mpam_control_link0,RW,por_ccg_ha_mpam_control_link0
+Table 8-13: por_ccg_ha_cfg register summary,0xA18,por_ccg_ha_mpam_control_link1,RW,por_ccg_ha_mpam_control_link1
+Table 8-13: por_ccg_ha_cfg register summary,0xA20,por_ccg_ha_mpam_control_link2,RW,por_ccg_ha_mpam_control_link2
+Table 8-13: por_ccg_ha_cfg register summary,0xA50 : 0xA60,por_ccg_ha_link0-2_cache_id_ctl,RW,por_ccg_ha_link0-2_cache_id_ctl
+Table 8-13: por_ccg_ha_cfg register summary,0x980,por_ccg_ha_scr,RW,por_ccg_ha_scr
+Table 8-13: por_ccg_ha_cfg register summary,0x988,por_ccg_ha_rcr,RW,por_ccg_ha_rcr
+Table 8-13: por_ccg_ha_cfg register summary,0x900,por_ccg_ha_unit_info,RO,por_ccg_ha_unit_info
+Table 8-13: por_ccg_ha_cfg register summary,0x908,por_ccg_ha_unit_info2,RO,por_ccg_ha_unit_info2
+Table 8-13: por_ccg_ha_cfg register summary,0x910,por_ccg_ha_unit_info3,RO,por_ccg_ha_unit_info3
+Table 8-13: por_ccg_ha_cfg register summary,0x1C00,por_ccg_ha_agentid_to_linkid_reg0,RW,por_ccg_ha_agentid_to_linkid_reg0
+Table 8-13: por_ccg_ha_cfg register summary,0x1CF8,por_ccg_ha_agentid_to_linkid_val,RW,por_ccg_ha_agentid_to_linkid_val
+Table 8-13: por_ccg_ha_cfg register summary,0xC00 : 0xCF8,por_ccg_ha_rnf_exp_raid_to_ldid_reg_0-31,RW,por_ccg_ha_rnf_exp_raid_to_ldid_reg_0-31
+Table 8-13: por_ccg_ha_cfg register summary,0xD00 : 0xDF8,por_ccg_ha_link1_rnf_exp_raid_to_ldid_reg_0-31,RW,por_ccg_ha_link1_rnf_exp_raid_to_ldid_reg_0-31
+Table 8-13: por_ccg_ha_cfg register summary,0xE00 : 0xEF8,por_ccg_ha_link2_rnf_exp_raid_to_ldid_reg_0-31,RW,por_ccg_ha_link2_rnf_exp_raid_to_ldid_reg_0-31
+Table 8-13: por_ccg_ha_cfg register summary,0xD900,por_ccg_ha_pmu_event_sel,RW,por_ccg_ha_pmu_event_sel
+Table 8-13: por_ccg_ha_cfg register summary,0x1900,por_ccg_ha_cxprtcl_link0_ctl,RW,por_ccg_ha_cxprtcl_link0_ctl
+Table 8-13: por_ccg_ha_cfg register summary,0x1908,por_ccg_ha_cxprtcl_link0_status,RO,por_ccg_ha_cxprtcl_link0_status
+Table 8-13: por_ccg_ha_cfg register summary,0x1910,por_ccg_ha_cxprtcl_link1_ctl,RW,por_ccg_ha_cxprtcl_link1_ctl
+Table 8-13: por_ccg_ha_cfg register summary,0x1918,por_ccg_ha_cxprtcl_link1_status,RO,por_ccg_ha_cxprtcl_link1_status
+Table 8-13: por_ccg_ha_cfg register summary,0x1920,por_ccg_ha_cxprtcl_link2_ctl,RW,por_ccg_ha_cxprtcl_link2_ctl
+Table 8-13: por_ccg_ha_cfg register summary,0x1928,por_ccg_ha_cxprtcl_link2_status,RO,por_ccg_ha_cxprtcl_link2_status
+Table 8-13: por_ccg_ha_cfg register summary,0xA30,por_ccg_ha_datasource_ctl_link0,RW,por_ccg_ha_datasource_ctl_link0
+Table 8-13: por_ccg_ha_cfg register summary,0xA38,por_ccg_ha_datasource_ctl_link1,RW,por_ccg_ha_datasource_ctl_link1
+Table 8-13: por_ccg_ha_cfg register summary,0xA40,por_ccg_ha_datasource_ctl_link2,RW,por_ccg_ha_datasource_ctl_link2
+Table 8-43: por_ccg_ra_cfg register summary,0x0,por_ccg_ra_node_info,RO,por_ccg_ra_node_info
+Table 8-43: por_ccg_ra_cfg register summary,0x80,por_ccg_ra_child_info,RO,por_ccg_ra_child_info
+Table 8-43: por_ccg_ra_cfg register summary,0x980,por_ccg_ra_scr,RW,por_ccg_ra_scr
+Table 8-43: por_ccg_ra_cfg register summary,0x988,por_ccg_ra_rcr,RW,por_ccg_ra_rcr
+Table 8-43: por_ccg_ra_cfg register summary,0x900,por_ccg_ra_unit_info,RO,por_ccg_ra_unit_info
+Table 8-43: por_ccg_ra_cfg register summary,0x908,por_ccg_ra_unit_info_1,RO,por_ccg_ra_unit_info_1
+Table 8-43: por_ccg_ra_cfg register summary,0xA00,por_ccg_ra_cfg_ctl,RW,por_ccg_ra_cfg_ctl
+Table 8-43: por_ccg_ra_cfg register summary,0xA08,por_ccg_ra_aux_ctl,RW,por_ccg_ra_aux_ctl
+Table 8-43: por_ccg_ra_cfg register summary,0xA10,por_ccg_ra_aux_ctl2,RW,por_ccg_ra_aux_ctl2
+Table 8-43: por_ccg_ra_cfg register summary,0xA18,por_ccg_ra_cbusy_limit_ctl,RW,por_ccg_ra_cbusy_limit_ctl
+Table 8-43: por_ccg_ra_cfg register summary,0xC00 : 0xC38,por_ccg_ra_sam_addr_region_reg0-7,RW,por_ccg_ra_sam_addr_region_reg0-7
+Table 8-43: por_ccg_ra_cfg register summary,0xD00,por_ccg_ra_agentid_to_linkid_val,RW,por_ccg_ra_agentid_to_linkid_val
+Table 8-43: por_ccg_ra_cfg register summary,0xD10 : 0xD10,por_ccg_ra_agentid_to_linkid_reg0-0,RW,por_ccg_ra_agentid_to_linkid_reg0-0
+Table 8-43: por_ccg_ra_cfg register summary,0xE00 : 0xEF8,por_ccg_ra_rni_ldid_to_exp_raid_reg0-31,RW,por_ccg_ra_rni_ldid_to_exp_raid_reg0-31
+Table 8-43: por_ccg_ra_cfg register summary,0xF00 : 0xFF8,por_ccg_ra_rnd_ldid_to_exp_raid_reg0-31,RW,por_ccg_ra_rnd_ldid_to_exp_raid_reg0-31
+Table 8-43: por_ccg_ra_cfg register summary,0x1000 : 0x13F8,por_ccg_ra_rnf_ldid_to_exp_raid_reg0-127,RW,por_ccg_ra_rnf_ldid_to_exp_raid_reg0-127
+Table 8-43: por_ccg_ra_cfg register summary,0x1400 : 0x15F8,por_ccg_ra_ha_ldid_to_exp_raid_reg0-63,RW,por_ccg_ra_ha_ldid_to_exp_raid_reg0-63
+Table 8-43: por_ccg_ra_cfg register summary,0x1600 : 0x1678,por_ccg_ra_hns_ldid_to_exp_raid_reg0-15,RW,por_ccg_ra_hns_ldid_to_exp_raid_reg0-15
+Table 8-43: por_ccg_ra_cfg register summary,0x1680 : 0x1A78,por_ccg_ra_rnf_ldid_to_ovrd_ldid_reg0-127,RW,por_ccg_ra_rnf_ldid_to_ovrd_ldid_reg0-127
+Table 8-43: por_ccg_ra_cfg register summary,0x1A80 : 0x1B78,por_ccg_ra_cml_port_aggr_grp0-31_addr_mask,RW,por_ccg_ra_cml_port_aggr_grp0-31_addr_mask
+Table 8-43: por_ccg_ra_cfg register summary,0x1B80 : 0x1BE0,por_ccg_ra_cml_port_aggr_grp_reg0-12,RW,por_ccg_ra_cml_port_aggr_grp_reg0-12
+Table 8-43: por_ccg_ra_cfg register summary,0x1BE8 : 0x1C18,por_ccg_ra_cml_port_aggr_ctrl_reg0-6,RW,por_ccg_ra_cml_port_aggr_ctrl_reg0-6
+Table 8-43: por_ccg_ra_cfg register summary,0x1C20 : 0x1E18,por_ccg_ra_ha_ldid_to_ovrd_ldid_reg0-63,RW,por_ccg_ra_ha_ldid_to_ovrd_ldid_reg0-63
+Table 8-43: por_ccg_ra_cfg register summary,0x1E38 : 0x2030,por_ccg_ra_ha_ldid_to_exp_raid_cpagen_reg0-63,RW,por_ccg_ra_ha_ldid_to_exp_raid_cpagen_reg0-63
+Table 8-43: por_ccg_ra_cfg register summary,0xD900,por_ccg_ra_pmu_event_sel,RW,por_ccg_ra_pmu_event_sel
+Table 8-43: por_ccg_ra_cfg register summary,0x4000,por_ccg_ra_ccprtcl_link0_ctl,RW,por_ccg_ra_ccprtcl_link0_ctl
+Table 8-43: por_ccg_ra_cfg register summary,0x4008,por_ccg_ra_ccprtcl_link0_status,RO,por_ccg_ra_ccprtcl_link0_status
+Table 8-43: por_ccg_ra_cfg register summary,0x4010,por_ccg_ra_ccprtcl_link1_ctl,RW,por_ccg_ra_ccprtcl_link1_ctl
+Table 8-43: por_ccg_ra_cfg register summary,0x4018,por_ccg_ra_ccprtcl_link1_status,RO,por_ccg_ra_ccprtcl_link1_status
+Table 8-43: por_ccg_ra_cfg register summary,0x4020,por_ccg_ra_ccprtcl_link2_ctl,RW,por_ccg_ra_ccprtcl_link2_ctl
+Table 8-43: por_ccg_ra_cfg register summary,0x4028,por_ccg_ra_ccprtcl_link2_status,RO,por_ccg_ra_ccprtcl_link2_status
+Table 8-43: por_ccg_ra_cfg register summary,0x4030,ccg_ra_c2c_non_caching_agent_id,RW,ccg_ra_c2c_non_caching_agent_id
+Table 8-43: por_ccg_ra_cfg register summary,0xA20,por_ccg_ra_datasource_ctl_link0,RW,por_ccg_ra_datasource_ctl_link0
+Table 8-43: por_ccg_ra_cfg register summary,0xA28,por_ccg_ra_datasource_ctl_link1,RW,por_ccg_ra_datasource_ctl_link1
+Table 8-43: por_ccg_ra_cfg register summary,0xA30,por_ccg_ra_datasource_ctl_link2,RW,por_ccg_ra_datasource_ctl_link2
+Table 8-43: por_ccg_ra_cfg register summary,{0-31} 0x3000 : 0x30F8,ra_rnsam_hashed_tgt_grp_cfg1_region0-31,RW,ra_rnsam_hashed_tgt_grp_cfg1_region0-31
+Table 8-43: por_ccg_ra_cfg register summary,{0-31} 0x3100 : 0x31F8,ra_rnsam_hashed_tgt_grp_cfg2_region0-31,RW,ra_rnsam_hashed_tgt_grp_cfg2_region0-31
+Table 8-43: por_ccg_ra_cfg register summary,{0-31} 0x3200 : 0x32F8,ra_rnsam_hashed_target_grp_secondary_cfg1_reg0-31,RW,ra_rnsam_hashed_target_grp_secondary_cfg1_reg0-31
+Table 8-43: por_ccg_ra_cfg register summary,{0-31} 0x3300 : 0x33F8,ra_rnsam_hashed_target_grp_secondary_cfg2_reg0-31,RW,ra_rnsam_hashed_target_grp_secondary_cfg2_reg0-31
+Table 8-43: por_ccg_ra_cfg register summary,{0-31} 0x3400 : 0x34F8,ra_rnsam_hashed_target_grp_hash_cntl_reg0-31,RW,ra_rnsam_hashed_target_grp_hash_cntl_reg0-31
+Table 8-43: por_ccg_ra_cfg register summary,{0-3} 0x3700 : 0x3718,ra_rnsam_hashed_target_group_hn_count_reg0-3,RW,ra_rnsam_hashed_target_group_hn_count_reg0-3
+Table 8-43: por_ccg_ra_cfg register summary,{0-31} 0x3500 : 0x35F8,ra_rnsam_hashed_target_grp_hnf_nodeid_reg0-31,RW,ra_rnsam_hashed_target_grp_hnf_nodeid_reg0-31
+Table 8-43: por_ccg_ra_cfg register summary,{0-7} 0x3780 : 0x37B8,ra_rnsam_hashed_target_grp_cal_mode_reg0-7,RW,ra_rnsam_hashed_target_grp_cal_mode_reg0-7
+Table 8-43: por_ccg_ra_cfg register summary,{0-31} 0x3840 : 0x3938,ra_rnsam_hashed_target_grp_compact_hash_ctrl0-31,RW,ra_rnsam_hashed_target_grp_compact_hash_ctrl0-31
+Table 8-43: por_ccg_ra_cfg register summary,{0-7} 0x3A00 : 0x3A38,ra_rnsam_hashed_target_grp_misc_nodeid_reg0-7,RW,ra_rnsam_hashed_target_grp_misc_nodeid_reg0-7
+Table 8-43: por_ccg_ra_cfg register summary,{0-7} 0x3B00 : 0x3B38,ra_rnsam_hashed_tgt_override_cam_reg0-7,RW,ra_rnsam_hashed_tgt_override_cam_reg0-7
+Table 8-43: por_ccg_ra_cfg register summary,0x37C0,ra_rnsam_hash_addr_mask_reg,RW,ra_rnsam_hash_addr_mask_reg
+Table 8-43: por_ccg_ra_cfg register summary,0x37C8,ra_rnsam_region_cmp_addr_mask_reg,RW,ra_rnsam_region_cmp_addr_mask_reg
+Table 8-43: por_ccg_ra_cfg register summary,0x37D0,ra_rnsam_status,RW,ra_rnsam_status
+Table 8-43: por_ccg_ra_cfg register summary,{0-7} 0x3800 : 0x3838,ra_rnsam_sam_generic_regs0-7,RW,ra_rnsam_sam_generic_regs0-7
+Table 8-94: por_ccla_cfg register summary,0x0,por_ccla_node_info,RO,por_ccla_node_info
+Table 8-94: por_ccla_cfg register summary,0x80,por_ccla_child_info,RO,por_ccla_child_info
+Table 8-94: por_ccla_cfg register summary,0x980,por_ccla_scr,RW,por_ccla_scr
+Table 8-94: por_ccla_cfg register summary,0x988,por_ccla_rcr,RW,por_ccla_rcr
+Table 8-94: por_ccla_cfg register summary,0x910,por_ccla_unit_info,RO,por_ccla_unit_info
+Table 8-94: por_ccla_cfg register summary,0xB00,por_ccla_cfg_ctl,RW,por_ccla_cfg_ctl
+Table 8-94: por_ccla_cfg register summary,0xB08,por_ccla_aux_ctl,RW,por_ccla_aux_ctl
+Table 8-94: por_ccla_cfg register summary,0xB10,por_ccla_c2c_packing_ctl,RW,por_ccla_c2c_packing_ctl
+Table 8-94: por_ccla_cfg register summary,0xC00,por_ccla_ccix_prop_capabilities,RO,por_ccla_ccix_prop_capabilities
+Table 8-94: por_ccla_cfg register summary,0xC08,por_ccla_cxs_attr_capabilities,RO,por_ccla_cxs_attr_capabilities
+Table 8-94: por_ccla_cfg register summary,0xD28,por_ccla_err_agent_id,RW,por_ccla_err_agent_id
+Table 8-94: por_ccla_cfg register summary,0xD30,por_ccla_agentid_to_portid_reg0,RW,por_ccla_agentid_to_portid_reg0
+Table 8-94: por_ccla_cfg register summary,0xD70,por_ccla_agentid_to_portid_val,RW,por_ccla_agentid_to_portid_val
+Table 8-94: por_ccla_cfg register summary,0xD78,por_ccla_portfwd_en,RW,por_ccla_portfwd_en
+Table 8-94: por_ccla_cfg register summary,0x1500,por_ccla_ide_freq_factor,RW,por_ccla_ide_freq_factor
+Table 8-94: por_ccla_cfg register summary,0x1458,por_ccla_ull_idle_counter,RW,por_ccla_ull_idle_counter
+Table 8-94: por_ccla_cfg register summary,0xD80,por_ccla_portfwd_status,RO,por_ccla_portfwd_status
+Table 8-94: por_ccla_cfg register summary,0xD88,por_ccla_portfwd_req,RW,por_ccla_portfwd_req
+Table 8-94: por_ccla_cfg register summary,0xD90,por_ccla_linkid_to_hops,RW,por_ccla_linkid_to_hops
+Table 8-94: por_ccla_cfg register summary,0xE00,por_ccla_cxl_link_rx_credit_ctl,RW,por_ccla_cxl_link_rx_credit_ctl
+Table 8-94: por_ccla_cfg register summary,0xE08,por_ccla_cxl_link_rx_credit_return_stat,RO,por_ccla_cxl_link_rx_credit_return_stat
+Table 8-94: por_ccla_cfg register summary,0xE10,por_ccla_cxl_link_tx_credit_stat,RO,por_ccla_cxl_link_tx_credit_stat
+Table 8-94: por_ccla_cfg register summary,0xE50,por_ccla_cxl_security_policy,RW,por_ccla_cxl_security_policy
+Table 8-94: por_ccla_cfg register summary,0xE78,por_ccla_cxl_hdm_decoder_capability,RO,por_ccla_cxl_hdm_decoder_capability
+Table 8-94: por_ccla_cfg register summary,0xE80,por_ccla_cxl_hdm_decoder_global_control,RW,por_ccla_cxl_hdm_decoder_global_control
+Table 8-94: por_ccla_cfg register summary,0x1040,por_ccla_cxl_hdm_decoder_0-7_base_low,RWL,por_ccla_cxl_hdm_decoder_0-7_base_low
+Table 8-94: por_ccla_cfg register summary,0x1080,por_ccla_cxl_hdm_decoder_0-7_base_high,RWL,por_ccla_cxl_hdm_decoder_0-7_base_high
+Table 8-94: por_ccla_cfg register summary,0x10C0,por_ccla_cxl_hdm_decoder_0-7_size_low,RWL,por_ccla_cxl_hdm_decoder_0-7_size_low
+Table 8-94: por_ccla_cfg register summary,0x1100,por_ccla_cxl_hdm_decoder_0-7_size_high,RWL,por_ccla_cxl_hdm_decoder_0-7_size_high
+Table 8-94: por_ccla_cfg register summary,0x1140,por_ccla_cxl_hdm_decoder_0-7_control,RWL,por_ccla_cxl_hdm_decoder_0-7_control
+Table 8-94: por_ccla_cfg register summary,0x1180,por_ccla_cxl_hdm_decoder_0-7_dpa_skip_low,RWL,por_ccla_cxl_hdm_decoder_0-7_dpa_skip_low
+Table 8-94: por_ccla_cfg register summary,0x11C0,por_ccla_cxl_hdm_decoder_0-7_dpa_skip_high,RWL,por_ccla_cxl_hdm_decoder_0-7_dpa_skip_high
+Table 8-94: por_ccla_cfg register summary,0x1200,por_ccla_cxl_dcd_region_base_address_low0-7,RW,por_ccla_cxl_dcd_region_base_address_low0-7
+Table 8-94: por_ccla_cfg register summary,0x1240,por_ccla_cxl_dcd_region_base_address_high0-7,RW,por_ccla_cxl_dcd_region_base_address_high0-7
+Table 8-94: por_ccla_cfg register summary,0x1280,por_ccla_cxl_dcd_region_max_address_low0-7,RW,por_ccla_cxl_dcd_region_max_address_low0-7
+Table 8-94: por_ccla_cfg register summary,0x12C0,por_ccla_cxl_dcd_region_max_address_high0-7,RW,por_ccla_cxl_dcd_region_max_address_high0-7
+Table 8-94: por_ccla_cfg register summary,0x1300,por_ccla_cxl_dcd_region_lut_control0-7,RW,por_ccla_cxl_dcd_region_lut_control0-7
+Table 8-94: por_ccla_cfg register summary,0x1340,por_ccla_cxl_dcd_write_intf,WO,por_ccla_cxl_dcd_write_intf
+Table 8-94: por_ccla_cfg register summary,0x1348,por_ccla_cxl_dcd_read_intf,RW,por_ccla_cxl_dcd_read_intf
+Table 8-94: por_ccla_cfg register summary,0xED0,por_ccla_snoop_filter_group_id,RW,por_ccla_snoop_filter_group_id
+Table 8-94: por_ccla_cfg register summary,0xED8,por_ccla_snoop_filter_effective_size,RW,por_ccla_snoop_filter_effective_size
+Table 8-94: por_ccla_cfg register summary,0xEE0,por_ccla_dvsec_cxl_range_1_base_high,RWL,por_ccla_dvsec_cxl_range_1_base_high
+Table 8-94: por_ccla_cfg register summary,0xEE8,por_ccla_dvsec_cxl_range_1_base_low,RWL,por_ccla_dvsec_cxl_range_1_base_low
+Table 8-94: por_ccla_cfg register summary,0xEF0,por_ccla_dvsec_cxl_range_2_base_high,RWL,por_ccla_dvsec_cxl_range_2_base_high
+Table 8-94: por_ccla_cfg register summary,0xEF8,por_ccla_dvsec_cxl_range_2_base_low,RWL,por_ccla_dvsec_cxl_range_2_base_low
+Table 8-94: por_ccla_cfg register summary,0x1000,por_ccla_dvsec_cxl_range_1_size_high,RW,por_ccla_dvsec_cxl_range_1_size_high
+Table 8-94: por_ccla_cfg register summary,0x1008,por_ccla_dvsec_cxl_range_1_size_low,RW,por_ccla_dvsec_cxl_range_1_size_low
+Table 8-94: por_ccla_cfg register summary,0x1010,por_ccla_dvsec_cxl_range_2_size_high,RW,por_ccla_dvsec_cxl_range_2_size_high
+Table 8-94: por_ccla_cfg register summary,0x1018,por_ccla_dvsec_cxl_range_2_size_low,RW,por_ccla_dvsec_cxl_range_2_size_low
+Table 8-94: por_ccla_cfg register summary,0xF00,por_ccla_dvsec_cxl_control,RWL,por_ccla_dvsec_cxl_control
+Table 8-94: por_ccla_cfg register summary,0xF08,por_ccla_dvsec_cxl_control2,RW,por_ccla_dvsec_cxl_control2
+Table 8-94: por_ccla_cfg register summary,0xF10,por_ccla_dvsec_cxl_lock,RW,por_ccla_dvsec_cxl_lock
+Table 8-94: por_ccla_cfg register summary,0x1F90,por_ccla_ras_err_en,RW,por_ccla_ras_err_en
+Table 8-94: por_ccla_cfg register summary,0x1F98,por_ccla_ras_viral_en,RW,por_ccla_ras_viral_en
+Table 8-94: por_ccla_cfg register summary,0xF18,por_ccla_dvsec_flex_bus_port_control,RW,por_ccla_dvsec_flex_bus_port_control
+Table 8-94: por_ccla_cfg register summary,0xF40,por_ccla_err_capabilities_control,RW,por_ccla_err_capabilities_control
+Table 8-94: por_ccla_cfg register summary,0xF58,por_ccla_IDE_key_refresh_time_control,RW,por_ccla_IDE_key_refresh_time_control
+Table 8-94: por_ccla_cfg register summary,0xF60,por_ccla_IDE_truncation_transmit_delay_control,RW,por_ccla_IDE_truncation_transmit_delay_control
+Table 8-94: por_ccla_cfg register summary,0xF90,por_ccla_IDE_outbound_state,RO,por_ccla_IDE_outbound_state
+Table 8-94: por_ccla_cfg register summary,0xF98,por_ccla_IDE_inbound_state,RO,por_ccla_IDE_inbound_state
+Table 8-94: por_ccla_cfg register summary,0xF70,por_ccla_ll_to_ull_msg,RW,por_ccla_ll_to_ull_msg
+Table 8-94: por_ccla_cfg register summary,0xF80,por_ccla_cxl_timeout_iso_ctl,RW,por_ccla_cxl_timeout_iso_ctl
+Table 8-94: por_ccla_cfg register summary,0xF88,por_ccla_cxl_timeout_iso_capability,RW,por_ccla_cxl_timeout_iso_capability
+Table 8-94: por_ccla_cfg register summary,0xF78,por_ccla_cxl_timeout_iso_status,RW,por_ccla_cxl_timeout_iso_status
+Table 8-94: por_ccla_cfg register summary,0x1020,por_ccla_timeout_base_value_cycles,RW,por_ccla_timeout_base_value_cycles
+Table 8-94: por_ccla_cfg register summary,0xE58,por_ccla_CXL_Cache_ID_Decoder_Capability,RW,por_ccla_CXL_Cache_ID_Decoder_Capability
+Table 8-94: por_ccla_cfg register summary,0xE60,por_ccla_CXL_Cache_ID_Decoder_Control,RW,por_ccla_CXL_Cache_ID_Decoder_Control
+Table 8-94: por_ccla_cfg register summary,0xE68,por_ccla_CXL_Cache_ID_Decoder_Status,RW,por_ccla_CXL_Cache_ID_Decoder_Status
+Table 8-94: por_ccla_cfg register summary,0xF28,por_ccla_root_port_n_security_policy,RW,por_ccla_root_port_n_security_policy
+Table 8-94: por_ccla_cfg register summary,0xF30,por_ccla_root_port_n_id,RW,por_ccla_root_port_n_id
+Table 8-94: por_ccla_cfg register summary,0xE18,por_ccla_cxl_link_layer_defeature,RW,por_ccla_cxl_link_layer_defeature
+Table 8-94: por_ccla_cfg register summary,0xE20,por_ccla_ull_ctl,RW,por_ccla_ull_ctl
+Table 8-94: por_ccla_cfg register summary,0xE28,por_ccla_ull_status,RO,por_ccla_ull_status
+Table 8-94: por_ccla_cfg register summary,0xE30,por_ccla_cxl_ll_errinject_ctl,RW,por_ccla_cxl_ll_errinject_ctl
+Table 8-94: por_ccla_cfg register summary,0xE38,por_ccla_cxl_ll_errinject_stat,RO,por_ccla_cxl_ll_errinject_stat
+Table 8-94: por_ccla_cfg register summary,0xE40,por_ccla_cxl_viral_prop_en,RW,por_ccla_cxl_viral_prop_en
+Table 8-94: por_ccla_cfg register summary,0xD908,por_ccla_pmu_event_sel,RW,por_ccla_pmu_event_sel
+Table 8-94: por_ccla_cfg register summary,0xF700,por_ccla_c2c_port_register_offset_header,RO,por_ccla_c2c_port_register_offset_header
+Table 8-94: por_ccla_cfg register summary,0xF708,por_ccla_c2c_port_register_offset_table_0,RO,por_ccla_c2c_port_register_offset_table_0
+Table 8-94: por_ccla_cfg register summary,0xF710,por_ccla_c2c_port_register_offset_table_1,RO,por_ccla_c2c_port_register_offset_table_1
+Table 8-94: por_ccla_cfg register summary,0xF718,por_ccla_c2c_port_capabilities_and_control_header,RO,por_ccla_c2c_port_capabilities_and_control_header
+Table 8-94: por_ccla_cfg register summary,0xF720,por_ccla_c2c_port_capabilities_1,RO,por_ccla_c2c_port_capabilities_1
+Table 8-94: por_ccla_cfg register summary,0xF728,por_ccla_c2c_port_capabilities_2,RO,por_ccla_c2c_port_capabilities_2
+Table 8-94: por_ccla_cfg register summary,0xF730,por_ccla_c2c_port_control_and_status,RW,por_ccla_c2c_port_control_and_status
+Table 8-94: por_ccla_cfg register summary,0xF738,por_ccla_c2c_port_ingressid_route_table_header,RO,por_ccla_c2c_port_ingressid_route_table_header
+Table 8-94: por_ccla_cfg register summary,0xF828,por_ccla_c2c_port_ingressid_route_table_capabilities,RO,por_ccla_c2c_port_ingressid_route_table_capabilities
+Table 8-94: por_ccla_cfg register summary,0xF740,por_ccla_c2c_port_ingressid_route_table_control_and_status,RW,por_ccla_c2c_port_ingressid_route_table_control_and_status
+Table 8-94: por_ccla_cfg register summary,0xF748,por_ccla_c2c_port_ingressid_route_entry_0,RW,por_ccla_c2c_port_ingressid_route_entry_0
+Table 8-94: por_ccla_cfg register summary,0xF750,por_ccla_c2c_port_egressid_route_table_header,RO,por_ccla_c2c_port_egressid_route_table_header
+Table 8-94: por_ccla_cfg register summary,0xF820,por_ccla_c2c_port_egressid_route_table_capabilities,RO,por_ccla_c2c_port_egressid_route_table_capabilities
+Table 8-94: por_ccla_cfg register summary,0xF758,por_ccla_c2c_port_egressid_route_table_control_and_status,RW,por_ccla_c2c_port_egressid_route_table_control_and_status
+Table 8-94: por_ccla_cfg register summary,0xF760,por_ccla_c2c_port_egressid_route_entry_0,RW,por_ccla_c2c_port_egressid_route_entry_0
+Table 8-94: por_ccla_cfg register summary,0xF768,por_ccla_c2c_logical_linkend_common_header,RO,por_ccla_c2c_logical_linkend_common_header
+Table 8-94: por_ccla_cfg register summary,0xF770,por_ccla_c2c_logical_linkend_offset_register,RO,por_ccla_c2c_logical_linkend_offset_register
+Table 8-94: por_ccla_cfg register summary,0xF778,por_ccla_c2c_logical_linkend_0-0_header,RO,por_ccla_c2c_logical_linkend_0-0_header
+Table 8-94: por_ccla_cfg register summary,0xF780,por_ccla_c2c_logical_linkend_0-0_control_and_status,RW,por_ccla_c2c_logical_linkend_0-0_control_and_status
+Table 8-94: por_ccla_cfg register summary,0xF788,por_ccla_c2c_logical_linkend_0-0_map_table,RW,por_ccla_c2c_logical_linkend_0-0_map_table
+Table 8-94: por_ccla_cfg register summary,0xF790,por_ccla_c2c_linkproperties_supported_uniform1_0-0,RO,por_ccla_c2c_linkproperties_supported_uniform1_0-0
+Table 8-94: por_ccla_cfg register summary,0xF798,por_ccla_c2c_linkproperties_advertised_uniform1_0-0,RW,por_ccla_c2c_linkproperties_advertised_uniform1_0-0
+Table 8-94: por_ccla_cfg register summary,0xF7A0,por_ccla_c2c_linkproperties_informed_uniform1_0-0,RO,por_ccla_c2c_linkproperties_informed_uniform1_0-0
+Table 8-94: por_ccla_cfg register summary,0xF7A8,por_ccla_c2c_linkproperties_negotiated_uniform1_0-0,RO,por_ccla_c2c_linkproperties_negotiated_uniform1_0-0
+Table 8-94: por_ccla_cfg register summary,0xF7B0,por_ccla_c2c_linkproperties_supported_rx1_0-0,RO,por_ccla_c2c_linkproperties_supported_rx1_0-0
+Table 8-94: por_ccla_cfg register summary,0xF7B8,por_ccla_c2c_linkproperties_advertised_rx1_0-0,RW,por_ccla_c2c_linkproperties_advertised_rx1_0-0
+Table 8-94: por_ccla_cfg register summary,0xF7C0,por_ccla_c2c_linkproperties_informed_rx1_0-0,RO,por_ccla_c2c_linkproperties_informed_rx1_0-0
+Table 8-94: por_ccla_cfg register summary,0xF7C8,por_ccla_c2c_linkproperties_negotiated_rx1_0-0,RO,por_ccla_c2c_linkproperties_negotiated_rx1_0-0
+Table 8-94: por_ccla_cfg register summary,0xF7D0,por_ccla_c2c_linkproperties_supported_tx1_0-0,RO,por_ccla_c2c_linkproperties_supported_tx1_0-0
+Table 8-94: por_ccla_cfg register summary,0xF7D8,por_ccla_c2c_linkproperties_advertised_tx1_0-0,RW,por_ccla_c2c_linkproperties_advertised_tx1_0-0
+Table 8-94: por_ccla_cfg register summary,0xF7E0,por_ccla_c2c_linkproperties_informed_tx1_0-0,RO,por_ccla_c2c_linkproperties_informed_tx1_0-0
+Table 8-94: por_ccla_cfg register summary,0xF7E8,por_ccla_c2c_linkproperties_negotiated_tx1_0-0,RO,por_ccla_c2c_linkproperties_negotiated_tx1_0-0
+Table 8-94: por_ccla_cfg register summary,0xF7F8,por_ccla_c2c_logical_linkend_0-0_mc_credit1,RW,por_ccla_c2c_logical_linkend_0-0_mc_credit1
+Table 8-94: por_ccla_cfg register summary,0xF800,por_ccla_c2c_logical_linkend_0-0_mc_credit2,RW,por_ccla_c2c_logical_linkend_0-0_mc_credit2
+Table 8-94: por_ccla_cfg register summary,0xF808,por_ccla_c2c_logical_linkend_0-0_mc_credit3,RW,por_ccla_c2c_logical_linkend_0-0_mc_credit3
+Table 8-94: por_ccla_cfg register summary,0xF810,por_ccla_c2c_logical_linkend_0-0_mc_credit4,RW,por_ccla_c2c_logical_linkend_0-0_mc_credit4
+Table 8-94: por_ccla_cfg register summary,0xF818,por_ccla_c2c_logical_linkend_0-0_mc_credit5,RW,por_ccla_c2c_logical_linkend_0-0_mc_credit5
+Table 8-94: por_ccla_cfg register summary,0xE000,por_ccla_errfr,RO,por_ccla_errfr
+Table 8-94: por_ccla_cfg register summary,0xE008,por_ccla_errctlr,RW,por_ccla_errctlr
+Table 8-94: por_ccla_cfg register summary,0xE010,por_ccla_errstatus,W1C,por_ccla_errstatus
+Table 8-94: por_ccla_cfg register summary,0xE018,por_ccla_erraddr,RW,por_ccla_erraddr
+Table 8-94: por_ccla_cfg register summary,0xE028,por_ccla_errmisc1,RW,por_ccla_errmisc1
+Table 8-94: por_ccla_cfg register summary,0xE800,por_ccla_errpfgf,RO,por_ccla_errpfgf
+Table 8-94: por_ccla_cfg register summary,0xE808,por_ccla_errpfgctl,RW,por_ccla_errpfgctl
+Table 8-94: por_ccla_cfg register summary,0xE810,por_ccla_errpfgcdn,RW,por_ccla_errpfgcdn
+Table 8-94: por_ccla_cfg register summary,0xE040,por_ccla_errfr_NS,RO,por_ccla_errfr_NS
+Table 8-94: por_ccla_cfg register summary,0xE048,por_ccla_errctlr_NS,RW,por_ccla_errctlr_NS
+Table 8-94: por_ccla_cfg register summary,0xE050,por_ccla_errstatus_NS,W1C,por_ccla_errstatus_NS
+Table 8-94: por_ccla_cfg register summary,0xE058,por_ccla_erraddr_NS,RW,por_ccla_erraddr_NS
+Table 8-94: por_ccla_cfg register summary,0xE068,por_ccla_errmisc1_NS,RW,por_ccla_errmisc1_NS
+Table 8-94: por_ccla_cfg register summary,0xE840,por_ccla_errpfgf_NS,RO,por_ccla_errpfgf_NS
+Table 8-94: por_ccla_cfg register summary,0xE848,por_ccla_errpfgctl_NS,RW,por_ccla_errpfgctl_NS
+Table 8-94: por_ccla_cfg register summary,0xE850,por_ccla_errpfgcdn_NS,RW,por_ccla_errpfgcdn_NS
+Table 8-94: por_ccla_cfg register summary,0xED00,por_ccla_errcapctl,RW,por_ccla_errcapctl
+Table 8-94: por_ccla_cfg register summary,0xEE00,por_ccla_errgsr,RO,por_ccla_errgsr
+Table 8-94: por_ccla_cfg register summary,0xEE10,por_ccla_erriidr,RO,por_ccla_erriidr
+Table 8-94: por_ccla_cfg register summary,0xEFA8,por_ccla_errdevaff,RO,por_ccla_errdevaff
+Table 8-94: por_ccla_cfg register summary,0xEFB8,por_ccla_errdevarch,RO,por_ccla_errdevarch
+Table 8-94: por_ccla_cfg register summary,0xEFC8,por_ccla_errdevid,RO,por_ccla_errdevid
+Table 8-94: por_ccla_cfg register summary,0xEFD0,por_ccla_errpidr45,RO,por_ccla_errpidr45
+Table 8-94: por_ccla_cfg register summary,0xEFE0,por_ccla_errpidr01,RO,por_ccla_errpidr01
+Table 8-94: por_ccla_cfg register summary,0xEFE8,por_ccla_errpidr23,RO,por_ccla_errpidr23
+Table 8-94: por_ccla_cfg register summary,0xEFF0,por_ccla_errcidr01,RO,por_ccla_errcidr01
+Table 8-94: por_ccla_cfg register summary,0xEFF8,por_ccla_errcidr23,RO,por_ccla_errcidr23
+Table 8-94: por_ccla_cfg register summary,0x1BF8,por_ccg_multi_mesh_chn_ctrl,RW,por_ccg_multi_mesh_chn_ctrl
+Table 8-94: por_ccla_cfg register summary,0x1C08,por_ccg_multi_mesh_chn_sel_0-15,RW,por_ccg_multi_mesh_chn_sel_0-15
+Table 8-238: por_cfgm_cfg register summary,0x0,por_cfgm_node_info,RO,por_cfgm_node_info
+Table 8-238: por_cfgm_cfg register summary,0x8,por_cfgm_periph_id_0_periph_id_1,RO,por_cfgm_periph_id_0_periph_id_1
+Table 8-238: por_cfgm_cfg register summary,0x10,por_cfgm_periph_id_2_periph_id_3,RO,por_cfgm_periph_id_2_periph_id_3
+Table 8-238: por_cfgm_cfg register summary,0x18,por_cfgm_periph_id_4_periph_id_5,RO,por_cfgm_periph_id_4_periph_id_5
+Table 8-238: por_cfgm_cfg register summary,0x20,por_cfgm_periph_id_6_periph_id_7,RO,por_cfgm_periph_id_6_periph_id_7
+Table 8-238: por_cfgm_cfg register summary,0x28,por_cfgm_component_id_0_component_id_1,RO,por_cfgm_component_id_0_component_id_1
+Table 8-238: por_cfgm_cfg register summary,0x30,por_cfgm_component_id_2_component_id_3,RO,por_cfgm_component_id_2_component_id_3
+Table 8-238: por_cfgm_cfg register summary,0x80,por_cfgm_child_info,RO,por_cfgm_child_info
+Table 8-238: por_cfgm_cfg register summary,0x980,por_cfgm_secure_access,RW,por_cfgm_secure_access
+Table 8-238: por_cfgm_cfg register summary,0x988,por_cfgm_rcr,RW,por_cfgm_rcr
+Table 8-238: por_cfgm_cfg register summary,0x990,por_cfgm_scr,RW,por_cfgm_scr
+Table 8-238: por_cfgm_cfg register summary,0xA00,por_cfgm_ras_mode,RW,por_cfgm_ras_mode
+Table 8-238: por_cfgm_cfg register summary,0x4000 : 0x10D76,por_errfr_0-671%56_sra_0-671/56,RO,por_errfr_0-671%56_sra_0-671/56
+Table 8-238: por_cfgm_cfg register summary,0x4010 : 0x10D86,por_errstatus_0-671%56_sra_0-671/56,W1C,por_errstatus_0-671%56_sra_0-671/56
+Table 8-238: por_cfgm_cfg register summary,0x4E00 : 0xFE00,por_errgsr_sra_0-11,RO,por_errgsr_sra_0-11
+Table 8-238: por_cfgm_cfg register summary,0x4E10 : 0xFE10,por_erriidr_sra_0-11,RO,por_erriidr_sra_0-11
+Table 8-238: por_cfgm_cfg register summary,0x4FA8 : 0xFFA8,por_errdevaff_sra_0-11,RO,por_errdevaff_sra_0-11
+Table 8-238: por_cfgm_cfg register summary,0x4FB8 : 0xFFB8,por_errdevarch_sra_0-11,RO,por_errdevarch_sra_0-11
+Table 8-238: por_cfgm_cfg register summary,0x4FC8 : 0xFFC8,por_errdevid_sra_0-11,RO,por_errdevid_sra_0-11
+Table 8-238: por_cfgm_cfg register summary,0x4FD0 : 0xFFD0,por_errpidr45_sra_0-11,RO,por_errpidr45_sra_0-11
+Table 8-238: por_cfgm_cfg register summary,0x4FE0 : 0xFFE0,por_errpidr01_sra_0-11,RO,por_errpidr01_sra_0-11
+Table 8-238: por_cfgm_cfg register summary,0x4FE8 : 0xFFE8,por_errpidr23_sra_0-11,RO,por_errpidr23_sra_0-11
+Table 8-238: por_cfgm_cfg register summary,0x4FF0 : 0xFFF0,por_errcidr01_sra_0-11,RO,por_errcidr01_sra_0-11
+Table 8-238: por_cfgm_cfg register summary,0x4FF8 : 0xFFF8,por_errcidr23_sra_0-11,RO,por_errcidr23_sra_0-11
+Table 8-238: por_cfgm_cfg register summary,0x900,por_info_global,RO,por_info_global
+Table 8-238: por_cfgm_cfg register summary,0x908,por_info_global_1,RO,por_info_global_1
+Table 8-238: por_cfgm_cfg register summary,0x1900,por_ppu_qactive_hyst,RW,por_ppu_qactive_hyst
+Table 8-238: por_cfgm_cfg register summary,{0-15} 0x1980 : 0x19F8,por_ppu_int_enable0-15,RW,por_ppu_int_enable0-15
+Table 8-238: por_cfgm_cfg register summary,{0-15} 0x1A00 : 0x1A78,por_ppu_int_status0-15,W1C,por_ppu_int_status0-15
+Table 8-238: por_cfgm_cfg register summary,{0-15} 0x1A80 : 0x1AF8,por_mpam_s_err_int_status0-15,W1C,por_mpam_s_err_int_status0-15
+Table 8-238: por_cfgm_cfg register summary,{0-15} 0x1B00 : 0x1B78,por_mpam_ns_err_int_status0-15,W1C,por_mpam_ns_err_int_status0-15
+Table 8-238: por_cfgm_cfg register summary,{0-15} 0x1B80 : 0x1BF8,por_mpam_rt_err_int_status0-15,W1C,por_mpam_rt_err_int_status0-15
+Table 8-238: por_cfgm_cfg register summary,{0-15} 0x1C00 : 0x1C78,por_mpam_rl_err_int_status0-15,W1C,por_mpam_rl_err_int_status0-15
+Table 8-238: por_cfgm_cfg register summary,0x100 : 0x8F8,por_cfgm_child_pointer_0-255,RO,por_cfgm_child_pointer_0-255
+Table 8-273: por_cxlapb_cfg register summary,0x1110,por_cxlapb_link_rx_credit_ctl,RW,por_cxlapb_link_rx_credit_ctl
+Table 8-273: por_cxlapb_cfg register summary,0x1118,por_cxlapb_link_rx_credit_return_stat,RO,por_cxlapb_link_rx_credit_return_stat
+Table 8-273: por_cxlapb_cfg register summary,0x1120,por_cxlapb_link_tx_credit_stat,RO,por_cxlapb_link_tx_credit_stat
+Table 8-273: por_cxlapb_cfg register summary,0x1060,por_cxlapb_cxl_security_policy,RW,por_cxlapb_cxl_security_policy
+Table 8-273: por_cxlapb_cfg register summary,0x1200,por_cxlapb_cxl_hdm_decoder_capability,RO,por_cxlapb_cxl_hdm_decoder_capability
+Table 8-273: por_cxlapb_cfg register summary,0x1204,por_cxlapb_cxl_hdm_decoder_global_control,RW,por_cxlapb_cxl_hdm_decoder_global_control
+Table 8-273: por_cxlapb_cfg register summary,0x1210,por_cxlapb_cxl_hdm_decoder_0-7_base_low,RWL,por_cxlapb_cxl_hdm_decoder_0-7_base_low
+Table 8-273: por_cxlapb_cfg register summary,0x1214,por_cxlapb_cxl_hdm_decoder_0-7_base_high,RWL,por_cxlapb_cxl_hdm_decoder_0-7_base_high
+Table 8-273: por_cxlapb_cfg register summary,0x1218,por_cxlapb_cxl_hdm_decoder_0-7_size_low,RWL,por_cxlapb_cxl_hdm_decoder_0-7_size_low
+Table 8-273: por_cxlapb_cfg register summary,0x121C,por_cxlapb_cxl_hdm_decoder_0-7_size_high,RWL,por_cxlapb_cxl_hdm_decoder_0-7_size_high
+Table 8-273: por_cxlapb_cfg register summary,0x1220,por_cxlapb_cxl_hdm_decoder_0-7_control,RWL,por_cxlapb_cxl_hdm_decoder_0-7_control
+Table 8-273: por_cxlapb_cfg register summary,0x1224,por_cxlapb_cxl_hdm_decoder_0-7_dpa_skip_low,RWL,por_cxlapb_cxl_hdm_decoder_0-7_dpa_skip_low
+Table 8-273: por_cxlapb_cfg register summary,0x1228,por_cxlapb_cxl_hdm_decoder_0-7_dpa_skip_high,RWL,por_cxlapb_cxl_hdm_decoder_0-7_dpa_skip_high
+Table 8-273: por_cxlapb_cfg register summary,0x1800,por_cxlapb_snoop_filter_group_id,RO,por_cxlapb_snoop_filter_group_id
+Table 8-273: por_cxlapb_cfg register summary,0x1804,por_cxlapb_snoop_filter_effective_size,RO,por_cxlapb_snoop_filter_effective_size
+Table 8-273: por_cxlapb_cfg register summary,0x120,por_cxlapb_dvsec_cxl_range_1_base_high,RWL,por_cxlapb_dvsec_cxl_range_1_base_high
+Table 8-273: por_cxlapb_cfg register summary,0x124,por_cxlapb_dvsec_cxl_range_1_base_low,RWL,por_cxlapb_dvsec_cxl_range_1_base_low
+Table 8-273: por_cxlapb_cfg register summary,0x130,por_cxlapb_dvsec_cxl_range_2_base_high,RWL,por_cxlapb_dvsec_cxl_range_2_base_high
+Table 8-273: por_cxlapb_cfg register summary,0x134,por_cxlapb_dvsec_cxl_range_2_base_low,RWL,por_cxlapb_dvsec_cxl_range_2_base_low
+Table 8-273: por_cxlapb_cfg register summary,0x118,por_cxlapb_dvsec_cxl_range_1_size_high,RO,por_cxlapb_dvsec_cxl_range_1_size_high
+Table 8-273: por_cxlapb_cfg register summary,0x11C,por_cxlapb_dvsec_cxl_range_1_size_low,RO,por_cxlapb_dvsec_cxl_range_1_size_low
+Table 8-273: por_cxlapb_cfg register summary,0x128,por_cxlapb_dvsec_cxl_range_2_size_high,RO,por_cxlapb_dvsec_cxl_range_2_size_high
+Table 8-273: por_cxlapb_cfg register summary,0x12C,por_cxlapb_dvsec_cxl_range_2_size_low,RO,por_cxlapb_dvsec_cxl_range_2_size_low
+Table 8-273: por_cxlapb_cfg register summary,0x10C,por_cxlapb_dvsec_cxl_control,RWL,por_cxlapb_dvsec_cxl_control
+Table 8-273: por_cxlapb_cfg register summary,0x110,por_cxlapb_dvsec_cxl_control2,RW,por_cxlapb_dvsec_cxl_control2
+Table 8-273: por_cxlapb_cfg register summary,0x114,por_cxlapb_dvsec_cxl_lock,RW,por_cxlapb_dvsec_cxl_lock
+Table 8-273: por_cxlapb_cfg register summary,0x20C,por_cxlapb_dvsec_flex_bus_port_control,RW,por_cxlapb_dvsec_flex_bus_port_control
+Table 8-273: por_cxlapb_cfg register summary,0x1014,por_cxlapb_err_capabilities_control,RW,por_cxlapb_err_capabilities_control
+Table 8-273: por_cxlapb_cfg register summary,0x1858,por_cxlapb_IDE_key_refresh_time_control,RW,por_cxlapb_IDE_key_refresh_time_control
+Table 8-273: por_cxlapb_cfg register summary,0x185C,por_cxlapb_IDE_truncation_transmit_delay_control,RW,por_cxlapb_IDE_truncation_transmit_delay_control
+Table 8-273: por_cxlapb_cfg register summary,0x0,por_cxlapb_ll_to_ull_msg,RW,por_cxlapb_ll_to_ull_msg
+Table 8-273: por_cxlapb_cfg register summary,0x1908,por_cxlapb_cxl_timeout_iso_ctl,RW,por_cxlapb_cxl_timeout_iso_ctl
+Table 8-273: por_cxlapb_cfg register summary,0x1900,por_cxlapb_cxl_timeout_iso_capability,RO,por_cxlapb_cxl_timeout_iso_capability
+Table 8-273: por_cxlapb_cfg register summary,0x190C,por_cxlapb_cxl_timeout_iso_status,RW,por_cxlapb_cxl_timeout_iso_status
+Table 8-273: por_cxlapb_cfg register summary,0x1980,por_cxlapb_CXL_Cache_ID_Decoder_Capability,RO,por_cxlapb_CXL_Cache_ID_Decoder_Capability
+Table 8-273: por_cxlapb_cfg register summary,0x1984,por_cxlapb_CXL_Cache_ID_Decoder_Control,RW,por_cxlapb_CXL_Cache_ID_Decoder_Control
+Table 8-273: por_cxlapb_cfg register summary,0x1988,por_cxlapb_CXL_Cache_ID_Decoder_Status,RO,por_cxlapb_CXL_Cache_ID_Decoder_Status
+Table 8-273: por_cxlapb_cfg register summary,0x1130,por_cxlapb_link_layer_defeature,RW,por_cxlapb_link_layer_defeature
+Table 8-273: por_cxlapb_cfg register summary,0x2000,por_c2capb_c2c_port_register_offset_header,RO,por_c2capb_c2c_port_register_offset_header
+Table 8-273: por_cxlapb_cfg register summary,0x2008,por_c2capb_c2c_port_register_offset_table_0,RO,por_c2capb_c2c_port_register_offset_table_0
+Table 8-273: por_cxlapb_cfg register summary,0x2010,por_c2capb_c2c_port_register_offset_table_1,RO,por_c2capb_c2c_port_register_offset_table_1
+Table 8-273: por_cxlapb_cfg register summary,0x2020,por_c2capb_c2c_port_capabilities_and_control_header,RO,por_c2capb_c2c_port_capabilities_and_control_header
+Table 8-273: por_cxlapb_cfg register summary,0x2028,por_c2capb_c2c_port_capabilities_1,RO,por_c2capb_c2c_port_capabilities_1
+Table 8-273: por_cxlapb_cfg register summary,0x2030,por_c2capb_c2c_port_capabilities_2,RO,por_c2capb_c2c_port_capabilities_2
+Table 8-273: por_cxlapb_cfg register summary,0x2040,por_c2capb_c2c_port_control_and_status,RW,por_c2capb_c2c_port_control_and_status
+Table 8-273: por_cxlapb_cfg register summary,0x2060,por_c2capb_c2c_port_ingressid_route_table_header,RO,por_c2capb_c2c_port_ingressid_route_table_header
+Table 8-273: por_cxlapb_cfg register summary,0x2068,por_c2capb_c2c_port_ingressid_route_table_capabilities,RO,por_c2capb_c2c_port_ingressid_route_table_capabilities
+Table 8-273: por_cxlapb_cfg register summary,0x2080,por_c2capb_c2c_port_ingressid_route_table_,RW,por_c2capb_c2c_port_ingressid_route_table_control_and_status
+Table 8-273: por_cxlapb_cfg register summary,0x20A0,por_c2capb_c2c_port_ingressid_route_entry_0,RW,por_c2capb_c2c_port_ingressid_route_entry_0
+Table 8-273: por_cxlapb_cfg register summary,0x20B0,por_c2capb_c2c_port_egressid_route_table_header,RO,por_c2capb_c2c_port_egressid_route_table_header
+Table 8-273: por_cxlapb_cfg register summary,0x20B8,por_c2capb_c2c_port_egressid_route_table_capabilities,RO,por_c2capb_c2c_port_egressid_route_table_capabilities
+Table 8-273: por_cxlapb_cfg register summary,0x20D0,por_c2capb_c2c_port_egressid_route_table_,RW,por_c2capb_c2c_port_egressid_route_table_control_and_status
+Table 8-273: por_cxlapb_cfg register summary,0x20F0,por_c2capb_c2c_port_egressid_route_entry_0,RW,por_c2capb_c2c_port_egressid_route_entry_0
+Table 8-273: por_cxlapb_cfg register summary,0x2200,por_c2capb_c2c_logical_linkend_common_header,RO,por_c2capb_c2c_logical_linkend_common_header
+Table 8-273: por_cxlapb_cfg register summary,0x2220,por_c2capb_c2c_logical_linkend_offset_register,RO,por_c2capb_c2c_logical_linkend_offset_register
+Table 8-273: por_cxlapb_cfg register summary,0x2240,por_c2capb_c2c_logical_linkend_0-0_header,RO,por_c2capb_c2c_logical_linkend_0-0_header
+Table 8-273: por_cxlapb_cfg register summary,0x2258,por_c2capb_c2c_logical_linkend_0-0_control_and_status,RW,por_c2capb_c2c_logical_linkend_0-0_control_and_status
+Table 8-273: por_cxlapb_cfg register summary,0x2268,por_c2capb_c2c_logical_linkend_0-0_map_table,RW,por_c2capb_c2c_logical_linkend_0-0_map_table
+Table 8-273: por_cxlapb_cfg register summary,0x2280,por_c2capb_c2c_linkproperties_supported_uniform1_0-0,RO,por_c2capb_c2c_linkproperties_supported_uniform1_0-0
+Table 8-273: por_cxlapb_cfg register summary,0x22C0,por_c2capb_c2c_linkproperties_advertised_uniform1_0-0,RW,por_c2capb_c2c_linkproperties_advertised_uniform1_0-0
+Table 8-273: por_cxlapb_cfg register summary,0x2300,por_c2capb_c2c_linkproperties_informed_uniform1_0-0,RO,por_c2capb_c2c_linkproperties_informed_uniform1_0-0
+Table 8-273: por_cxlapb_cfg register summary,0x2340,por_c2capb_c2c_linkproperties_negotiated_uniform1_0-0,RO,por_c2capb_c2c_linkproperties_negotiated_uniform1_0-0
+Table 8-273: por_cxlapb_cfg register summary,0x2290,por_c2capb_c2c_linkproperties_supported_rx1_0-0,RO,por_c2capb_c2c_linkproperties_supported_rx1_0-0
+Table 8-273: por_cxlapb_cfg register summary,0x22D0,por_c2capb_c2c_linkproperties_advertised_rx1_0-0,RW,por_c2capb_c2c_linkproperties_advertised_rx1_0-0
+Table 8-273: por_cxlapb_cfg register summary,0x2310,por_c2capb_c2c_linkproperties_informed_rx1_0-0,RO,por_c2capb_c2c_linkproperties_informed_rx1_0-0
+Table 8-273: por_cxlapb_cfg register summary,0x2350,por_c2capb_c2c_linkproperties_negotiated_rx1_0-0,RO,por_c2capb_c2c_linkproperties_negotiated_rx1_0-0
+Table 8-273: por_cxlapb_cfg register summary,0x22A0,por_c2capb_c2c_linkproperties_supported_tx1_0-0,RO,por_c2capb_c2c_linkproperties_supported_tx1_0-0
+Table 8-273: por_cxlapb_cfg register summary,0x22E0,por_c2capb_c2c_linkproperties_advertised_tx1_0-0,RW,por_c2capb_c2c_linkproperties_advertised_tx1_0-0
+Table 8-273: por_cxlapb_cfg register summary,0x2320,por_c2capb_c2c_linkproperties_informed_tx1_0-0,RO,por_c2capb_c2c_linkproperties_informed_tx1_0-0
+Table 8-273: por_cxlapb_cfg register summary,0x2360,por_c2capb_c2c_linkproperties_negotiated_tx1_0-0,RO,por_c2capb_c2c_linkproperties_negotiated_tx1_0-0
+Table 8-273: por_cxlapb_cfg register summary,0x2388,por_c2capb_c2c_logical_linkend_0-0_mc_credit1,RW,por_c2capb_c2c_logical_linkend_0-0_mc_credit1
+Table 8-273: por_cxlapb_cfg register summary,0x2390,por_c2capb_c2c_logical_linkend_0-0_mc_credit2,RW,por_c2capb_c2c_logical_linkend_0-0_mc_credit2
+Table 8-273: por_cxlapb_cfg register summary,0x2398,por_c2capb_c2c_logical_linkend_0-0_mc_credit3,RW,por_c2capb_c2c_logical_linkend_0-0_mc_credit3
+Table 8-273: por_cxlapb_cfg register summary,0x23A0,por_c2capb_c2c_logical_linkend_0-0_mc_credit4,RW,por_c2capb_c2c_logical_linkend_0-0_mc_credit4
+Table 8-273: por_cxlapb_cfg register summary,0x23A8,por_c2capb_c2c_logical_linkend_0-0_mc_credit5,RW,por_c2capb_c2c_logical_linkend_0-0_mc_credit5
+Table 8-349: por_dn_cfg register summary,0x0,por_dn_node_info,RO,por_dn_node_info
+Table 8-349: por_dn_cfg register summary,0x80,por_dn_child_info,RO,por_dn_child_info
+Table 8-349: por_dn_cfg register summary,0x900,por_dn_build_info,RO,por_dn_build_info
+Table 8-349: por_dn_cfg register summary,0x980,por_dn_rcr,RW,por_dn_rcr
+Table 8-349: por_dn_cfg register summary,0x988,por_dn_scr,RW,por_dn_scr
+Table 8-349: por_dn_cfg register summary,0xA00,por_dn_cfg_ctl,RW,por_dn_cfg_ctl
+Table 8-349: por_dn_cfg register summary,0xA08,por_dn_aux_ctl,RW,por_dn_aux_ctl
+Table 8-349: por_dn_cfg register summary,0xC00 : 0xF48,por_dn_vmf0-15_ctrl,RW,por_dn_vmf0-15_ctrl
+Table 8-349: por_dn_cfg register summary,0xC08 : 0xF50,por_dn_vmf0-15_rnf0,RW,por_dn_vmf0-15_rnf0
+Table 8-349: por_dn_cfg register summary,0xC10 : 0xF58,por_dn_vmf0-15_rnf1,RW,por_dn_vmf0-15_rnf1
+Table 8-349: por_dn_cfg register summary,0xC18 : 0xF60,por_dn_vmf0-15_rnf2,RW,por_dn_vmf0-15_rnf2
+Table 8-349: por_dn_cfg register summary,0xC20 : 0xF68,por_dn_vmf0-15_rnf3,RW,por_dn_vmf0-15_rnf3
+Table 8-349: por_dn_cfg register summary,0xC28 : 0xF70,por_dn_vmf0-15_rnd0,RW,por_dn_vmf0-15_rnd0
+Table 8-349: por_dn_cfg register summary,0xC30 : 0xF78,por_dn_vmf0-15_cxra,RW,por_dn_vmf0-15_cxra
+Table 8-349: por_dn_cfg register summary,0xF80 : 0xF98,por_dn_domain_rnf0-3,RW,por_dn_domain_rnf0-3
+Table 8-349: por_dn_cfg register summary,0xFA0,por_dn_domain_rnd0,RW,por_dn_domain_rnd0
+Table 8-349: por_dn_cfg register summary,0xFA8,por_dn_domain_cxra,RW,por_dn_domain_cxra
+Table 8-349: por_dn_cfg register summary,0xFB0 : 0x1028,por_dn_vmf0-15_rnd1,RW,por_dn_vmf0-15_rnd1
+Table 8-349: por_dn_cfg register summary,0x1030,por_dn_domain_rnd1,RW,por_dn_domain_rnd1
+Table 8-349: por_dn_cfg register summary,0x1038,por_dn_domain_cxra_cc,RW,por_dn_domain_cxra_cc
+Table 8-349: por_dn_cfg register summary,0x1040 : 0x1388,por_dn_vmf16-31_ctrl,RW,por_dn_vmf16-31_ctrl
+Table 8-349: por_dn_cfg register summary,0x1048 : 0x1390,por_dn_vmf16-31_rnf0,RW,por_dn_vmf16-31_rnf0
+Table 8-349: por_dn_cfg register summary,0x1050 : 0x1398,por_dn_vmf16-31_rnf1,RW,por_dn_vmf16-31_rnf1
+Table 8-349: por_dn_cfg register summary,0x1058 : 0x13A0,por_dn_vmf16-31_rnf2,RW,por_dn_vmf16-31_rnf2
+Table 8-349: por_dn_cfg register summary,0x1060 : 0x13A8,por_dn_vmf16-31_rnf3,RW,por_dn_vmf16-31_rnf3
+Table 8-349: por_dn_cfg register summary,0x1068 : 0x13B0,por_dn_vmf16-31_rnd0,RW,por_dn_vmf16-31_rnd0
+Table 8-349: por_dn_cfg register summary,0x1070 : 0x13B8,por_dn_vmf16-31_cxra,RW,por_dn_vmf16-31_cxra
+Table 8-349: por_dn_cfg register summary,0x13C0 : 0x1438,por_dn_vmf16-31_rnd1,RW,por_dn_vmf16-31_rnd1
+Table 8-349: por_dn_cfg register summary,0xD900,por_dn_pmu_event_sel,RW,por_dn_pmu_event_sel
+Table 8-379: por_dt_cfg register summary,0x0,por_dt_node_info,RO,por_dt_node_info
+Table 8-379: por_dt_cfg register summary,0x80,por_dt_child_info,RO,por_dt_child_info
+Table 8-379: por_dt_cfg register summary,0x980,por_dt_secure_access,RW,por_dt_secure_access
+Table 8-379: por_dt_cfg register summary,0x988,por_dt_pmscr,RW,por_dt_pmscr
+Table 8-379: por_dt_cfg register summary,0x990,por_dt_pmrcr,RW,por_dt_pmrcr
+Table 8-379: por_dt_cfg register summary,0xA00,por_dt_dtc_ctl,RW,por_dt_dtc_ctl
+Table 8-379: por_dt_cfg register summary,0xA10,por_dt_trigger_status,RO,por_dt_trigger_status
+Table 8-379: por_dt_cfg register summary,0xA20,por_dt_trigger_status_clr,WO,por_dt_trigger_status_clr
+Table 8-379: por_dt_cfg register summary,0xA30,por_dt_trace_control,RW,por_dt_trace_control
+Table 8-379: por_dt_cfg register summary,0xA48,por_dt_traceid,RW,por_dt_traceid
+Table 8-379: por_dt_cfg register summary,0xD900,por_dt_pmevcntAB,RW,por_dt_pmevcntAB
+Table 8-379: por_dt_cfg register summary,0xD910,por_dt_pmevcntCD,RW,por_dt_pmevcntCD
+Table 8-379: por_dt_cfg register summary,0xD920,por_dt_pmevcntEF,RW,por_dt_pmevcntEF
+Table 8-379: por_dt_cfg register summary,0xD930,por_dt_pmevcntGH,RW,por_dt_pmevcntGH
+Table 8-379: por_dt_cfg register summary,0xD940,por_dt_pmccntr,RW,por_dt_pmccntr
+Table 8-379: por_dt_cfg register summary,0xD950,por_dt_pmevcntsrAB,RW,por_dt_pmevcntsrAB
+Table 8-379: por_dt_cfg register summary,0xD960,por_dt_pmevcntsrCD,RW,por_dt_pmevcntsrCD
+Table 8-379: por_dt_cfg register summary,0xD970,por_dt_pmevcntsrEF,RW,por_dt_pmevcntsrEF
+Table 8-379: por_dt_cfg register summary,0xD980,por_dt_pmevcntsrGH,RW,por_dt_pmevcntsrGH
+Table 8-379: por_dt_cfg register summary,0xD990,por_dt_pmccntrsr,RW,por_dt_pmccntrsr
+Table 8-379: por_dt_cfg register summary,0xDA00,por_dt_pmcr,RW,por_dt_pmcr
+Table 8-379: por_dt_cfg register summary,0xDA18,por_dt_pmovsr,RO,por_dt_pmovsr
+Table 8-379: por_dt_cfg register summary,0xDA20,por_dt_pmovsr_clr,WO,por_dt_pmovsr_clr
+Table 8-379: por_dt_cfg register summary,0xDA28,por_dt_pmssr,RO,por_dt_pmssr
+Table 8-379: por_dt_cfg register summary,0xDA30,por_dt_pmsrr,WO,por_dt_pmsrr
+Table 8-379: por_dt_cfg register summary,0xFA0,por_dt_claim,RW,por_dt_claim
+Table 8-379: por_dt_cfg register summary,0xFA8,por_dt_devaff,RO,por_dt_devaff
+Table 8-379: por_dt_cfg register summary,0xFB0,por_dt_lsr,RO,por_dt_lsr
+Table 8-379: por_dt_cfg register summary,0xFB8,por_dt_authstatus_devarch,RO,por_dt_authstatus_devarch
+Table 8-379: por_dt_cfg register summary,0xFC0,por_dt_devid,RO,por_dt_devid
+Table 8-379: por_dt_cfg register summary,0xFC8,por_dt_devtype,RO,por_dt_devtype
+Table 8-379: por_dt_cfg register summary,0xFD0,por_dt_pidr45,RO,por_dt_pidr45
+Table 8-379: por_dt_cfg register summary,0xFD8,por_dt_pidr67,RO,por_dt_pidr67
+Table 8-379: por_dt_cfg register summary,0xFE0,por_dt_pidr01,RO,por_dt_pidr01
+Table 8-379: por_dt_cfg register summary,0xFE8,por_dt_pidr23,RO,por_dt_pidr23
+Table 8-379: por_dt_cfg register summary,0xFF0,por_dt_cidr01,RO,por_dt_cidr01
+Table 8-379: por_dt_cfg register summary,0xFF8,por_dt_cidr23,RO,por_dt_cidr23
+Table 8-417: cmn_hns_cfg register summary,0x0,cmn_hns_node_info,RO,cmn_hns_node_info
+Table 8-417: cmn_hns_cfg register summary,0x80,cmn_hns_child_info,RO,cmn_hns_child_info
+Table 8-417: cmn_hns_cfg register summary,0x980,cmn_hns_scr,RW,cmn_hns_scr
+Table 8-417: cmn_hns_cfg register summary,0x988,cmn_hns_rcr,RW,cmn_hns_rcr
+Table 8-417: cmn_hns_cfg register summary,0x900,cmn_hns_unit_info,RO,cmn_hns_unit_info
+Table 8-417: cmn_hns_cfg register summary,0x908,cmn_hns_unit_info_1,RO,cmn_hns_unit_info_1
+Table 8-417: cmn_hns_cfg register summary,0xA00,cmn_hns_cfg_ctl,RW,cmn_hns_cfg_ctl
+Table 8-417: cmn_hns_cfg register summary,0xA08,cmn_hns_aux_ctl,RW,cmn_hns_aux_ctl
+Table 8-417: cmn_hns_cfg register summary,0xA10,cmn_hns_aux_ctl_1,RW,cmn_hns_aux_ctl_1
+Table 8-417: cmn_hns_cfg register summary,0xA18,cmn_hns_cbusy_limit_ctl,RW,cmn_hns_cbusy_limit_ctl
+Table 8-417: cmn_hns_cfg register summary,0xA20,cmn_hns_txrsp_arb_weight_ctl,RW,cmn_hns_txrsp_arb_weight_ctl
+Table 8-417: cmn_hns_cfg register summary,0xA28,cmn_hns_cbusy_mode_ctl,RW,cmn_hns_cbusy_mode_ctl
+Table 8-417: cmn_hns_cfg register summary,0xA30,cmn_hns_lbt_cfg_ctl,RW,cmn_hns_lbt_cfg_ctl
+Table 8-417: cmn_hns_cfg register summary,0xA38,cmn_hns_lbt_aux_ctl,RW,cmn_hns_lbt_aux_ctl
+Table 8-417: cmn_hns_cfg register summary,0xA50,cmn_hns_datasource_ctl,RW,cmn_hns_datasource_ctl
+Table 8-417: cmn_hns_cfg register summary,0x1900,cmn_hns_ppu_pwpr,RW,cmn_hns_ppu_pwpr
+Table 8-417: cmn_hns_cfg register summary,0x1908,cmn_hns_ppu_pwsr,RO,cmn_hns_ppu_pwsr
+Table 8-417: cmn_hns_cfg register summary,0x1914,cmn_hns_ppu_misr,RO,cmn_hns_ppu_misr
+Table 8-417: cmn_hns_cfg register summary,0x28B0,cmn_hns_ppu_idr0,RO,cmn_hns_ppu_idr0
+Table 8-417: cmn_hns_cfg register summary,0x28B4,cmn_hns_ppu_idr1,RO,cmn_hns_ppu_idr1
+Table 8-417: cmn_hns_cfg register summary,0x28C8,cmn_hns_ppu_iidr,RO,cmn_hns_ppu_iidr
+Table 8-417: cmn_hns_cfg register summary,0x28CC,cmn_hns_ppu_aidr,RO,cmn_hns_ppu_aidr
+Table 8-417: cmn_hns_cfg register summary,0x1A00,cmn_hns_ppu_dyn_ret_threshold,RW,cmn_hns_ppu_dyn_ret_threshold
+Table 8-417: cmn_hns_cfg register summary,0xA80,cmn_hns_qos_band,RO,cmn_hns_qos_band
+Table 8-417: cmn_hns_cfg register summary,0xE000,cmn_hns_errfr,RO,cmn_hns_errfr
+Table 8-417: cmn_hns_cfg register summary,0xE008,cmn_hns_errctlr,RW,cmn_hns_errctlr
+Table 8-417: cmn_hns_cfg register summary,0xE010,cmn_hns_errstatus,W1C,cmn_hns_errstatus
+Table 8-417: cmn_hns_cfg register summary,0xE018,cmn_hns_erraddr,RW,cmn_hns_erraddr
+Table 8-417: cmn_hns_cfg register summary,0xE020,cmn_hns_errmisc0,RW,cmn_hns_errmisc0
+Table 8-417: cmn_hns_cfg register summary,0xE028,cmn_hns_errmisc1,RW,cmn_hns_errmisc1
+Table 8-417: cmn_hns_cfg register summary,0xE800,cmn_hns_errpfgf,RO,cmn_hns_errpfgf
+Table 8-417: cmn_hns_cfg register summary,0xE808,cmn_hns_errpfgctl,RW,cmn_hns_errpfgctl
+Table 8-417: cmn_hns_cfg register summary,0xE810,cmn_hns_errpfgcdn,RW,cmn_hns_errpfgcdn
+Table 8-417: cmn_hns_cfg register summary,0xE040,cmn_hns_errfr_NS,RO,cmn_hns_errfr_NS
+Table 8-417: cmn_hns_cfg register summary,0xE048,cmn_hns_errctlr_NS,RW,cmn_hns_errctlr_NS
+Table 8-417: cmn_hns_cfg register summary,0xE050,cmn_hns_errstatus_NS,W1C,cmn_hns_errstatus_NS
+Table 8-417: cmn_hns_cfg register summary,0xE058,cmn_hns_erraddr_NS,RW,cmn_hns_erraddr_NS
+Table 8-417: cmn_hns_cfg register summary,0xE060,cmn_hns_errmisc0_NS,RW,cmn_hns_errmisc0_NS
+Table 8-417: cmn_hns_cfg register summary,0xE068,cmn_hns_errmisc1_NS,RW,cmn_hns_errmisc1_NS
+Table 8-417: cmn_hns_cfg register summary,0xE840,cmn_hns_errpfgf_NS,RO,cmn_hns_errpfgf_NS
+Table 8-417: cmn_hns_cfg register summary,0xE848,cmn_hns_errpfgctl_NS,RW,cmn_hns_errpfgctl_NS
+Table 8-417: cmn_hns_cfg register summary,0xE850,cmn_hns_errpfgcdn_NS,RW,cmn_hns_errpfgcdn_NS
+Table 8-417: cmn_hns_cfg register summary,0xED00,cmn_hns_errcapctl,RW,cmn_hns_errcapctl
+Table 8-417: cmn_hns_cfg register summary,0xEE00,cmn_hns_errgsr,RO,cmn_hns_errgsr
+Table 8-417: cmn_hns_cfg register summary,0xEE10,cmn_hns_erriidr,RO,cmn_hns_erriidr
+Table 8-417: cmn_hns_cfg register summary,0xEFA8,cmn_hns_errdevaff,RO,cmn_hns_errdevaff
+Table 8-417: cmn_hns_cfg register summary,0xEFB8,cmn_hns_errdevarch,RO,cmn_hns_errdevarch
+Table 8-417: cmn_hns_cfg register summary,0xEFC8,cmn_hns_errdevid,RO,cmn_hns_errdevid
+Table 8-417: cmn_hns_cfg register summary,0xEFD0,cmn_hns_errpidr45,RO,cmn_hns_errpidr45
+Table 8-417: cmn_hns_cfg register summary,0xEFE0,cmn_hns_errpidr01,RO,cmn_hns_errpidr01
+Table 8-417: cmn_hns_cfg register summary,0xEFE8,cmn_hns_errpidr23,RO,cmn_hns_errpidr23
+Table 8-417: cmn_hns_cfg register summary,0xEFF0,cmn_hns_errcidr01,RO,cmn_hns_errcidr01
+Table 8-417: cmn_hns_cfg register summary,0xEFF8,cmn_hns_errcidr23,RO,cmn_hns_errcidr23
+Table 8-417: cmn_hns_cfg register summary,0xE030,cmn_hns_err_inj,RW,cmn_hns_err_inj
+Table 8-417: cmn_hns_cfg register summary,0xE938,cmn_hns_byte_par_err_inj,WO,cmn_hns_byte_par_err_inj
+Table 8-417: cmn_hns_cfg register summary,0xC00,cmn_hns_slc_lock_ways,RW,cmn_hns_slc_lock_ways
+Table 8-417: cmn_hns_cfg register summary,0xC08,cmn_hns_slc_lock_base0,RW,cmn_hns_slc_lock_base0
+Table 8-417: cmn_hns_cfg register summary,0xC10,cmn_hns_slc_lock_base1,RW,cmn_hns_slc_lock_base1
+Table 8-417: cmn_hns_cfg register summary,0xC18,cmn_hns_slc_lock_base2,RW,cmn_hns_slc_lock_base2
+Table 8-417: cmn_hns_cfg register summary,0xC20,cmn_hns_slc_lock_base3,RW,cmn_hns_slc_lock_base3
+Table 8-417: cmn_hns_cfg register summary,0xC28,cmn_hns_rni_region_vec,RW,cmn_hns_rni_region_vec
+Table 8-417: cmn_hns_cfg register summary,0xC30,cmn_hns_rnd_region_vec,RW,cmn_hns_rnd_region_vec
+Table 8-417: cmn_hns_cfg register summary,0xC38,cmn_hns_rnf_region_vec,RW,cmn_hns_rnf_region_vec
+Table 8-417: cmn_hns_cfg register summary,0xC40,cmn_hns_rnf_region_vec1,RW,cmn_hns_rnf_region_vec1
+Table 8-417: cmn_hns_cfg register summary,0xC48,cmn_hns_slcway_partition0_rnf_vec,RW,cmn_hns_slcway_partition0_rnf_vec
+Table 8-417: cmn_hns_cfg register summary,0xC50,cmn_hns_slcway_partition1_rnf_vec,RW,cmn_hns_slcway_partition1_rnf_vec
+Table 8-417: cmn_hns_cfg register summary,0xC58,cmn_hns_slcway_partition2_rnf_vec,RW,cmn_hns_slcway_partition2_rnf_vec
+Table 8-417: cmn_hns_cfg register summary,0xC60,cmn_hns_slcway_partition3_rnf_vec,RW,cmn_hns_slcway_partition3_rnf_vec
+Table 8-417: cmn_hns_cfg register summary,0xCB0,cmn_hns_slcway_partition0_rnf_vec1,RW,cmn_hns_slcway_partition0_rnf_vec1
+Table 8-417: cmn_hns_cfg register summary,0xCB8,cmn_hns_slcway_partition1_rnf_vec1,RW,cmn_hns_slcway_partition1_rnf_vec1
+Table 8-417: cmn_hns_cfg register summary,0xCC0,cmn_hns_slcway_partition2_rnf_vec1,RW,cmn_hns_slcway_partition2_rnf_vec1
+Table 8-417: cmn_hns_cfg register summary,0xCC8,cmn_hns_slcway_partition3_rnf_vec1,RW,cmn_hns_slcway_partition3_rnf_vec1
+Table 8-417: cmn_hns_cfg register summary,0xC68,cmn_hns_slcway_partition0_rni_vec,RW,cmn_hns_slcway_partition0_rni_vec
+Table 8-417: cmn_hns_cfg register summary,0xC70,cmn_hns_slcway_partition1_rni_vec,RW,cmn_hns_slcway_partition1_rni_vec
+Table 8-417: cmn_hns_cfg register summary,0xC78,cmn_hns_slcway_partition2_rni_vec,RW,cmn_hns_slcway_partition2_rni_vec
+Table 8-417: cmn_hns_cfg register summary,0xC80,cmn_hns_slcway_partition3_rni_vec,RW,cmn_hns_slcway_partition3_rni_vec
+Table 8-417: cmn_hns_cfg register summary,0xC88,cmn_hns_slcway_partition0_rnd_vec,RW,cmn_hns_slcway_partition0_rnd_vec
+Table 8-417: cmn_hns_cfg register summary,0xC90,cmn_hns_slcway_partition1_rnd_vec,RW,cmn_hns_slcway_partition1_rnd_vec
+Table 8-417: cmn_hns_cfg register summary,0xC98,cmn_hns_slcway_partition2_rnd_vec,RW,cmn_hns_slcway_partition2_rnd_vec
+Table 8-417: cmn_hns_cfg register summary,0xCA0,cmn_hns_slcway_partition3_rnd_vec,RW,cmn_hns_slcway_partition3_rnd_vec
+Table 8-417: cmn_hns_cfg register summary,0xCA8,cmn_hns_rn_region_lock,RW,cmn_hns_rn_region_lock
+Table 8-417: cmn_hns_cfg register summary,0xCD0,cmn_hns_sf_cxg_blocked_ways,RW,cmn_hns_sf_cxg_blocked_ways
+Table 8-417: cmn_hns_cfg register summary,0xCE0,cmn_hns_cxg_ha_metadata_exclusion_list,RW,cmn_hns_cxg_ha_metadata_exclusion_list
+Table 8-417: cmn_hns_cfg register summary,0xD60,cmn_hns_cxg_ha_snp_throttle_disable_list,RW,cmn_hns_cxg_ha_snp_throttle_disable_list
+Table 8-417: cmn_hns_cfg register summary,0xCD8,cmn_hns_cxg_ha_smp_exclusion_list,RW,cmn_hns_cxg_ha_smp_exclusion_list
+Table 8-417: cmn_hns_cfg register summary,0xCF0,hn_sam_hash_addr_mask_reg,RW,hn_sam_hash_addr_mask_reg
+Table 8-417: cmn_hns_cfg register summary,0xCF8,hn_sam_region_cmp_addr_mask_reg,RW,hn_sam_region_cmp_addr_mask_reg
+Table 8-417: cmn_hns_cfg register summary,0xD48,cmn_hns_sam_cfg1_def_hashed_region,RW,cmn_hns_sam_cfg1_def_hashed_region
+Table 8-417: cmn_hns_cfg register summary,0xD50,cmn_hns_sam_cfg2_def_hashed_region,RW,cmn_hns_sam_cfg2_def_hashed_region
+Table 8-417: cmn_hns_cfg register summary,0xD00,cmn_hns_sam_control,RW,cmn_hns_sam_control
+Table 8-417: cmn_hns_cfg register summary,0xD28,cmn_hns_sam_control2,RW,cmn_hns_sam_control2
+Table 8-417: cmn_hns_cfg register summary,0xD08,cmn_hns_sam_memregion0,RW,cmn_hns_sam_memregion0
+Table 8-417: cmn_hns_cfg register summary,0xD38,cmn_hns_sam_memregion0_end_addr,RW,cmn_hns_sam_memregion0_end_addr
+Table 8-417: cmn_hns_cfg register summary,0xD10,cmn_hns_sam_memregion1,RW,cmn_hns_sam_memregion1
+Table 8-417: cmn_hns_cfg register summary,0xD40,cmn_hns_sam_memregion1_end_addr,RW,cmn_hns_sam_memregion1_end_addr
+Table 8-417: cmn_hns_cfg register summary,0xD18,cmn_hns_sam_sn_properties,RW,cmn_hns_sam_sn_properties
+Table 8-417: cmn_hns_cfg register summary,0xD20,cmn_hns_sam_6sn_nodeid,RW,cmn_hns_sam_6sn_nodeid
+Table 8-417: cmn_hns_cfg register summary,0xCE8,cmn_hns_sam_sn_properties1,RW,cmn_hns_sam_sn_properties1
+Table 8-417: cmn_hns_cfg register summary,0xD30,cmn_hns_sam_sn_properties2,RW,cmn_hns_sam_sn_properties2
+Table 8-417: cmn_hns_cfg register summary,{0-4} 0xF80 : 0xFA0; {5-31} 0x6028 : 0x60F8,cmn_hns_cml_port_aggr_grp0-4_add_mask,RW,cmn_hns_cml_port_aggr_grp0-4_add_mask
+Table 8-417: cmn_hns_cfg register summary,{0-4} 0xF80 : 0xFA0; {5-31} 0x6028 : 0x60F8,cmn_hns_cml_port_aggr_grp5-31_add_mask,RW,cmn_hns_cml_port_aggr_grp5-31_add_mask
+Table 8-417: cmn_hns_cfg register summary,{0-7} 0x6400 : 0x6438; {2-12} 0x6110 : 0x6160,cmn_hns_cml_cpag_base_indx_grp0-3,RW,cmn_hns_cml_cpag_base_indx_grp0-3
+Table 8-417: cmn_hns_cfg register summary,0xFD0,cmn_hns_cml_port_aggr_ctrl_reg,RW,cmn_hns_cml_port_aggr_ctrl_reg
+Table 8-417: cmn_hns_cfg register summary,{1-6} 0x6208 : 0x6230,cmn_hns_cml_port_aggr_ctrl_reg1-6,RW,cmn_hns_cml_port_aggr_ctrl_reg1-6
+Table 8-417: cmn_hns_cfg register summary,0xF50,cmn_hns_abf_lo_addr,RW,cmn_hns_abf_lo_addr
+Table 8-417: cmn_hns_cfg register summary,0xF58,cmn_hns_abf_hi_addr,RW,cmn_hns_abf_hi_addr
+Table 8-417: cmn_hns_cfg register summary,0xF60,cmn_hns_abf_pr,RW,cmn_hns_abf_pr
+Table 8-417: cmn_hns_cfg register summary,0xF68,cmn_hns_abf_sr,RO,cmn_hns_abf_sr
+Table 8-417: cmn_hns_cfg register summary,0x1000,cmn_hns_cbusy_write_limit_ctl,RW,cmn_hns_cbusy_write_limit_ctl
+Table 8-417: cmn_hns_cfg register summary,0x1008,cmn_hns_cbusy_resp_ctl,RW,cmn_hns_cbusy_resp_ctl
+Table 8-417: cmn_hns_cfg register summary,0x1010,cmn_hns_cbusy_sn_ctl,RW,cmn_hns_cbusy_sn_ctl
+Table 8-417: cmn_hns_cfg register summary,0x1068,cmn_hns_cbusy_sn1_ctl,RW,cmn_hns_cbusy_sn1_ctl
+Table 8-417: cmn_hns_cfg register summary,0x1070,cmn_hns_cbusy_sn1_threshold,RW,cmn_hns_cbusy_sn1_threshold
+Table 8-417: cmn_hns_cfg register summary,0x1018,cmn_hns_lbt_cbusy_ctl,RW,cmn_hns_lbt_cbusy_ctl
+Table 8-417: cmn_hns_cfg register summary,0x1080,cmn_hns_cbusy_ccg_ctl,RW,cmn_hns_cbusy_ccg_ctl
+Table 8-417: cmn_hns_cfg register summary,0x1088,cmn_hns_cbusy_ccg_threshold,RW,cmn_hns_cbusy_ccg_threshold
+Table 8-417: cmn_hns_cfg register summary,0x1020,cmn_hns_pocq_alloc_class_dedicated,RW,cmn_hns_pocq_alloc_class_dedicated
+Table 8-417: cmn_hns_cfg register summary,0x1028,cmn_hns_pocq_alloc_class_max_allowed,RW,cmn_hns_pocq_alloc_class_max_allowed
+Table 8-417: cmn_hns_cfg register summary,0x1030,cmn_hns_pocq_alloc_class_contended_min,RW,cmn_hns_pocq_alloc_class_contended_min
+Table 8-417: cmn_hns_cfg register summary,0x1038,cmn_hns_pocq_alloc_misc_max_allowed,RW,cmn_hns_pocq_alloc_misc_max_allowed
+Table 8-417: cmn_hns_cfg register summary,0x1040,cmn_hns_class_ctl,RW,cmn_hns_class_ctl
+Table 8-417: cmn_hns_cfg register summary,0x1048,cmn_hns_pocq_qos_class_ctl,RW,cmn_hns_pocq_qos_class_ctl
+Table 8-417: cmn_hns_cfg register summary,0x1050,cmn_hns_class_pocq_arb_weight_ctl,RW,cmn_hns_class_pocq_arb_weight_ctl
+Table 8-417: cmn_hns_cfg register summary,0x1058,cmn_hns_class_retry_weight_ctl,RW,cmn_hns_class_retry_weight_ctl
+Table 8-417: cmn_hns_cfg register summary,0x1060,cmn_hns_pocq_misc_retry_weight_ctl,RW,cmn_hns_pocq_misc_retry_weight_ctl
+Table 8-417: cmn_hns_cfg register summary,0xFE0,cmn_hns_partner_scratch_reg0,RW,cmn_hns_partner_scratch_reg0
+Table 8-417: cmn_hns_cfg register summary,0xFE8,cmn_hns_partner_scratch_reg1,RW,cmn_hns_partner_scratch_reg1
+Table 8-417: cmn_hns_cfg register summary,0xB80,cmn_hns_cfg_slcsf_dbgrd,WO,cmn_hns_cfg_slcsf_dbgrd
+Table 8-417: cmn_hns_cfg register summary,0xB88,cmn_hns_slc_cache_access_slc_tag,RO,cmn_hns_slc_cache_access_slc_tag
+Table 8-417: cmn_hns_cfg register summary,0xB90,cmn_hns_slc_cache_access_slc_tag1,RO,cmn_hns_slc_cache_access_slc_tag1
+Table 8-417: cmn_hns_cfg register summary,0xB98,cmn_hns_slc_cache_access_slc_data,RO,cmn_hns_slc_cache_access_slc_data
+Table 8-417: cmn_hns_cfg register summary,0xBC0,cmn_hns_slc_cache_access_slc_mte_tag,RO,cmn_hns_slc_cache_access_slc_mte_tag
+Table 8-417: cmn_hns_cfg register summary,0xBA0,cmn_hns_slc_cache_access_sf_tag,RO,cmn_hns_slc_cache_access_sf_tag
+Table 8-417: cmn_hns_cfg register summary,0xBA8,cmn_hns_slc_cache_access_sf_tag1,RO,cmn_hns_slc_cache_access_sf_tag1
+Table 8-417: cmn_hns_cfg register summary,0xBB0,cmn_hns_slc_cache_access_sf_tag2,RO,cmn_hns_slc_cache_access_sf_tag2
+Table 8-417: cmn_hns_cfg register summary,0xD900,cmn_hns_pmu_event_sel,RW,cmn_hns_pmu_event_sel
+Table 8-417: cmn_hns_cfg register summary,0xD908,cmn_hns_pmu_mpam_sel,RW,cmn_hns_pmu_mpam_sel
+Table 8-417: cmn_hns_cfg register summary,0xC900 : 0xC920,cmn_hns_amevcntr0-4,RW,cmn_hns_amevcntr0-4
+Table 8-417: cmn_hns_cfg register summary,0xCD00 : 0xCD10,cmn_hns_amevtyper0-4,RO,cmn_hns_amevtyper0-4
+Table 8-417: cmn_hns_cfg register summary,0xD500,cmn_hns_amcntenset,W1S,cmn_hns_amcntenset
+Table 8-417: cmn_hns_cfg register summary,0xD520,cmn_hns_amcntenclr,W1C,cmn_hns_amcntenclr
+Table 8-417: cmn_hns_cfg register summary,0xD700,cmn_hns_amcfgr,RO,cmn_hns_amcfgr
+Table 8-417: cmn_hns_cfg register summary,0xD704,cmn_hns_amcr,RW,cmn_hns_amcr
+Table 8-417: cmn_hns_cfg register summary,0xD708,cmn_hns_amiidr,RO,cmn_hns_amiidr
+Table 8-417: cmn_hns_cfg register summary,0xD8BC,cmn_hns_amdevarch,RO,cmn_hns_amdevarch
+Table 8-417: cmn_hns_cfg register summary,0xD8C8,cmn_hns_amdevid,RO,cmn_hns_amdevid
+Table 8-417: cmn_hns_cfg register summary,0xD8CC,cmn_hns_amdevtype,RO,cmn_hns_amdevtype
+Table 8-417: cmn_hns_cfg register summary,0xD8D0,cmn_hns_ampidr4,RO,cmn_hns_ampidr4
+Table 8-417: cmn_hns_cfg register summary,0xD8D4 : 0xD8DC,cmn_hns_ampidr5-7,RO,cmn_hns_ampidr5-7
+Table 8-417: cmn_hns_cfg register summary,0xD8E0,cmn_hns_ampidr0,RO,cmn_hns_ampidr0
+Table 8-417: cmn_hns_cfg register summary,0xD8E4,cmn_hns_ampidr1,RO,cmn_hns_ampidr1
+Table 8-417: cmn_hns_cfg register summary,0xD8E8,cmn_hns_ampidr2,RO,cmn_hns_ampidr2
+Table 8-417: cmn_hns_cfg register summary,0xD8EC,cmn_hns_ampidr3,RO,cmn_hns_ampidr3
+Table 8-417: cmn_hns_cfg register summary,0xD8F0,cmn_hns_amcidr0,RO,cmn_hns_amcidr0
+Table 8-417: cmn_hns_cfg register summary,0xD8F4,cmn_hns_amcidr1,RO,cmn_hns_amcidr1
+Table 8-417: cmn_hns_cfg register summary,0xD8F8,cmn_hns_amcidr2,RO,cmn_hns_amcidr2
+Table 8-417: cmn_hns_cfg register summary,0xD8FC,cmn_hns_amcidr3,RO,cmn_hns_amcidr3
+Table 8-417: cmn_hns_cfg register summary,0xD910,+,-,#{8*index} cmn_hns_pmu_mpam_pardid_mask0-7 RW cmn_hns_pmu_mpam_pardid_mask0-7
+Table 8-417: cmn_hns_cfg register summary,0x3C00 : 0x43E0,cmn_hns_rn_cluster0-63_physid_reg0,RW,cmn_hns_rn_cluster0-63_physid_reg0
+Table 8-417: cmn_hns_cfg register summary,0x4400 : 0x4BE0,cmn_hns_rn_cluster64-127_physid_reg0,RW,cmn_hns_rn_cluster64-127_physid_reg0
+Table 8-417: cmn_hns_cfg register summary,0x3C08 : 0x4BE8,cmn_hns_rn_cluster0-127_physid_reg1,RW,cmn_hns_rn_cluster0-127_physid_reg1
+Table 8-417: cmn_hns_cfg register summary,0x3C10 : 0x4BF0,cmn_hns_rn_cluster0-127_physid_reg2,RW,cmn_hns_rn_cluster0-127_physid_reg2
+Table 8-417: cmn_hns_cfg register summary,0x3C18 : 0x4BF8,cmn_hns_rn_cluster0-127_physid_reg3,RW,cmn_hns_rn_cluster0-127_physid_reg3
+Table 8-417: cmn_hns_cfg register summary,0x5010 : 0x51F8,cmn_hns_sam_nonhash_cfg1_memregion2-63,RW,cmn_hns_sam_nonhash_cfg1_memregion2-63
+Table 8-417: cmn_hns_cfg register summary,0x5210 : 0x53F8,cmn_hns_sam_nonhash_cfg2_memregion2-63,RW,cmn_hns_sam_nonhash_cfg2_memregion2-63
+Table 8-417: cmn_hns_cfg register summary,0x5400 : 0x5478,cmn_hns_sam_htg_cfg1_memregion0-15,RW,cmn_hns_sam_htg_cfg1_memregion0-15
+Table 8-417: cmn_hns_cfg register summary,0x5480 : 0x54F8,cmn_hns_sam_htg_cfg2_memregion0-15,RW,cmn_hns_sam_htg_cfg2_memregion0-15
+Table 8-417: cmn_hns_cfg register summary,0x5500 : 0x5578,cmn_hns_sam_htg_cfg3_memregion0-15,RW,cmn_hns_sam_htg_cfg3_memregion0-15
+Table 8-417: cmn_hns_cfg register summary,{0-15} 0x5600 : 0x5678; {16-31} 0x5808 : 0x5880,cmn_hns_sam_htg_sn_nodeid_reg0-31,RW,cmn_hns_sam_htg_sn_nodeid_reg0-31
+Table 8-417: cmn_hns_cfg register summary,0x5680 : 0x56F8,cmn_hns_sam_htg_sn_attr0-15,RW,cmn_hns_sam_htg_sn_attr0-15
+Table 8-417: cmn_hns_cfg register summary,0x5700 : 0x5718,cmn_hns_sam_ccg_sa_nodeid_reg0-3,RW,cmn_hns_sam_ccg_sa_nodeid_reg0-3
+Table 8-417: cmn_hns_cfg register summary,0x5740 : 0x5758,cmn_hns_sam_ccg_sa_attr0-3,RW,cmn_hns_sam_ccg_sa_attr0-3
+Table 8-417: cmn_hns_cfg register summary,0x5780 : 0x57B8,hns_generic_regs0-7,RW,hns_generic_regs0-7
+Table 8-417: cmn_hns_cfg register summary,0x5900,cmn_hns_pa2setaddr_slc,RW,cmn_hns_pa2setaddr_slc
+Table 8-417: cmn_hns_cfg register summary,0x5908,cmn_hns_pa2setaddr_sf,RW,cmn_hns_pa2setaddr_sf
+Table 8-417: cmn_hns_cfg register summary,0x5910,cmn_hns_pa2setaddr_flex_slc,RW,cmn_hns_pa2setaddr_flex_slc
+Table 8-417: cmn_hns_cfg register summary,0x5918,cmn_hns_pa2setaddr_flex_sf,RW,cmn_hns_pa2setaddr_flex_sf
+Table 8-417: cmn_hns_cfg register summary,{0-31} 0x7000 : 0x70F8,lcn_hashed_tgt_grp_cfg1_region0-31,RW,lcn_hashed_tgt_grp_cfg1_region0-31
+Table 8-417: cmn_hns_cfg register summary,{0-31} 0x7100 : 0x71F8,lcn_hashed_tgt_grp_cfg2_region0-31,RW,lcn_hashed_tgt_grp_cfg2_region0-31
+Table 8-417: cmn_hns_cfg register summary,{0-31} 0x7200 : 0x72F8,lcn_hashed_target_grp_secondary_cfg1_reg0-31,RW,lcn_hashed_target_grp_secondary_cfg1_reg0-31
+Table 8-417: cmn_hns_cfg register summary,{0-31} 0x7300 : 0x73F8,lcn_hashed_target_grp_secondary_cfg2_reg0-31,RW,lcn_hashed_target_grp_secondary_cfg2_reg0-31
+Table 8-417: cmn_hns_cfg register summary,{0-31} 0x7400 : 0x74F8,lcn_hashed_target_grp_hash_cntl_reg0-31,RW,lcn_hashed_target_grp_hash_cntl_reg0-31
+Table 8-417: cmn_hns_cfg register summary,{0-3} 0x7500 : 0x7518,lcn_hashed_target_group_hn_count_reg0-3,RW,lcn_hashed_target_group_hn_count_reg0-3
+Table 8-417: cmn_hns_cfg register summary,{0-7} 0x7520 : 0x7558,lcn_hashed_target_grp_cal_mode_reg0-7,RW,lcn_hashed_target_grp_cal_mode_reg0-7
+Table 8-417: cmn_hns_cfg register summary,{0-1} 0x7560 : 0x7568,lcn_hashed_target_grp_hnf_cpa_en_reg0-1,RW,lcn_hashed_target_grp_hnf_cpa_en_reg0-1
+Table 8-417: cmn_hns_cfg register summary,{0-15} 0x7580 : 0x75F8,lcn_hashed_target_grp_cpag_perhnf_reg0-15,RW,lcn_hashed_target_grp_cpag_perhnf_reg0-15
+Table 8-417: cmn_hns_cfg register summary,{0-31} 0x7700 : 0x77F8,lcn_hashed_target_grp_compact_cpag_ctrl0-31,RW,lcn_hashed_target_grp_compact_cpag_ctrl0-31
+Table 8-417: cmn_hns_cfg register summary,{0-31} 0x7800 : 0x78F8,lcn_hashed_target_grp_compact_hash_ctrl0-31,RW,lcn_hashed_target_grp_compact_hash_ctrl0-31
+Table 8-607: cmn_hns_mpam_ns_cfg register summary,0x0,cmn_hns_mpam_ns_node_info,RO,cmn_hns_mpam_ns_node_info
+Table 8-607: cmn_hns_mpam_ns_cfg register summary,0x80,cmn_hns_mpam_ns_child_info,RO,cmn_hns_mpam_ns_child_info
+Table 8-607: cmn_hns_mpam_ns_cfg register summary,0x1000,cmn_hns_ns_mpam_idr,RO,cmn_hns_ns_mpam_idr
+Table 8-607: cmn_hns_mpam_ns_cfg register summary,0x1018,cmn_hns_mpam_iidr,RO,cmn_hns_mpam_iidr
+Table 8-607: cmn_hns_mpam_ns_cfg register summary,0x1020,cmn_hns_mpam_aidr,RO,cmn_hns_mpam_aidr
+Table 8-607: cmn_hns_mpam_ns_cfg register summary,0x1028,cmn_hns_ns_mpam_impl_idr,RO,cmn_hns_ns_mpam_impl_idr
+Table 8-607: cmn_hns_mpam_ns_cfg register summary,0x1030,cmn_hns_ns_mpam_cpor_idr,RO,cmn_hns_ns_mpam_cpor_idr
+Table 8-607: cmn_hns_mpam_ns_cfg register summary,0x1038,cmn_hns_ns_mpam_ccap_idr,RO,cmn_hns_ns_mpam_ccap_idr
+Table 8-607: cmn_hns_mpam_ns_cfg register summary,0x1040,cmn_hns_ns_mpam_mbw_idr,RO,cmn_hns_ns_mpam_mbw_idr
+Table 8-607: cmn_hns_mpam_ns_cfg register summary,0x1048,cmn_hns_ns_mpam_pri_idr,RO,cmn_hns_ns_mpam_pri_idr
+Table 8-607: cmn_hns_mpam_ns_cfg register summary,0x1050,cmn_hns_ns_mpam_partid_nrw_idr,RO,cmn_hns_ns_mpam_partid_nrw_idr
+Table 8-607: cmn_hns_mpam_ns_cfg register summary,0x1080,cmn_hns_ns_mpam_msmon_idr,RO,cmn_hns_ns_mpam_msmon_idr
+Table 8-607: cmn_hns_mpam_ns_cfg register summary,0x1088,cmn_hns_ns_mpam_csumon_idr,RO,cmn_hns_ns_mpam_csumon_idr
+Table 8-607: cmn_hns_mpam_ns_cfg register summary,0x1090,cmn_hns_ns_mpam_mbwumon_idr,RO,cmn_hns_ns_mpam_mbwumon_idr
+Table 8-607: cmn_hns_mpam_ns_cfg register summary,0x10F0,cmn_hns_ns_mpam_ecr,RW,cmn_hns_ns_mpam_ecr
+Table 8-607: cmn_hns_mpam_ns_cfg register summary,0x10F8,cmn_hns_ns_mpam_esr,RW,cmn_hns_ns_mpam_esr
+Table 8-607: cmn_hns_mpam_ns_cfg register summary,0x1100,cmn_hns_ns_mpamcfg_part_sel,RW,cmn_hns_ns_mpamcfg_part_sel
+Table 8-607: cmn_hns_mpam_ns_cfg register summary,0x1108,cmn_hns_ns_mpamcfg_cmax,RW,cmn_hns_ns_mpamcfg_cmax
+Table 8-607: cmn_hns_mpam_ns_cfg register summary,0x1200,cmn_hns_ns_mpamcfg_mbw_min,RW,cmn_hns_ns_mpamcfg_mbw_min
+Table 8-607: cmn_hns_mpam_ns_cfg register summary,0x1208,cmn_hns_ns_mpamcfg_mbw_max,RW,cmn_hns_ns_mpamcfg_mbw_max
+Table 8-607: cmn_hns_mpam_ns_cfg register summary,0x1220,cmn_hns_ns_mpamcfg_mbw_winwd,RW,cmn_hns_ns_mpamcfg_mbw_winwd
+Table 8-607: cmn_hns_mpam_ns_cfg register summary,0x1400,cmn_hns_ns_mpamcfg_pri,RW,cmn_hns_ns_mpamcfg_pri
+Table 8-607: cmn_hns_mpam_ns_cfg register summary,0x1500,cmn_hns_ns_mpamcfg_mbw_prop,RW,cmn_hns_ns_mpamcfg_mbw_prop
+Table 8-607: cmn_hns_mpam_ns_cfg register summary,0x1600,cmn_hns_ns_mpamcfg_intpartid,RW,cmn_hns_ns_mpamcfg_intpartid
+Table 8-607: cmn_hns_mpam_ns_cfg register summary,0x1800,cmn_hns_ns_msmon_cfg_mon_sel,RW,cmn_hns_ns_msmon_cfg_mon_sel
+Table 8-607: cmn_hns_mpam_ns_cfg register summary,0x1808,cmn_hns_ns_msmon_capt_evnt,RW,cmn_hns_ns_msmon_capt_evnt
+Table 8-607: cmn_hns_mpam_ns_cfg register summary,0x1810,cmn_hns_ns_msmon_cfg_csu_flt,RW,cmn_hns_ns_msmon_cfg_csu_flt
+Table 8-607: cmn_hns_mpam_ns_cfg register summary,0x1818,cmn_hns_ns_msmon_cfg_csu_ctl,RW,cmn_hns_ns_msmon_cfg_csu_ctl
+Table 8-607: cmn_hns_mpam_ns_cfg register summary,0x1820,cmn_hns_ns_msmon_cfg_mbwu_flt,RW,cmn_hns_ns_msmon_cfg_mbwu_flt
+Table 8-607: cmn_hns_mpam_ns_cfg register summary,0x1828,cmn_hns_ns_msmon_cfg_mbwu_ctl,RW,cmn_hns_ns_msmon_cfg_mbwu_ctl
+Table 8-607: cmn_hns_mpam_ns_cfg register summary,0x1840,cmn_hns_ns_msmon_csu,RW,cmn_hns_ns_msmon_csu
+Table 8-607: cmn_hns_mpam_ns_cfg register summary,0x1848,cmn_hns_ns_msmon_csu_capture,RW,cmn_hns_ns_msmon_csu_capture
+Table 8-607: cmn_hns_mpam_ns_cfg register summary,0x1860,cmn_hns_ns_msmon_mbwu,RW,cmn_hns_ns_msmon_mbwu
+Table 8-607: cmn_hns_mpam_ns_cfg register summary,0x1868,cmn_hns_ns_msmon_mbwu_capture,RW,cmn_hns_ns_msmon_mbwu_capture
+Table 8-607: cmn_hns_mpam_ns_cfg register summary,0x2000,cmn_hns_ns_mpamcfg_cpbm,RW,cmn_hns_ns_mpamcfg_cpbm
+Table 8-607: cmn_hns_mpam_ns_cfg register summary,0x8000,cmn_hns_rl_mpam_idr,RO,cmn_hns_rl_mpam_idr
+Table 8-607: cmn_hns_mpam_ns_cfg register summary,0x8018,cmn_hns_rl_mpam_iidr,RO,cmn_hns_rl_mpam_iidr
+Table 8-607: cmn_hns_mpam_ns_cfg register summary,0x8020,cmn_hns_rl_mpam_aidr,RO,cmn_hns_rl_mpam_aidr
+Table 8-607: cmn_hns_mpam_ns_cfg register summary,0x8028,cmn_hns_rl_mpam_impl_idr,RO,cmn_hns_rl_mpam_impl_idr
+Table 8-607: cmn_hns_mpam_ns_cfg register summary,0x8030,cmn_hns_rl_mpam_cpor_idr,RO,cmn_hns_rl_mpam_cpor_idr
+Table 8-607: cmn_hns_mpam_ns_cfg register summary,0x8038,cmn_hns_rl_mpam_ccap_idr,RO,cmn_hns_rl_mpam_ccap_idr
+Table 8-607: cmn_hns_mpam_ns_cfg register summary,0x8040,cmn_hns_rl_mpam_mbw_idr,RO,cmn_hns_rl_mpam_mbw_idr
+Table 8-607: cmn_hns_mpam_ns_cfg register summary,0x8048,cmn_hns_rl_mpam_pri_idr,RO,cmn_hns_rl_mpam_pri_idr
+Table 8-607: cmn_hns_mpam_ns_cfg register summary,0x8050,cmn_hns_rl_mpam_partid_nrw_idr,RO,cmn_hns_rl_mpam_partid_nrw_idr
+Table 8-607: cmn_hns_mpam_ns_cfg register summary,0x8080,cmn_hns_rl_mpam_msmon_idr,RO,cmn_hns_rl_mpam_msmon_idr
+Table 8-607: cmn_hns_mpam_ns_cfg register summary,0x8088,cmn_hns_rl_mpam_csumon_idr,RO,cmn_hns_rl_mpam_csumon_idr
+Table 8-607: cmn_hns_mpam_ns_cfg register summary,0x8090,cmn_hns_rl_mpam_mbwumon_idr,RO,cmn_hns_rl_mpam_mbwumon_idr
+Table 8-607: cmn_hns_mpam_ns_cfg register summary,0x80F0,cmn_hns_rl_mpam_ecr,RW,cmn_hns_rl_mpam_ecr
+Table 8-607: cmn_hns_mpam_ns_cfg register summary,0x80F8,cmn_hns_rl_mpam_esr,RW,cmn_hns_rl_mpam_esr
+Table 8-607: cmn_hns_mpam_ns_cfg register summary,0x8100,cmn_hns_rl_mpamcfg_part_sel,RW,cmn_hns_rl_mpamcfg_part_sel
+Table 8-607: cmn_hns_mpam_ns_cfg register summary,0x8108,cmn_hns_rl_mpamcfg_cmax,RW,cmn_hns_rl_mpamcfg_cmax
+Table 8-607: cmn_hns_mpam_ns_cfg register summary,0x8200,cmn_hns_rl_mpamcfg_mbw_min,RW,cmn_hns_rl_mpamcfg_mbw_min
+Table 8-607: cmn_hns_mpam_ns_cfg register summary,0x8208,cmn_hns_rl_mpamcfg_mbw_max,RW,cmn_hns_rl_mpamcfg_mbw_max
+Table 8-607: cmn_hns_mpam_ns_cfg register summary,0x8220,cmn_hns_rl_mpamcfg_mbw_winwd,RW,cmn_hns_rl_mpamcfg_mbw_winwd
+Table 8-607: cmn_hns_mpam_ns_cfg register summary,0x8400,cmn_hns_rl_mpamcfg_pri,RW,cmn_hns_rl_mpamcfg_pri
+Table 8-607: cmn_hns_mpam_ns_cfg register summary,0x8500,cmn_hns_rl_mpamcfg_mbw_prop,RW,cmn_hns_rl_mpamcfg_mbw_prop
+Table 8-607: cmn_hns_mpam_ns_cfg register summary,0x8600,cmn_hns_rl_mpamcfg_intpartid,RW,cmn_hns_rl_mpamcfg_intpartid
+Table 8-607: cmn_hns_mpam_ns_cfg register summary,0x8800,cmn_hns_rl_msmon_cfg_mon_sel,RW,cmn_hns_rl_msmon_cfg_mon_sel
+Table 8-607: cmn_hns_mpam_ns_cfg register summary,0x8808,cmn_hns_rl_msmon_capt_evnt,RW,cmn_hns_rl_msmon_capt_evnt
+Table 8-607: cmn_hns_mpam_ns_cfg register summary,0x8810,cmn_hns_rl_msmon_cfg_csu_flt,RW,cmn_hns_rl_msmon_cfg_csu_flt
+Table 8-607: cmn_hns_mpam_ns_cfg register summary,0x8818,cmn_hns_rl_msmon_cfg_csu_ctl,RW,cmn_hns_rl_msmon_cfg_csu_ctl
+Table 8-607: cmn_hns_mpam_ns_cfg register summary,0x8820,cmn_hns_rl_msmon_cfg_mbwu_flt,RW,cmn_hns_rl_msmon_cfg_mbwu_flt
+Table 8-607: cmn_hns_mpam_ns_cfg register summary,0x8828,cmn_hns_rl_msmon_cfg_mbwu_ctl,RW,cmn_hns_rl_msmon_cfg_mbwu_ctl
+Table 8-607: cmn_hns_mpam_ns_cfg register summary,0x8840,cmn_hns_rl_msmon_csu,RW,cmn_hns_rl_msmon_csu
+Table 8-607: cmn_hns_mpam_ns_cfg register summary,0x8848,cmn_hns_rl_msmon_csu_capture,RW,cmn_hns_rl_msmon_csu_capture
+Table 8-607: cmn_hns_mpam_ns_cfg register summary,0x8860,cmn_hns_rl_msmon_mbwu,RW,cmn_hns_rl_msmon_mbwu
+Table 8-607: cmn_hns_mpam_ns_cfg register summary,0x8868,cmn_hns_rl_msmon_mbwu_capture,RW,cmn_hns_rl_msmon_mbwu_capture
+Table 8-607: cmn_hns_mpam_ns_cfg register summary,0x9000,cmn_hns_rl_mpamcfg_cpbm,RW,cmn_hns_rl_mpamcfg_cpbm
+Table 8-676: cmn_hns_mpam_s_cfg register summary,0x0,cmn_hns_mpam_s_node_info,RO,cmn_hns_mpam_s_node_info
+Table 8-676: cmn_hns_mpam_s_cfg register summary,0x80,cmn_hns_mpam_s_child_info,RO,cmn_hns_mpam_s_child_info
+Table 8-676: cmn_hns_mpam_s_cfg register summary,0x1000,cmn_hns_s_mpam_idr,RO,cmn_hns_s_mpam_idr
+Table 8-676: cmn_hns_mpam_s_cfg register summary,0x1008,cmn_hns_mpam_sidr,RO,cmn_hns_mpam_sidr
+Table 8-676: cmn_hns_mpam_s_cfg register summary,0x1018,cmn_hns_s_mpam_iidr,RO,cmn_hns_s_mpam_iidr
+Table 8-676: cmn_hns_mpam_s_cfg register summary,0x1020,cmn_hns_s_mpam_aidr,RO,cmn_hns_s_mpam_aidr
+Table 8-676: cmn_hns_mpam_s_cfg register summary,0x1028,cmn_hns_s_mpam_impl_idr,RO,cmn_hns_s_mpam_impl_idr
+Table 8-676: cmn_hns_mpam_s_cfg register summary,0x1030,cmn_hns_s_mpam_cpor_idr,RO,cmn_hns_s_mpam_cpor_idr
+Table 8-676: cmn_hns_mpam_s_cfg register summary,0x1038,cmn_hns_s_mpam_ccap_idr,RO,cmn_hns_s_mpam_ccap_idr
+Table 8-676: cmn_hns_mpam_s_cfg register summary,0x1040,cmn_hns_s_mpam_mbw_idr,RO,cmn_hns_s_mpam_mbw_idr
+Table 8-676: cmn_hns_mpam_s_cfg register summary,0x1048,cmn_hns_s_mpam_pri_idr,RO,cmn_hns_s_mpam_pri_idr
+Table 8-676: cmn_hns_mpam_s_cfg register summary,0x1050,cmn_hns_s_mpam_partid_nrw_idr,RO,cmn_hns_s_mpam_partid_nrw_idr
+Table 8-676: cmn_hns_mpam_s_cfg register summary,0x1080,cmn_hns_s_mpam_msmon_idr,RO,cmn_hns_s_mpam_msmon_idr
+Table 8-676: cmn_hns_mpam_s_cfg register summary,0x1088,cmn_hns_s_mpam_csumon_idr,RO,cmn_hns_s_mpam_csumon_idr
+Table 8-676: cmn_hns_mpam_s_cfg register summary,0x1090,cmn_hns_s_mpam_mbwumon_idr,RO,cmn_hns_s_mpam_mbwumon_idr
+Table 8-676: cmn_hns_mpam_s_cfg register summary,0x10F0,cmn_hns_s_mpam_ecr,RW,cmn_hns_s_mpam_ecr
+Table 8-676: cmn_hns_mpam_s_cfg register summary,0x10F8,cmn_hns_s_mpam_esr,RW,cmn_hns_s_mpam_esr
+Table 8-676: cmn_hns_mpam_s_cfg register summary,0x1100,cmn_hns_s_mpamcfg_part_sel,RW,cmn_hns_s_mpamcfg_part_sel
+Table 8-676: cmn_hns_mpam_s_cfg register summary,0x1108,cmn_hns_s_mpamcfg_cmax,RW,cmn_hns_s_mpamcfg_cmax
+Table 8-676: cmn_hns_mpam_s_cfg register summary,0x1200,cmn_hns_s_mpamcfg_mbw_min,RW,cmn_hns_s_mpamcfg_mbw_min
+Table 8-676: cmn_hns_mpam_s_cfg register summary,0x1208,cmn_hns_s_mpamcfg_mbw_max,RW,cmn_hns_s_mpamcfg_mbw_max
+Table 8-676: cmn_hns_mpam_s_cfg register summary,0x1220,cmn_hns_s_mpamcfg_mbw_winwd,RW,cmn_hns_s_mpamcfg_mbw_winwd
+Table 8-676: cmn_hns_mpam_s_cfg register summary,0x1400,cmn_hns_s_mpamcfg_pri,RW,cmn_hns_s_mpamcfg_pri
+Table 8-676: cmn_hns_mpam_s_cfg register summary,0x1500,cmn_hns_s_mpamcfg_mbw_prop,RW,cmn_hns_s_mpamcfg_mbw_prop
+Table 8-676: cmn_hns_mpam_s_cfg register summary,0x1600,cmn_hns_s_mpamcfg_intpartid,RW,cmn_hns_s_mpamcfg_intpartid
+Table 8-676: cmn_hns_mpam_s_cfg register summary,0x1800,cmn_hns_s_msmon_cfg_mon_sel,RW,cmn_hns_s_msmon_cfg_mon_sel
+Table 8-676: cmn_hns_mpam_s_cfg register summary,0x1808,cmn_hns_s_msmon_capt_evnt,RW,cmn_hns_s_msmon_capt_evnt
+Table 8-676: cmn_hns_mpam_s_cfg register summary,0x1810,cmn_hns_s_msmon_cfg_csu_flt,RW,cmn_hns_s_msmon_cfg_csu_flt
+Table 8-676: cmn_hns_mpam_s_cfg register summary,0x1818,cmn_hns_s_msmon_cfg_csu_ctl,RW,cmn_hns_s_msmon_cfg_csu_ctl
+Table 8-676: cmn_hns_mpam_s_cfg register summary,0x1820,cmn_hns_s_msmon_cfg_mbwu_flt,RW,cmn_hns_s_msmon_cfg_mbwu_flt
+Table 8-676: cmn_hns_mpam_s_cfg register summary,0x1828,cmn_hns_s_msmon_cfg_mbwu_ctl,RW,cmn_hns_s_msmon_cfg_mbwu_ctl
+Table 8-676: cmn_hns_mpam_s_cfg register summary,0x1840,cmn_hns_s_msmon_csu,RW,cmn_hns_s_msmon_csu
+Table 8-676: cmn_hns_mpam_s_cfg register summary,0x1848,cmn_hns_s_msmon_csu_capture,RW,cmn_hns_s_msmon_csu_capture
+Table 8-676: cmn_hns_mpam_s_cfg register summary,0x1860,cmn_hns_s_msmon_mbwu,RW,cmn_hns_s_msmon_mbwu
+Table 8-676: cmn_hns_mpam_s_cfg register summary,0x1868,cmn_hns_s_msmon_mbwu_capture,RW,cmn_hns_s_msmon_mbwu_capture
+Table 8-676: cmn_hns_mpam_s_cfg register summary,0x2000,cmn_hns_s_mpamcfg_cpbm,RW,cmn_hns_s_mpamcfg_cpbm
+Table 8-676: cmn_hns_mpam_s_cfg register summary,0x8000,cmn_hns_rt_mpam_idr,RO,cmn_hns_rt_mpam_idr
+Table 8-676: cmn_hns_mpam_s_cfg register summary,0x8018,cmn_hns_rt_mpam_iidr,RO,cmn_hns_rt_mpam_iidr
+Table 8-676: cmn_hns_mpam_s_cfg register summary,0x8020,cmn_hns_rt_mpam_aidr,RO,cmn_hns_rt_mpam_aidr
+Table 8-676: cmn_hns_mpam_s_cfg register summary,0x8028,cmn_hns_rt_mpam_impl_idr,RO,cmn_hns_rt_mpam_impl_idr
+Table 8-676: cmn_hns_mpam_s_cfg register summary,0x8030,cmn_hns_rt_mpam_cpor_idr,RO,cmn_hns_rt_mpam_cpor_idr
+Table 8-676: cmn_hns_mpam_s_cfg register summary,0x8038,cmn_hns_rt_mpam_ccap_idr,RO,cmn_hns_rt_mpam_ccap_idr
+Table 8-676: cmn_hns_mpam_s_cfg register summary,0x8040,cmn_hns_rt_mpam_mbw_idr,RO,cmn_hns_rt_mpam_mbw_idr
+Table 8-676: cmn_hns_mpam_s_cfg register summary,0x8048,cmn_hns_rt_mpam_pri_idr,RO,cmn_hns_rt_mpam_pri_idr
+Table 8-676: cmn_hns_mpam_s_cfg register summary,0x8050,cmn_hns_rt_mpam_partid_nrw_idr,RO,cmn_hns_rt_mpam_partid_nrw_idr
+Table 8-676: cmn_hns_mpam_s_cfg register summary,0x8080,cmn_hns_rt_mpam_msmon_idr,RO,cmn_hns_rt_mpam_msmon_idr
+Table 8-676: cmn_hns_mpam_s_cfg register summary,0x8088,cmn_hns_rt_mpam_csumon_idr,RO,cmn_hns_rt_mpam_csumon_idr
+Table 8-676: cmn_hns_mpam_s_cfg register summary,0x8090,cmn_hns_rt_mpam_mbwumon_idr,RO,cmn_hns_rt_mpam_mbwumon_idr
+Table 8-676: cmn_hns_mpam_s_cfg register summary,0x80F0,cmn_hns_rt_mpam_ecr,RW,cmn_hns_rt_mpam_ecr
+Table 8-676: cmn_hns_mpam_s_cfg register summary,0x80F8,cmn_hns_rt_mpam_esr,RW,cmn_hns_rt_mpam_esr
+Table 8-676: cmn_hns_mpam_s_cfg register summary,0x8100,cmn_hns_rt_mpamcfg_part_sel,RW,cmn_hns_rt_mpamcfg_part_sel
+Table 8-676: cmn_hns_mpam_s_cfg register summary,0x8108,cmn_hns_rt_mpamcfg_cmax,RW,cmn_hns_rt_mpamcfg_cmax
+Table 8-676: cmn_hns_mpam_s_cfg register summary,0x8200,cmn_hns_rt_mpamcfg_mbw_min,RW,cmn_hns_rt_mpamcfg_mbw_min
+Table 8-676: cmn_hns_mpam_s_cfg register summary,0x8208,cmn_hns_rt_mpamcfg_mbw_max,RW,cmn_hns_rt_mpamcfg_mbw_max
+Table 8-676: cmn_hns_mpam_s_cfg register summary,0x8220,cmn_hns_rt_mpamcfg_mbw_winwd,RW,cmn_hns_rt_mpamcfg_mbw_winwd
+Table 8-676: cmn_hns_mpam_s_cfg register summary,0x8400,cmn_hns_rt_mpamcfg_pri,RW,cmn_hns_rt_mpamcfg_pri
+Table 8-676: cmn_hns_mpam_s_cfg register summary,0x8500,cmn_hns_rt_mpamcfg_mbw_prop,RW,cmn_hns_rt_mpamcfg_mbw_prop
+Table 8-676: cmn_hns_mpam_s_cfg register summary,0x8600,cmn_hns_rt_mpamcfg_intpartid,RW,cmn_hns_rt_mpamcfg_intpartid
+Table 8-676: cmn_hns_mpam_s_cfg register summary,0x8800,cmn_hns_rt_msmon_cfg_mon_sel,RW,cmn_hns_rt_msmon_cfg_mon_sel
+Table 8-676: cmn_hns_mpam_s_cfg register summary,0x8808,cmn_hns_rt_msmon_capt_evnt,RW,cmn_hns_rt_msmon_capt_evnt
+Table 8-676: cmn_hns_mpam_s_cfg register summary,0x8810,cmn_hns_rt_msmon_cfg_csu_flt,RW,cmn_hns_rt_msmon_cfg_csu_flt
+Table 8-676: cmn_hns_mpam_s_cfg register summary,0x8818,cmn_hns_rt_msmon_cfg_csu_ctl,RW,cmn_hns_rt_msmon_cfg_csu_ctl
+Table 8-676: cmn_hns_mpam_s_cfg register summary,0x8820,cmn_hns_rt_msmon_cfg_mbwu_flt,RW,cmn_hns_rt_msmon_cfg_mbwu_flt
+Table 8-676: cmn_hns_mpam_s_cfg register summary,0x8828,cmn_hns_rt_msmon_cfg_mbwu_ctl,RW,cmn_hns_rt_msmon_cfg_mbwu_ctl
+Table 8-676: cmn_hns_mpam_s_cfg register summary,0x8840,cmn_hns_rt_msmon_csu,RW,cmn_hns_rt_msmon_csu
+Table 8-676: cmn_hns_mpam_s_cfg register summary,0x8848,cmn_hns_rt_msmon_csu_capture,RW,cmn_hns_rt_msmon_csu_capture
+Table 8-676: cmn_hns_mpam_s_cfg register summary,0x8860,cmn_hns_rt_msmon_mbwu,RW,cmn_hns_rt_msmon_mbwu
+Table 8-676: cmn_hns_mpam_s_cfg register summary,0x8868,cmn_hns_rt_msmon_mbwu_capture,RW,cmn_hns_rt_msmon_mbwu_capture
+Table 8-676: cmn_hns_mpam_s_cfg register summary,0x9000,cmn_hns_rt_mpamcfg_cpbm,RW,cmn_hns_rt_mpamcfg_cpbm
+Table 8-746: por_hni_cfg register summary,0x0,por_hni_node_info,RO,por_hni_node_info
+Table 8-746: por_hni_cfg register summary,0x80,por_hni_child_info,RO,por_hni_child_info
+Table 8-746: por_hni_cfg register summary,0x980,por_hni_rcr,RW,por_hni_rcr
+Table 8-746: por_hni_cfg register summary,0x988,por_hni_scr,RW,por_hni_scr
+Table 8-746: por_hni_cfg register summary,0x900,por_hni_unit_info,RO,por_hni_unit_info
+Table 8-746: por_hni_cfg register summary,0x908,por_hni_unit_info_1,RO,por_hni_unit_info_1
+Table 8-746: por_hni_cfg register summary,0xC00,por_hni_sam_addrregion0_cfg,RW,por_hni_sam_addrregion0_cfg
+Table 8-746: por_hni_cfg register summary,0xC08,por_hni_sam_addrregion1_cfg,RW,por_hni_sam_addrregion1_cfg
+Table 8-746: por_hni_cfg register summary,0xC10,por_hni_sam_addrregion2_cfg,RW,por_hni_sam_addrregion2_cfg
+Table 8-746: por_hni_cfg register summary,0xC18,por_hni_sam_addrregion3_cfg,RW,por_hni_sam_addrregion3_cfg
+Table 8-746: por_hni_cfg register summary,0xC20,por_hnp_multi_mesh_chn_ctrl,RW,por_hnp_multi_mesh_chn_ctrl
+Table 8-746: por_hni_cfg register summary,0xC28 : 0xCA0,por_hnp_multi_mesh_chn_sel_0-15,RW,por_hnp_multi_mesh_chn_sel_0-15
+Table 8-746: por_hni_cfg register summary,0xA00,por_hni_cfg_ctl,RW,por_hni_cfg_ctl
+Table 8-746: por_hni_cfg register summary,0xA08,por_hni_aux_ctl,RW,por_hni_aux_ctl
+Table 8-746: por_hni_cfg register summary,0xA10,por_hni_datasource_ctl,RW,por_hni_datasource_ctl
+Table 8-746: por_hni_cfg register summary,0xE000,por_hni_errfr,RO,por_hni_errfr
+Table 8-746: por_hni_cfg register summary,0xE008,por_hni_errctlr,RW,por_hni_errctlr
+Table 8-746: por_hni_cfg register summary,0xE010,por_hni_errstatus,W1C,por_hni_errstatus
+Table 8-746: por_hni_cfg register summary,0xE018,por_hni_erraddr,RW,por_hni_erraddr
+Table 8-746: por_hni_cfg register summary,0xE020,por_hni_errmisc1,RW,por_hni_errmisc1
+Table 8-746: por_hni_cfg register summary,0xE800,por_hni_errpfgf,RO,por_hni_errpfgf
+Table 8-746: por_hni_cfg register summary,0xE808,por_hni_errpfgctl,RW,por_hni_errpfgctl
+Table 8-746: por_hni_cfg register summary,0xE810,por_hni_errpfgcdn,RW,por_hni_errpfgcdn
+Table 8-746: por_hni_cfg register summary,0xE040,por_hni_errfr_NS,RO,por_hni_errfr_NS
+Table 8-746: por_hni_cfg register summary,0xE048,por_hni_errctlr_NS,RW,por_hni_errctlr_NS
+Table 8-746: por_hni_cfg register summary,0xE050,por_hni_errstatus_NS,W1C,por_hni_errstatus_NS
+Table 8-746: por_hni_cfg register summary,0xE058,por_hni_erraddr_NS,RW,por_hni_erraddr_NS
+Table 8-746: por_hni_cfg register summary,0xE068,por_hni_errmisc1_NS,RW,por_hni_errmisc1_NS
+Table 8-746: por_hni_cfg register summary,0xE840,por_hni_errpfgf_NS,RO,por_hni_errpfgf_NS
+Table 8-746: por_hni_cfg register summary,0xE848,por_hni_errpfgctl_NS,RW,por_hni_errpfgctl_NS
+Table 8-746: por_hni_cfg register summary,0xE850,por_hni_errpfgcdn_NS,RW,por_hni_errpfgcdn_NS
+Table 8-746: por_hni_cfg register summary,0xED00,por_hni_errcapctl,RW,por_hni_errcapctl
+Table 8-746: por_hni_cfg register summary,0xEE00,por_hni_errgsr,RO,por_hni_errgsr
+Table 8-746: por_hni_cfg register summary,0xEE10,por_hni_erriidr,RO,por_hni_erriidr
+Table 8-746: por_hni_cfg register summary,0xEFA8,por_hni_errdevaff,RO,por_hni_errdevaff
+Table 8-746: por_hni_cfg register summary,0xEFB8,por_hni_errdevarch,RO,por_hni_errdevarch
+Table 8-746: por_hni_cfg register summary,0xEFC8,por_hni_errdevid,RO,por_hni_errdevid
+Table 8-746: por_hni_cfg register summary,0xEFD0,por_hni_errpidr45,RO,por_hni_errpidr45
+Table 8-746: por_hni_cfg register summary,0xEFE0,por_hni_errpidr01,RO,por_hni_errpidr01
+Table 8-746: por_hni_cfg register summary,0xEFE8,por_hni_errpidr23,RO,por_hni_errpidr23
+Table 8-746: por_hni_cfg register summary,0xEFF0,por_hni_errcidr01,RO,por_hni_errcidr01
+Table 8-746: por_hni_cfg register summary,0xEFF8,por_hni_errcidr23,RO,por_hni_errcidr23
+Table 8-746: por_hni_cfg register summary,0xD900,por_hni_pmu_event_sel,RW,por_hni_pmu_event_sel
+Table 8-746: por_hni_cfg register summary,0xD908,por_hnp_pmu_event_sel,RW,por_hnp_pmu_event_sel
+Table 8-791: por_mtu_cfg register summary,0x0,por_mtu_node_info,RO,por_mtu_node_info
+Table 8-791: por_mtu_cfg register summary,0x80,por_mtu_child_info,RO,por_mtu_child_info
+Table 8-791: por_mtu_cfg register summary,0x980,por_mtu_rcr,RW,por_mtu_rcr
+Table 8-791: por_mtu_cfg register summary,0x988,por_mtu_scr,RW,por_mtu_scr
+Table 8-791: por_mtu_cfg register summary,0x900,por_mtu_unit_info,RO,por_mtu_unit_info
+Table 8-791: por_mtu_cfg register summary,0xA00,por_mtu_cfg_ctl,RW,por_mtu_cfg_ctl
+Table 8-791: por_mtu_cfg register summary,0xA08,por_mtu_aux_ctl,RW,por_mtu_aux_ctl
+Table 8-791: por_mtu_cfg register summary,0xA30,por_mtu_tc_flush_pr,RW,por_mtu_tc_flush_pr
+Table 8-791: por_mtu_cfg register summary,0xA38,por_mtu_tc_flush_sr,RO,por_mtu_tc_flush_sr
+Table 8-791: por_mtu_cfg register summary,0xA40,por_mtu_tag_addr_ctl,RW,por_mtu_tag_addr_ctl
+Table 8-791: por_mtu_cfg register summary,0xA48,por_mtu_tag_addr_base,RW,por_mtu_tag_addr_base
+Table 8-791: por_mtu_cfg register summary,0xA50 : 0xA60,por_mtu_tag_addr_shutter0-2,RW,por_mtu_tag_addr_shutter0-2
+Table 8-791: por_mtu_cfg register summary,0xE000,por_mtu_errfr,RO,por_mtu_errfr
+Table 8-791: por_mtu_cfg register summary,0xE008,por_mtu_errctlr,RW,por_mtu_errctlr
+Table 8-791: por_mtu_cfg register summary,0xE010,por_mtu_errstatus,W1C,por_mtu_errstatus
+Table 8-791: por_mtu_cfg register summary,0xE018,por_mtu_erraddr,RW,por_mtu_erraddr
+Table 8-791: por_mtu_cfg register summary,0xE020,por_mtu_errmisc0,RW,por_mtu_errmisc0
+Table 8-791: por_mtu_cfg register summary,0xE028,por_mtu_errmisc1,RW,por_mtu_errmisc1
+Table 8-791: por_mtu_cfg register summary,0xE800,por_mtu_errpfgf,RO,por_mtu_errpfgf
+Table 8-791: por_mtu_cfg register summary,0xE808,por_mtu_errpfgctl,RW,por_mtu_errpfgctl
+Table 8-791: por_mtu_cfg register summary,0xE810,por_mtu_errpfgcdn,RW,por_mtu_errpfgcdn
+Table 8-791: por_mtu_cfg register summary,0xE040,por_mtu_errfr_NS,RO,por_mtu_errfr_NS
+Table 8-791: por_mtu_cfg register summary,0xE048,por_mtu_errctlr_NS,RW,por_mtu_errctlr_NS
+Table 8-791: por_mtu_cfg register summary,0xE050,por_mtu_errstatus_NS,W1C,por_mtu_errstatus_NS
+Table 8-791: por_mtu_cfg register summary,0xE058,por_mtu_erraddr_NS,RW,por_mtu_erraddr_NS
+Table 8-791: por_mtu_cfg register summary,0xE060,por_mtu_errmisc0_NS,RW,por_mtu_errmisc0_NS
+Table 8-791: por_mtu_cfg register summary,0xE068,por_mtu_errmisc1_NS,RW,por_mtu_errmisc1_NS
+Table 8-791: por_mtu_cfg register summary,0xE840,por_mtu_errpfgf_NS,RO,por_mtu_errpfgf_NS
+Table 8-791: por_mtu_cfg register summary,0xE848,por_mtu_errpfgctl_NS,RW,por_mtu_errpfgctl_NS
+Table 8-791: por_mtu_cfg register summary,0xE850,por_mtu_errpfgcdn_NS,RW,por_mtu_errpfgcdn_NS
+Table 8-791: por_mtu_cfg register summary,0xED00,por_mtu_errcapctl,RW,por_mtu_errcapctl
+Table 8-791: por_mtu_cfg register summary,0xEE00,por_mtu_errgsr,RO,por_mtu_errgsr
+Table 8-791: por_mtu_cfg register summary,0xEE10,por_mtu_erriidr,RO,por_mtu_erriidr
+Table 8-791: por_mtu_cfg register summary,0xEFA8,por_mtu_errdevaff,RO,por_mtu_errdevaff
+Table 8-791: por_mtu_cfg register summary,0xEFB8,por_mtu_errdevarch,RO,por_mtu_errdevarch
+Table 8-791: por_mtu_cfg register summary,0xEFC8,por_mtu_errdevid,RO,por_mtu_errdevid
+Table 8-791: por_mtu_cfg register summary,0xEFD0,por_mtu_errpidr45,RO,por_mtu_errpidr45
+Table 8-791: por_mtu_cfg register summary,0xEFE0,por_mtu_errpidr01,RO,por_mtu_errpidr01
+Table 8-791: por_mtu_cfg register summary,0xEFE8,por_mtu_errpidr23,RO,por_mtu_errpidr23
+Table 8-791: por_mtu_cfg register summary,0xEFF0,por_mtu_errcidr01,RO,por_mtu_errcidr01
+Table 8-791: por_mtu_cfg register summary,0xEFF8,por_mtu_errcidr23,RO,por_mtu_errcidr23
+Table 8-791: por_mtu_cfg register summary,0xE030,por_mtu_err_inj,RW,por_mtu_err_inj
+Table 8-791: por_mtu_cfg register summary,0xB80,por_mtu_cfg_tc_dbgrd,WO,por_mtu_cfg_tc_dbgrd
+Table 8-791: por_mtu_cfg register summary,0xB88,por_mtu_tc_cache_access_tc_ctl,RO,por_mtu_tc_cache_access_tc_ctl
+Table 8-791: por_mtu_cfg register summary,0xB98,por_mtu_tc_cache_access_tc_data,RO,por_mtu_tc_cache_access_tc_data
+Table 8-791: por_mtu_cfg register summary,0xD900,por_mtu_pmu_event_sel,RW,por_mtu_pmu_event_sel
+Table 8-838: por_mxp_cfg register summary,0x0,por_mxp_node_info,RO,por_mxp_node_info
+Table 8-838: por_mxp_cfg register summary,0x8 : 0x30,por_mxp_device_port_connect_info_p0-5,RO,por_mxp_device_port_connect_info_p0-5
+Table 8-838: por_mxp_cfg register summary,0x38,por_mxp_mesh_port_connect_info_east,RO,por_mxp_mesh_port_connect_info_east
+Table 8-838: por_mxp_cfg register summary,0x40,por_mxp_mesh_port_connect_info_north,RO,por_mxp_mesh_port_connect_info_north
+Table 8-838: por_mxp_cfg register summary,0x48 : 0x70,por_mxp_device_port_connect_ldid_info_p0-5,RO,por_mxp_device_port_connect_ldid_info_p0-5
+Table 8-838: por_mxp_cfg register summary,0x80,por_mxp_child_info,RO,por_mxp_child_info
+Table 8-838: por_mxp_cfg register summary,0x100 : 0x1F8,por_mxp_child_pointer_0-31,RO,por_mxp_child_pointer_0-31
+Table 8-838: por_mxp_cfg register summary,0x900 : 0x950,por_mxp_p0-5_info,RO,por_mxp_p0-5_info
+Table 8-838: por_mxp_cfg register summary,0x908 : 0x958,por_mxp_p0-5_info_1,RO,por_mxp_p0-5_info_1
+Table 8-838: por_mxp_cfg register summary,0x960,por_dtm_unit_info,RO,por_dtm_unit_info
+Table 8-838: por_mxp_cfg register summary,0x968 : 0x978,por_dtm_unit_info_dt1-3,RO,por_dtm_unit_info_dt1-3
+Table 8-838: por_mxp_cfg register summary,0x980,por_mxp_scr,RW,por_mxp_scr
+Table 8-838: por_mxp_cfg register summary,0x988,por_mxp_rcr,RW,por_mxp_rcr
+Table 8-838: por_mxp_cfg register summary,0xA00,por_mxp_aux_ctl,RW,por_mxp_aux_ctl
+Table 8-838: por_mxp_cfg register summary,0xA08,por_mxp_device_port_ctl,RW,por_mxp_device_port_ctl
+Table 8-838: por_mxp_cfg register summary,0xA10 : 0xA38,por_mxp_p0-5_mpam_override,RW,por_mxp_p0-5_mpam_override
+Table 8-838: por_mxp_cfg register summary,0xA40 : 0xA68,por_mxp_p0-5_ldid_override,RW,por_mxp_p0-5_ldid_override
+Table 8-838: por_mxp_cfg register summary,0xA70,por_mxp_device_port_disable,RW,por_mxp_device_port_disable
+Table 8-838: por_mxp_cfg register summary,0xA78,por_mxp_cfg_ctl,RW,por_mxp_cfg_ctl
+Table 8-838: por_mxp_cfg register summary,0xA80 : 0xB60,por_mxp_p0-5_qos_control,RW,por_mxp_p0-5_qos_control
+Table 8-838: por_mxp_cfg register summary,0xA88 : 0xB68,por_mxp_p0-5_qos_lat_tgt,RW,por_mxp_p0-5_qos_lat_tgt
+Table 8-838: por_mxp_cfg register summary,0xA90 : 0xB70,por_mxp_p0-5_qos_lat_scale,RW,por_mxp_p0-5_qos_lat_scale
+Table 8-838: por_mxp_cfg register summary,0xA98 : 0xB78,por_mxp_p0-5_qos_lat_range,RW,por_mxp_p0-5_qos_lat_range
+Table 8-838: por_mxp_cfg register summary,0xA000,por_mxp_pmu_event_sel,RW,por_mxp_pmu_event_sel
+Table 8-838: por_mxp_cfg register summary,0xE000,por_mxp_errfr,RO,por_mxp_errfr
+Table 8-838: por_mxp_cfg register summary,0xE008,por_mxp_errctlr,RW,por_mxp_errctlr
+Table 8-838: por_mxp_cfg register summary,0xE010,por_mxp_errstatus,W1C,por_mxp_errstatus
+Table 8-838: por_mxp_cfg register summary,0xE018,por_mxp_erraddr,RW,por_mxp_erraddr
+Table 8-838: por_mxp_cfg register summary,0xE028,por_mxp_errmisc1,RW,por_mxp_errmisc1
+Table 8-838: por_mxp_cfg register summary,0xE930 : 0xE968,por_mxp_p0-5_byte_par_err_inj,WO,por_mxp_p0-5_byte_par_err_inj
+Table 8-838: por_mxp_cfg register summary,0xE800,por_mxp_errpfgf,RO,por_mxp_errpfgf
+Table 8-838: por_mxp_cfg register summary,0xE808,por_mxp_errpfgctl,RW,por_mxp_errpfgctl
+Table 8-838: por_mxp_cfg register summary,0xE810,por_mxp_errpfgcdn,RW,por_mxp_errpfgcdn
+Table 8-838: por_mxp_cfg register summary,0xE040,por_mxp_errfr_NS,RO,por_mxp_errfr_NS
+Table 8-838: por_mxp_cfg register summary,0xE048,por_mxp_errctlr_NS,RW,por_mxp_errctlr_NS
+Table 8-838: por_mxp_cfg register summary,0xE050,por_mxp_errstatus_NS,W1C,por_mxp_errstatus_NS
+Table 8-838: por_mxp_cfg register summary,0xE058,por_mxp_erraddr_NS,RW,por_mxp_erraddr_NS
+Table 8-838: por_mxp_cfg register summary,0xE068,por_mxp_errmisc1_NS,RW,por_mxp_errmisc1_NS
+Table 8-838: por_mxp_cfg register summary,0xE840,por_mxp_errpfgf_NS,RO,por_mxp_errpfgf_NS
+Table 8-838: por_mxp_cfg register summary,0xE848,por_mxp_errpfgctl_NS,RW,por_mxp_errpfgctl_NS
+Table 8-838: por_mxp_cfg register summary,0xE850,por_mxp_errpfgcdn_NS,RW,por_mxp_errpfgcdn_NS
+Table 8-838: por_mxp_cfg register summary,0xED00,por_mxp_errcapctl,RW,por_mxp_errcapctl
+Table 8-838: por_mxp_cfg register summary,0xEE00,por_mxp_errgsr,RO,por_mxp_errgsr
+Table 8-838: por_mxp_cfg register summary,0xEE10,por_mxp_erriidr,RO,por_mxp_erriidr
+Table 8-838: por_mxp_cfg register summary,0xEFA8,por_mxp_errdevaff,RO,por_mxp_errdevaff
+Table 8-838: por_mxp_cfg register summary,0xEFB8,por_mxp_errdevarch,RO,por_mxp_errdevarch
+Table 8-838: por_mxp_cfg register summary,0xEFC8,por_mxp_errdevid,RO,por_mxp_errdevid
+Table 8-838: por_mxp_cfg register summary,0xEFD0,por_mxp_errpidr45,RO,por_mxp_errpidr45
+Table 8-838: por_mxp_cfg register summary,0xEFE0,por_mxp_errpidr01,RO,por_mxp_errpidr01
+Table 8-838: por_mxp_cfg register summary,0xEFE8,por_mxp_errpidr23,RO,por_mxp_errpidr23
+Table 8-838: por_mxp_cfg register summary,0xEFF0,por_mxp_errcidr01,RO,por_mxp_errcidr01
+Table 8-838: por_mxp_cfg register summary,0xEFF8,por_mxp_errcidr23,RO,por_mxp_errcidr23
+Table 8-838: por_mxp_cfg register summary,0x1000 : 0x1070,por_mxp_p0-5_syscoreq_ctl,RW,por_mxp_p0-5_syscoreq_ctl
+Table 8-838: por_mxp_cfg register summary,0x1008 : 0x1078,por_mxp_p0-5_syscoack_status,RO,por_mxp_p0-5_syscoack_status
+Table 8-838: por_mxp_cfg register summary,0xA100,por_dtm_control,RW,por_dtm_control
+Table 8-838: por_mxp_cfg register summary,0xA118,por_dtm_fifo_entry_ready,W1C,por_dtm_fifo_entry_ready
+Table 8-838: por_mxp_cfg register summary,0xA120 : 0xA180,por_dtm_fifo_entry0-3_0,RO,por_dtm_fifo_entry0-3_0
+Table 8-838: por_mxp_cfg register summary,0xA128 : 0xA188,por_dtm_fifo_entry0-3_1,RO,por_dtm_fifo_entry0-3_1
+Table 8-838: por_mxp_cfg register summary,0xA130 : 0xA190,por_dtm_fifo_entry0-3_2,RO,por_dtm_fifo_entry0-3_2
+Table 8-838: por_mxp_cfg register summary,0xA138 : 0xA198,por_dtm_fifo_entry0-3_3,RO,por_dtm_fifo_entry0-3_3
+Table 8-838: por_mxp_cfg register summary,0xA1A0 : 0xA1E8,por_dtm_wp0-3_config,RW,por_dtm_wp0-3_config
+Table 8-838: por_mxp_cfg register summary,0xA1A8 : 0xA1F0,por_dtm_wp0-3_val,RW,por_dtm_wp0-3_val
+Table 8-838: por_mxp_cfg register summary,0xA1B0 : 0xA1F8,por_dtm_wp0-3_mask,RW,por_dtm_wp0-3_mask
+Table 8-838: por_mxp_cfg register summary,0xA200,por_dtm_pmsicr,RW,por_dtm_pmsicr
+Table 8-838: por_mxp_cfg register summary,0xA208,por_dtm_pmsirr,RW,por_dtm_pmsirr
+Table 8-838: por_mxp_cfg register summary,0xA210,por_dtm_pmu_config,RW,por_dtm_pmu_config
+Table 8-838: por_mxp_cfg register summary,0xA220,por_dtm_pmevcnt,RW,por_dtm_pmevcnt
+Table 8-838: por_mxp_cfg register summary,0xA240,por_dtm_pmevcntsr,RW,por_dtm_pmevcntsr
+Table 8-838: por_mxp_cfg register summary,0xA300 : 0xA700,por_dtm_control_dt1-3,RW,por_dtm_control_dt1-3
+Table 8-838: por_mxp_cfg register summary,0xA318 : 0xA718,por_dtm_fifo_entry_ready_dt1-3,W1C,por_dtm_fifo_entry_ready_dt1-3
+Table 8-838: por_mxp_cfg register summary,0xA320 : 0xA900,por_dtm_fifo_entry0-11%4_0_dt(0-11/4)+1,RO,por_dtm_fifo_entry0-11%4_0_dt(0-11/4)+1
+Table 8-838: por_mxp_cfg register summary,0xA328 : 0xA908,por_dtm_fifo_entry0-11%4_1_dt(0-11/4)+1,RO,por_dtm_fifo_entry0-11%4_1_dt(0-11/4)+1
+Table 8-838: por_mxp_cfg register summary,0xA330 : 0xA910,por_dtm_fifo_entry0-11%4_2_dt(0-11/4)+1,RO,por_dtm_fifo_entry0-11%4_2_dt(0-11/4)+1
+Table 8-838: por_mxp_cfg register summary,0xA338 : 0xA918,por_dtm_fifo_entry0-11%4_3_dt(0-11/4)+1,RO,por_dtm_fifo_entry0-11%4_3_dt(0-11/4)+1
+Table 8-838: por_mxp_cfg register summary,0xA3A0 : 0xA968,por_dtm_wp0-11%4_config_dt(0-11/4)+1,RW,por_dtm_wp0-11%4_config_dt(0-11/4)+1
+Table 8-838: por_mxp_cfg register summary,0xA3A8 : 0xA970,por_dtm_wp0-11%4_val_dt(0-11/4)+1,RW,por_dtm_wp0-11%4_val_dt(0-11/4)+1
+Table 8-838: por_mxp_cfg register summary,0xA3B0 : 0xA978,por_dtm_wp0-11%4_mask_dt(0-11/4)+1,RW,por_dtm_wp0-11%4_mask_dt(0-11/4)+1
+Table 8-838: por_mxp_cfg register summary,0xA400 : 0xA800,por_dtm_pmsicr_dt1-3,RW,por_dtm_pmsicr_dt1-3
+Table 8-838: por_mxp_cfg register summary,0xA408 : 0xA808,por_dtm_pmsirr_dt1-3,RW,por_dtm_pmsirr_dt1-3
+Table 8-838: por_mxp_cfg register summary,0xA410 : 0xA810,por_dtm_pmu_config_dt1-3,RW,por_dtm_pmu_config_dt1-3
+Table 8-838: por_mxp_cfg register summary,0xA420 : 0xA820,por_dtm_pmevcnt_dt1-3,RW,por_dtm_pmevcnt_dt1-3
+Table 8-838: por_mxp_cfg register summary,0xA440 : 0xA840,por_dtm_pmevcntsr_dt1-3,RW,por_dtm_pmevcntsr_dt1-3
+Table 8-838: por_mxp_cfg register summary,0xC00 : 0xC78,por_mxp_multi_mesh_chn_sel_0-15,RW,por_mxp_multi_mesh_chn_sel_0-15
+Table 8-838: por_mxp_cfg register summary,0xC00 + 0x80,por_mxp_multi_mesh_chn_ctrl,RW,por_mxp_multi_mesh_chn_ctrl
+Table 8-838: por_mxp_cfg register summary,0xC90 : 0xCC8,por_mxp_xy_override_sel_0-7,RW,por_mxp_xy_override_sel_0-7
+Table 8-838: por_mxp_cfg register summary,0xCD0 : 0xDB0,por_mxp_p0-5_pa2setaddr_slc,RW,por_mxp_p0-5_pa2setaddr_slc
+Table 8-838: por_mxp_cfg register summary,0xCD8 : 0xDB8,por_mxp_p0-5_pa2setaddr_sf,RW,por_mxp_p0-5_pa2setaddr_sf
+Table 8-838: por_mxp_cfg register summary,0xCE0 : 0xDC0,por_mxp_p0-5_pa2setaddr_flex_slc,RW,por_mxp_p0-5_pa2setaddr_flex_slc
+Table 8-838: por_mxp_cfg register summary,0xCE8 : 0xDC8,por_mxp_p0-5_pa2setaddr_flex_sf,RW,por_mxp_p0-5_pa2setaddr_flex_sf
+Table 8-838: por_mxp_cfg register summary,0xE00 : 0xE38,por_mxp_p0-5_datasource_ctl,RW,por_mxp_p0-5_datasource_ctl
+Table 8-929: por_rnd_cfg register summary,0x0,por_rnd_node_info,RO,por_rnd_node_info
+Table 8-929: por_rnd_cfg register summary,0x80,por_rnd_child_info,RO,por_rnd_child_info
+Table 8-929: por_rnd_cfg register summary,0x980,por_rnd_rcr,RW,por_rnd_rcr
+Table 8-929: por_rnd_cfg register summary,0x988,por_rnd_scr,RW,por_rnd_scr
+Table 8-929: por_rnd_cfg register summary,0x900,por_rnd_unit_info,RO,por_rnd_unit_info
+Table 8-929: por_rnd_cfg register summary,0x908,por_rnd_unit_info2,RO,por_rnd_unit_info2
+Table 8-929: por_rnd_cfg register summary,0xA00,por_rnd_cfg_ctl,RW,por_rnd_cfg_ctl
+Table 8-929: por_rnd_cfg register summary,0xA08,por_rnd_cfg_ctl2,RW,por_rnd_cfg_ctl2
+Table 8-929: por_rnd_cfg register summary,0xA10,por_rnd_aux_ctl,RW,por_rnd_aux_ctl
+Table 8-929: por_rnd_cfg register summary,0xA18 : 0xA28,por_rnd_s0-2_port_control,RW,por_rnd_s0-2_port_control
+Table 8-929: por_rnd_cfg register summary,0xA30 : 0xA40,por_rnd_s0-2_mpam_control,RW,por_rnd_s0-2_mpam_control
+Table 8-929: por_rnd_cfg register summary,0xA80 : 0xAC0,por_rnd_s0-2_qos_control,RW,por_rnd_s0-2_qos_control
+Table 8-929: por_rnd_cfg register summary,0xA88 : 0xAC8,por_rnd_s0-2_qos_lat_tgt,RW,por_rnd_s0-2_qos_lat_tgt
+Table 8-929: por_rnd_cfg register summary,0xA90 : 0xAD0,por_rnd_s0-2_qos_lat_scale,RW,por_rnd_s0-2_qos_lat_scale
+Table 8-929: por_rnd_cfg register summary,0xA98 : 0xAD8,por_rnd_s0-2_qos_lat_range,RW,por_rnd_s0-2_qos_lat_range
+Table 8-929: por_rnd_cfg register summary,0xD900,por_rnd_pmu_event_sel,RW,por_rnd_pmu_event_sel
+Table 8-929: por_rnd_cfg register summary,0x1900,por_rnd_syscoreq_ctl,RW,por_rnd_syscoreq_ctl
+Table 8-929: por_rnd_cfg register summary,0x1908,por_rnd_syscoack_status,RO,por_rnd_syscoack_status
+Table 8-948: por_rni_cfg register summary,0x0,por_rni_node_info,RO,por_rni_node_info
+Table 8-948: por_rni_cfg register summary,0x80,por_rni_child_info,RO,por_rni_child_info
+Table 8-948: por_rni_cfg register summary,0x980,por_rni_rcr,RW,por_rni_rcr
+Table 8-948: por_rni_cfg register summary,0x988,por_rni_scr,RW,por_rni_scr
+Table 8-948: por_rni_cfg register summary,0x900,por_rni_unit_info,RO,por_rni_unit_info
+Table 8-948: por_rni_cfg register summary,0x908,por_rni_unit_info2,RO,por_rni_unit_info2
+Table 8-948: por_rni_cfg register summary,0xA00,por_rni_cfg_ctl,RW,por_rni_cfg_ctl
+Table 8-948: por_rni_cfg register summary,0xA08,por_rni_cfg_ctl2,RW,por_rni_cfg_ctl2
+Table 8-948: por_rni_cfg register summary,0xA10,por_rni_aux_ctl,RW,por_rni_aux_ctl
+Table 8-948: por_rni_cfg register summary,0xA18 : 0xA28,por_rni_s0-2_port_control,RW,por_rni_s0-2_port_control
+Table 8-948: por_rni_cfg register summary,0xA30 : 0xA40,por_rni_s0-2_mpam_control,RW,por_rni_s0-2_mpam_control
+Table 8-948: por_rni_cfg register summary,0xA80 : 0xAC0,por_rni_s0-2_qos_control,RW,por_rni_s0-2_qos_control
+Table 8-948: por_rni_cfg register summary,0xA88 : 0xAC8,por_rni_s0-2_qos_lat_tgt,RW,por_rni_s0-2_qos_lat_tgt
+Table 8-948: por_rni_cfg register summary,0xA90 : 0xAD0,por_rni_s0-2_qos_lat_scale,RW,por_rni_s0-2_qos_lat_scale
+Table 8-948: por_rni_cfg register summary,0xA98 : 0xAD8,por_rni_s0-2_qos_lat_range,RW,por_rni_s0-2_qos_lat_range
+Table 8-948: por_rni_cfg register summary,0xD900,por_rni_pmu_event_sel,RW,por_rni_pmu_event_sel
+Table 8-965: por_rnsam_cfg register summary,0x0,por_rnsam_node_info,RO,por_rnsam_node_info
+Table 8-965: por_rnsam_cfg register summary,0x80,por_rnsam_child_info,RO,por_rnsam_child_info
+Table 8-965: por_rnsam_cfg register summary,0x980,por_rnsam_scr,RW,por_rnsam_scr
+Table 8-965: por_rnsam_cfg register summary,0x988,por_rnsam_rcr,RW,por_rnsam_rcr
+Table 8-965: por_rnsam_cfg register summary,0x900,por_rnsam_unit_info,RO,por_rnsam_unit_info
+Table 8-965: por_rnsam_cfg register summary,0x908,por_rnsam_unit_info1,RO,por_rnsam_unit_info1
+Table 8-965: por_rnsam_cfg register summary,{0-23} 0xC00 : 0xCB8; {24-151} 0x20C0 : 0x24B8,non_hash_mem_region_reg0-127,RW,non_hash_mem_region_reg0-127
+Table 8-965: por_rnsam_cfg register summary,{0-23} 0xCC0 : 0xD78; {24-151} 0x24C0 : 0x28B8,non_hash_mem_region_cfg2_reg0-127,RW,non_hash_mem_region_cfg2_reg0-127
+Table 8-965: por_rnsam_cfg register summary,{0-15} 0xD80 : 0xDF8; {16-47} 0x2880 : 0x2978,non_hash_tgt_nodeid0-31,RW,non_hash_tgt_nodeid0-31
+Table 8-965: por_rnsam_cfg register summary,0x11A0,cml_port_aggr_mode_ctrl_reg,RW,cml_port_aggr_mode_ctrl_reg
+Table 8-965: por_rnsam_cfg register summary,{0-3} 0x11A0 : 0x11B8; {4-19} 0x2A20 : 0x2A98,cml_port_aggr_mode_ctrl_reg1-12,RW,cml_port_aggr_mode_ctrl_reg1-12
+Table 8-965: por_rnsam_cfg register summary,{0-7} 0xE00 : 0xE38; {8-31} 0x3040 : 0x30F8,hashed_tgt_grp_cfg1_region4-31,RW,hashed_tgt_grp_cfg1_region4-31
+Table 8-965: por_rnsam_cfg register summary,{0-31} 0x3100 : 0x31F8,hashed_tgt_grp_cfg2_region0-31,RW,hashed_tgt_grp_cfg2_region0-31
+Table 8-965: por_rnsam_cfg register summary,{0-7} 0xE40 : 0xE78; {8-31} 0x3240 : 0x32F8,sys_cache_grp_secondary_reg0-3,RW,sys_cache_grp_secondary_reg0-3
+Table 8-965: por_rnsam_cfg register summary,{0-7} 0xE40 : 0xE78; {8-31} 0x3240 : 0x32F8,hashed_target_grp_secondary_cfg1_reg4-31,RW,hashed_target_grp_secondary_cfg1_reg4-31
+Table 8-965: por_rnsam_cfg register summary,{0-31} 0x3300 : 0x33F8,hashed_target_grp_secondary_cfg2_reg0-31,RW,hashed_target_grp_secondary_cfg2_reg0-31
+Table 8-965: por_rnsam_cfg register summary,{0-31} 0x3400 : 0x34F8,hashed_target_grp_hash_cntl_reg0-31,RW,hashed_target_grp_hash_cntl_reg0-31
+Table 8-965: por_rnsam_cfg register summary,0xEA0,sys_cache_group_hn_count,RW,sys_cache_group_hn_count
+Table 8-965: por_rnsam_cfg register summary,{0-1} 0xEA0 : 0xEA8; {2-3} 0x3710 : 0x3718,hashed_target_group_hn_count_reg1-3,RW,hashed_target_group_hn_count_reg1-3
+Table 8-965: por_rnsam_cfg register summary,0xEC0,sys_cache_grp_nonhash_nodeid,RW,sys_cache_grp_nonhash_nodeid
+Table 8-965: por_rnsam_cfg register summary,{0-5} 0xEC0 : 0xEE8; {6-9} 0x3800 : 0x3818,hashed_target_grp_nonhash_nodeid_reg1-6,RW,hashed_target_grp_nonhash_nodeid_reg1-6
+Table 8-965: por_rnsam_cfg register summary,{0-31} 0xF00 : 0xFF8,sys_cache_grp_hn_nodeid_reg0-15,RW,sys_cache_grp_hn_nodeid_reg0-15
+Table 8-965: por_rnsam_cfg register summary,{0-31} 0xF00 : 0xFF8; {32-63} 0x3600 : 0x36F8,hashed_target_grp_hnf_nodeid_reg16-31,RW,hashed_target_grp_hnf_nodeid_reg16-31
+Table 8-965: por_rnsam_cfg register summary,{0-31} 0x3600 : 0x36F8,hashed_target_grp_hnp_nodeid_reg0-15,RW,hashed_target_grp_hnp_nodeid_reg0-15
+Table 8-965: por_rnsam_cfg register summary,{0-7} 0x1900 : 0x1938,hashed_target_grp_misc_nodeid_reg0-7,RW,hashed_target_grp_misc_nodeid_reg0-7
+Table 8-965: por_rnsam_cfg register summary,0x1980,hashed_target_grp_misc_tgts_lcn_bound_cfg_reg0,RW,hashed_target_grp_misc_tgts_lcn_bound_cfg_reg0
+Table 8-965: por_rnsam_cfg register summary,{0-7} 0x1800 : 0x1838,hashed_tgt_override_cam_reg0-7,RW,hashed_tgt_override_cam_reg0-7
+Table 8-965: por_rnsam_cfg register summary,0x1120,sys_cache_grp_cal_mode_reg,RW,sys_cache_grp_cal_mode_reg
+Table 8-965: por_rnsam_cfg register summary,{0-3} 0x1120 : 0x1138; {4-7} 0x37A0 : 0x37B8,hashed_target_grp_cal_mode_reg1-7,RW,hashed_target_grp_cal_mode_reg1-7
+Table 8-965: por_rnsam_cfg register summary,0x1180,sys_cache_grp_hn_cpa_en_reg,RW,sys_cache_grp_hn_cpa_en_reg
+Table 8-965: por_rnsam_cfg register summary,{0-1} 0x1180 : 0x1188; {2-3} 0x3730 : 0x3738,hashed_target_grp_hnf_cpa_en_reg1-1,RW,hashed_target_grp_hnf_cpa_en_reg1-1
+Table 8-965: por_rnsam_cfg register summary,{0-15} 0x3900 : 0x3978,hashed_target_grp_cpag_perhnf_reg0-15,RW,hashed_target_grp_cpag_perhnf_reg0-15
+Table 8-965: por_rnsam_cfg register summary,0x1190,sys_cache_grp_hn_cpa_grp_reg,RW,sys_cache_grp_hn_cpa_grp_reg
+Table 8-965: por_rnsam_cfg register summary,{0-1} 0x1190 : 0x1198; {2-9} 0x3750 : 0x3788,hashed_target_grp_cpa_grp_reg1-7,RW,hashed_target_grp_cpa_grp_reg1-7
+Table 8-965: por_rnsam_cfg register summary,{0-3} 0x37C0 : 0x37D8,hashed_target_grp_hnf_lcn_bound_cfg_reg0-1,RW,hashed_target_grp_hnf_lcn_bound_cfg_reg0-1
+Table 8-965: por_rnsam_cfg register summary,{0-1} 0x37E0 : 0x37E8,hashed_target_grp_hnf_target_type_override_cfg_reg0-1,RW,hashed_target_grp_hnf_target_type_override_cfg_reg0-1
+Table 8-965: por_rnsam_cfg register summary,{0-31} 0x3A00 : 0x3AF8,hashed_target_grp_compact_cpag_ctrl0-31,RW,hashed_target_grp_compact_cpag_ctrl0-31
+Table 8-965: por_rnsam_cfg register summary,{0-31} 0x3B00 : 0x3BF8,hashed_target_grp_compact_hash_ctrl0-31,RW,hashed_target_grp_compact_hash_ctrl0-31
+Table 8-965: por_rnsam_cfg register summary,0xE80,rnsam_hash_addr_mask_reg,RW,rnsam_hash_addr_mask_reg
+Table 8-965: por_rnsam_cfg register summary,0xE88,rnsam_hash_axi_id_mask_reg,RW,rnsam_hash_axi_id_mask_reg
+Table 8-965: por_rnsam_cfg register summary,0xE90,rnsam_region_cmp_addr_mask_reg,RW,rnsam_region_cmp_addr_mask_reg
+Table 8-965: por_rnsam_cfg register summary,{0-5} 0x11C0 : 0x11E8; {6-37} 0x2B30 : 0x2C28,cml_port_aggr_grp0-31_add_mask,RW,cml_port_aggr_grp0-31_add_mask
+Table 8-965: por_rnsam_cfg register summary,{0-7} 0x2B00 : 0x2B38,cml_cpag_base_indx_grp0-3,RW,cml_cpag_base_indx_grp0-3
+Table 8-965: por_rnsam_cfg register summary,{0-2} 0x11F0 : 0x1200; {3-14} 0x2C18 : 0x2C70,cml_port_aggr_grp_reg0-12,RW,cml_port_aggr_grp_reg0-12
+Table 8-965: por_rnsam_cfg register summary,0x1208,cml_port_aggr_ctrl_reg,RW,cml_port_aggr_ctrl_reg
+Table 8-965: por_rnsam_cfg register summary,{0-15} 0x1208 : 0x1280,cml_port_aggr_ctrl_reg1-6,RW,cml_port_aggr_ctrl_reg1-6
+Table 8-965: por_rnsam_cfg register summary,0xEB0,sys_cache_grp_sn_attr,RW,sys_cache_grp_sn_attr
+Table 8-965: por_rnsam_cfg register summary,0xEB8,sys_cache_grp_sn_attr1,RW,sys_cache_grp_sn_attr1
+Table 8-965: por_rnsam_cfg register summary,{0-7} 0x1140 : 0x1178,sys_cache_grp_sn_sam_cfg0-3,RW,sys_cache_grp_sn_sam_cfg0-3
+Table 8-965: por_rnsam_cfg register summary,{0-15} 0x1280 : 0x12F8,sam_qos_mem_region_reg0-15,RW,sam_qos_mem_region_reg0-15
+Table 8-965: por_rnsam_cfg register summary,{0-15} 0x1340 : 0x13B8,sam_qos_mem_region_cfg2_reg0-15,RW,sam_qos_mem_region_cfg2_reg0-15
+Table 8-965: por_rnsam_cfg register summary,0xE18,{0-511} sam_scg0-511/64_prefetch_nonhashed_mem_region_,-,-
+Table 8-965: por_rnsam_cfg register summary, : 0x4FF8,{0-511} sam_scg0-511/64_prefetch_nonhashed_mem_region_,-,-
+Table 8-965: por_rnsam_cfg register summary,{0-63} 0x6000 : 0x61F8,sam_scg0-63/8_prefetch_hashed_region_cfg1_reg0-63%8,RW,sam_scg0-63/8_prefetch_hashed_region_cfg1_reg0-63%8
+Table 8-965: por_rnsam_cfg register summary,{0-63} 0x6200 : 0x63F8,sam_scg0-63/8_prefetch_hashed_region_cfg2_reg0-63%8,RW,sam_scg0-63/8_prefetch_hashed_region_cfg2_reg0-63%8
+Table 8-965: por_rnsam_cfg register summary,{0-63} 0x6400 : 0x65F8,sam_scg0-63/8_prefetch_hashed_region_cfg3_reg0-63%8,RW,sam_scg0-63/8_prefetch_hashed_region_cfg3_reg0-63%8
+Table 8-965: por_rnsam_cfg register summary,{0-31} 0x1000 : 0x10F8,sys_cache_grp_sn_nodeid_reg0-31,RW,sys_cache_grp_sn_nodeid_reg0-31
+Table 8-965: por_rnsam_cfg register summary,{0-63} 0x1400 : 0x15F8,sys_cache_grp_region0-63/32_sn_nodeid_reg0-63%32,RW,sys_cache_grp_region0-63/32_sn_nodeid_reg0-63%32
+Table 8-965: por_rnsam_cfg register summary,{0-31} 0x6600 : 0x66F8,sys_cache_grp_hashed_regions_sn_nodeid_reg0-31,RW,sys_cache_grp_hashed_regions_sn_nodeid_reg0-31
+Table 8-965: por_rnsam_cfg register summary, : 0x5FF8,{0-3} sys_cache_grp_hashed_regions_cxg_sa_nodeid_reg0-3,-,-
+Table 8-965: por_rnsam_cfg register summary,0x1100,rnsam_status,RW,rnsam_status
+Table 8-965: por_rnsam_cfg register summary,0x1108,gic_mem_region_reg,RW,gic_mem_region_reg
+Table 8-965: por_rnsam_cfg register summary,0x1110,dsu_hni_region_reg,RW,dsu_hni_region_reg
+Table 8-965: por_rnsam_cfg register summary,{0-7} 0x1600 : 0x1638,sam_generic_regs0-7,RW,sam_generic_regs0-7
+Table 8-1031: por_sbsx_cfg register summary,0x0,por_sbsx_node_info,RO,por_sbsx_node_info
+Table 8-1031: por_sbsx_cfg register summary,0x80,por_sbsx_child_info,RO,por_sbsx_child_info
+Table 8-1031: por_sbsx_cfg register summary,0x980,por_sbsx_rcr,RW,por_sbsx_rcr
+Table 8-1031: por_sbsx_cfg register summary,0x988,por_sbsx_scr,RW,por_sbsx_scr
+Table 8-1031: por_sbsx_cfg register summary,0x900,por_sbsx_unit_info,RO,por_sbsx_unit_info
+Table 8-1031: por_sbsx_cfg register summary,0xA00,por_sbsx_cfg_ctl,RW,por_sbsx_cfg_ctl
+Table 8-1031: por_sbsx_cfg register summary,0xA08,por_sbsx_aux_ctl,RW,por_sbsx_aux_ctl
+Table 8-1031: por_sbsx_cfg register summary,0xA10,por_sbsx_datasource_ctl,RW,por_sbsx_datasource_ctl
+Table 8-1031: por_sbsx_cfg register summary,0xA18,por_sbsx_cbusy_limit_ctl,RW,por_sbsx_cbusy_limit_ctl
+Table 8-1031: por_sbsx_cfg register summary,0xE000,por_sbsx_errfr,RO,por_sbsx_errfr
+Table 8-1031: por_sbsx_cfg register summary,0xE008,por_sbsx_errctlr,RW,por_sbsx_errctlr
+Table 8-1031: por_sbsx_cfg register summary,0xE010,por_sbsx_errstatus,W1C,por_sbsx_errstatus
+Table 8-1031: por_sbsx_cfg register summary,0xE018,por_sbsx_erraddr,RW,por_sbsx_erraddr
+Table 8-1031: por_sbsx_cfg register summary,0xE028,por_sbsx_errmisc1,RW,por_sbsx_errmisc1
+Table 8-1031: por_sbsx_cfg register summary,0xE800,por_sbsx_errpfgf,RO,por_sbsx_errpfgf
+Table 8-1031: por_sbsx_cfg register summary,0xE808,por_sbsx_errpfgctl,RW,por_sbsx_errpfgctl
+Table 8-1031: por_sbsx_cfg register summary,0xE810,por_sbsx_errpfgcdn,RW,por_sbsx_errpfgcdn
+Table 8-1031: por_sbsx_cfg register summary,0xE040,por_sbsx_errfr_NS,RO,por_sbsx_errfr_NS
+Table 8-1031: por_sbsx_cfg register summary,0xE048,por_sbsx_errctlr_NS,RW,por_sbsx_errctlr_NS
+Table 8-1031: por_sbsx_cfg register summary,0xE050,por_sbsx_errstatus_NS,W1C,por_sbsx_errstatus_NS
+Table 8-1031: por_sbsx_cfg register summary,0xE058,por_sbsx_erraddr_NS,RW,por_sbsx_erraddr_NS
+Table 8-1031: por_sbsx_cfg register summary,0xE068,por_sbsx_errmisc1_NS,RW,por_sbsx_errmisc1_NS
+Table 8-1031: por_sbsx_cfg register summary,0xE840,por_sbsx_errpfgf_NS,RO,por_sbsx_errpfgf_NS
+Table 8-1031: por_sbsx_cfg register summary,0xE848,por_sbsx_errpfgctl_NS,RW,por_sbsx_errpfgctl_NS
+Table 8-1031: por_sbsx_cfg register summary,0xE850,por_sbsx_errpfgcdn_NS,RW,por_sbsx_errpfgcdn_NS
+Table 8-1031: por_sbsx_cfg register summary,0xED00,por_sbsx_errcapctl,RW,por_sbsx_errcapctl
+Table 8-1031: por_sbsx_cfg register summary,0xEE00,por_sbsx_errgsr,RO,por_sbsx_errgsr
+Table 8-1031: por_sbsx_cfg register summary,0xEE10,por_sbsx_erriidr,RO,por_sbsx_erriidr
+Table 8-1031: por_sbsx_cfg register summary,0xEFA8,por_sbsx_errdevaff,RO,por_sbsx_errdevaff
+Table 8-1031: por_sbsx_cfg register summary,0xEFB8,por_sbsx_errdevarch,RO,por_sbsx_errdevarch
+Table 8-1031: por_sbsx_cfg register summary,0xEFC8,por_sbsx_errdevid,RO,por_sbsx_errdevid
+Table 8-1031: por_sbsx_cfg register summary,0xEFD0,por_sbsx_errpidr45,RO,por_sbsx_errpidr45
+Table 8-1031: por_sbsx_cfg register summary,0xEFE0,por_sbsx_errpidr01,RO,por_sbsx_errpidr01
+Table 8-1031: por_sbsx_cfg register summary,0xEFE8,por_sbsx_errpidr23,RO,por_sbsx_errpidr23
+Table 8-1031: por_sbsx_cfg register summary,0xEFF0,por_sbsx_errcidr01,RO,por_sbsx_errcidr01
+Table 8-1031: por_sbsx_cfg register summary,0xEFF8,por_sbsx_errcidr23,RO,por_sbsx_errcidr23
+Table 8-1031: por_sbsx_cfg register summary,0xD900,por_sbsx_pmu_event_sel,RW,por_sbsx_pmu_event_sel
