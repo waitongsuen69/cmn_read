@@ -34,6 +34,8 @@ def check_contiguous_segments(offset_pattern):
     
     Returns: (is_contiguous, segments)
     """
+    # First convert any 16'h notation to 0x
+    offset_pattern = convert_hex_notation(offset_pattern)
     segments = re.findall(r'\{(\d+)-(\d+)\}\s*(0x[0-9A-Fa-f]+)\s*:\s*(0x[0-9A-Fa-f]+)', offset_pattern)
     
     if len(segments) <= 1:
@@ -69,8 +71,12 @@ def simplify_single_element_offset(offset, array_size):
     Convert single-element array offsets to simple form.
     0x23A8 : 0x23A8 -> 0x23a8
     {0-0} 0x23A8 : 0x23A8 -> 0x23a8
+    16'h23A8 : 16'h23A8 -> 0x23a8
     """
     if array_size == 1:
+        # First convert any 16'h to 0x
+        offset = convert_hex_notation(offset)
+        
         # Remove index prefix if present
         offset = re.sub(r'^\{[0-9]+-[0-9]+\}\s*', '', offset)
         
@@ -192,13 +198,23 @@ def parse_array_info(name, preserve_full_name=False):
     
     return name, 1, ""
 
+def convert_hex_notation(offset_str):
+    """
+    Convert Verilog hex notation (16'h) to standard hex notation (0x).
+    Example: "16'h100" -> "0x100"
+    """
+    if pd.isna(offset_str):
+        return offset_str
+    # Convert 16'h notation to 0x notation
+    return re.sub(r"16'h([0-9A-Fa-f]+)", r"0x\1", str(offset_str))
+
 def process_register_entry(row):
     """
     Process a single register entry and potentially split it.
     Returns list of processed entries.
     """
     name = row['name']
-    offset = row['offset']
+    offset = convert_hex_notation(row['offset'])  # Convert 16'h to 0x
     results = []
     
     # Parse array info from name twice - once for processing, once for display
@@ -206,7 +222,9 @@ def process_register_entry(row):
     full_name, _, _ = parse_array_info(name, preserve_full_name=True)
     
     # Check for multi-segment offsets
-    segments = re.findall(r'\{(\d+)-(\d+)\}\s*(0x[0-9A-Fa-f]+)\s*:\s*(0x[0-9A-Fa-f]+)', offset)
+    segments = re.findall(r'\{(\d+)-(\d+)\}\s*((?:0x|16\'h)[0-9A-Fa-f]+)\s*:\s*((?:0x|16\'h)[0-9A-Fa-f]+)', offset)
+    # Convert any 16'h notation in segments to 0x
+    segments = [(s[0], s[1], convert_hex_notation(s[2]), convert_hex_notation(s[3])) for s in segments]
     
     if len(segments) > 1:
         # Check if segments are contiguous
@@ -360,6 +378,9 @@ def optimize_register_summaries_with_size(input_csv, output_csv, register_sizes)
     """
     print(f"Processing {input_csv} with size detection...")
     df = pd.read_csv(input_csv)
+    
+    # Convert all 16'h notation to 0x in offset column
+    df['offset'] = df['offset'].apply(convert_hex_notation)
     
     # Process each row and collect results
     all_rows = []

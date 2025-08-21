@@ -195,6 +195,17 @@ def parse_offset(offset_str):
     
     offset_str = str(offset_str).strip()
     
+    # Check for multiple space-separated offsets (malformed data)
+    # If we have multiple 0x patterns separated by spaces (not : or +), take the first one
+    if ' ' in offset_str and not ':' in offset_str and not '+' in offset_str:
+        # Count how many 0x patterns we have
+        hex_patterns = re.findall(r'0x[0-9A-Fa-f]+', offset_str)
+        if len(hex_patterns) > 1:
+            # Multiple offsets concatenated - take the first one
+            print(f"  Warning: Multiple offsets in single field '{offset_str}', using first: {hex_patterns[0]}")
+            return int(hex_patterns[0], 16)
+    
+    
     # Handle offset+size format like "0xC00 + 0x80"
     if '+' in offset_str:
         # Take just the base offset before the +
@@ -231,7 +242,11 @@ def parse_offset(offset_str):
     
     # Handle simple offset
     if offset_str.startswith('0x'):
-        return int(offset_str, 16)
+        try:
+            return int(offset_str, 16)
+        except ValueError:
+            print(f"  Warning: Invalid offset format '{offset_str}', using 0")
+            return 0
     
     return int(offset_str) if offset_str.isdigit() else 0
 

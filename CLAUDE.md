@@ -11,7 +11,7 @@ ARM CMN (Coherent Mesh Network) register extraction pipeline that parses PDF doc
 The pipeline expects to run from the root directory containing:
 - `l1_pdf_analysis.py`, `l2_csv_optimize.py`, `l3_cpp_generator.py`, `l4_reg_generator.py` - Pipeline stage scripts
 - `run_pipeline.sh` - Main pipeline runner
-- `cmn437-2072.pdf` - Example PDF for testing
+- `cmn437-2072.pdf`, `cmn_700_pdftk.pdf` - Example PDFs for testing
 
 ## Key Commands
 
@@ -20,8 +20,9 @@ The pipeline expects to run from the root directory containing:
 # Process PDF through all stages (L1→L2→L3→L4)
 ./run_pipeline.sh path/to/pdf_file.pdf
 
-# Example with provided PDF
+# Example with provided PDFs
 ./run_pipeline.sh cmn437-2072.pdf
+./run_pipeline.sh cmn_700_pdftk.pdf
 ```
 
 ### Run Individual Stages
@@ -133,20 +134,20 @@ pip install pandas
 ### L1 PDF Parsing Patterns
 - Table headers: `Table X-Y: <name> register summary/attributes`
 - Register columns: `table_name, Offset, Name, Type, Description`
-- Bit field columns: `table_name, Bits, Name, Description, Type, Reset`
+- Bit field columns: `table_name, register_name, Bits, field_name, Description, Type, Reset`
 - Handles 21 type token variants (RO, RW, WO, R/W, R/W1C, RWL, etc.)
 - **Complex offset formats**: Supports ranges (`0x100 : 0x200`), arrays (`{0-31} 0x3000 : 0x30F8`), offset+size (`0xC00 + 0x80`), and multi-segment arrays
-- **Multi-pass text processing**: Three-phase approach for handling split patterns across lines
+- **Multi-pass text processing**: Three-phase approach in `clean_pdf_text()` for handling split patterns across lines
 - **Sub-bit filtering**: Skips sub-bit definitions (e.g., `[4]`, `[3]`) within multi-bit field descriptions to prevent false field detection
 - **Reserved concatenation artifacts**: Filters PDF extraction artifacts where "Reserved" concatenates with following content without spaces
 - **Boilerplate filtering**: Removes document metadata and header/footer noise using multiple pattern sets
 - **Multi-segment array parsing**: Handles complex patterns like `{0-23} 0xCC0 : 0xD78; {24-151} 0x24C0 : 0x28B8`
-- **Wrapped register pattern handling**: Fixes cases where array indices and partial register names appear first, with offset information on subsequent lines (e.g., `{0-1} partial_name...` followed by `0x37E0 cfg_reg0-1`, `:`, `0x37E8`)
-- **Wrapped attribute field names**: Joins bit field names split across lines in attribute tables (e.g., `[63:61] htg#{index*4 +` followed by `3}_hnf_cal_override_map_11`)
+- **Wrapped register pattern handling**: Fixes cases where array indices and partial register names appear first, with offset information on subsequent lines
+- **Wrapped attribute field names**: Joins bit field names split across lines in attribute tables
 
 ### L2 Array Register Detection
 - Pattern: `{start-end} 0xSTART : 0xEND` indicates array
-- Contiguity validation ensures proper memory layout
+- Contiguity validation ensures proper memory layout via `check_contiguous_segments()`
 - Single-element arrays simplified to scalar registers
 - Multi-segment offset handling with stride calculation
 
@@ -168,9 +169,9 @@ pip install pandas
 ```
 L1_pdf_analysis/
 ├── output.txt                    # Extracted text from pdftotext
+├── output_cleaned.txt            # Cleaned text after multi-pass processing
 ├── all_register_summaries.csv    # Raw register definitions
-├── all_register_attributes.csv   # Raw bit field definitions
-└── cmn437-2072.pdf               # Original PDF (if copied)
+└── all_register_attributes.csv   # Raw bit field definitions
 
 L2_csv_optimize/
 ├── register_summaries_optimized.csv    # Structured registers
@@ -224,7 +225,7 @@ The pipeline performs a clean build by default, removing:
 
 **Concatenated fields**
 - Verify L1 `split_concatenated_registers()`
-- Check for Reserved concatenation artifacts
+- Check for Reserved concatenation artifacts via `is_reserved_concatenation_artifact()`
 - Review address-name separation logic
 
 **Array detection failures**
@@ -255,27 +256,34 @@ The pipeline performs a clean build by default, removing:
 - `is_probable_name()`: Validate field names (rejects "1-" patterns)
 - `is_reserved_concatenation_artifact()`: Filter Reserved concatenation artifacts
 - `remove_spurious_reserved_entries()`: Post-process to remove false Reserved entries
+- `separate_name_and_type()`: Extract type tokens from concatenated name/type strings
+- `is_valid_name_type_separation()`: Validate name/type separation results
 
 ### L2: CSV Optimization
 - `extract_reg_block_name()`: Parse table headers
 - `check_contiguous_segments()`: Validate array memory layout
 - `simplify_single_element_offset()`: Convert single arrays to scalars
-- `parse_offset_pattern()`: Extract array indices and addresses
+- `parse_array_info()`: Extract array indices from register names
 - `determine_register_size()`: Calculate 32-bit vs 64-bit registers
+- `fix_reset_value()`: Process and validate reset values
+- `remove_duplicate_fields()`: Handle field duplicates within registers
 
 ### L3: JSON Generation
 - `deduplicate_attributes()`: Remove duplicate fields with collision handling
 - `deduplicate_registers()`: Handle register conflicts
-- `build_register_json()`: Create hierarchical data model
+- `process_register_blocks()`: Build hierarchical register block structure
 - `sanitize_name()`: Ensure C++ identifier validity
+- `parse_offset()`: Extract address information from offset strings
+- `parse_bits()`: Convert bit range strings to numeric values
+- `calculate_register_reset()`: Compute full register reset value from fields
 
 ### L4: C++ Generation
 - `sanitize_name()`: Create valid C++ identifiers
 - `parse_bits_range()`: Extract bit positions
 - `get_access_and_write_effect()`: Map types to vlab parameters
-- `generate_field_constructor()`: Create field initialization code
 - `generate_field_cpp()`: Generate all field definitions
 - `generate_register_cpp()`: Generate register structures
+- `simplify_reset_value()`: Convert reset values to C++ format
 
 ## Quality Metrics & Validation
 
@@ -308,3 +316,5 @@ The pipeline performs a clean build by default, removing:
 - L3 generates rename logs showing all deduplication actions
 - L3 `unmatched_fields.log` shows fields without matching registers
 - Use validation commands to quickly check for common issues
+- Check intermediate CSV files for data transformation issues
+- Review JSON model in L3 for structural problems before C++ generation

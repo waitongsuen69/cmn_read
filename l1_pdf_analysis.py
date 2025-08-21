@@ -18,13 +18,13 @@ import os
 # ------------------ Regexes / token classes ------------------
 heading_re = re.compile(r'^Table\s+\d+-\d+:\s+.*$', re.IGNORECASE)
 section_re = re.compile(r'^\d+(\.\d+)+')  # e.g., 8.3.1
-offset_re  = re.compile(r'^0x[0-9A-Fa-f]+$')
+offset_re  = re.compile(r'^(?:0x|16\'h)[0-9A-Fa-f]+$')
 bits_re    = re.compile(r'^\[\d+(?::\d+)?\]$')
 range_re   = re.compile(r'^\{\s*\d+(?:\s*-\s*\d+)?\s*\}$')
 
 # New patterns for pdftotext format with ligatures
-array_offset_re = re.compile(r'^\{\d+-\d+\}\s+0x[0-9A-Fa-f]+\s*:\s*0x[0-9A-Fa-f]+')  # {0-31} 0x3000 : 0x31F8
-simple_offset_re = re.compile(r'^0x[0-9A-Fa-f]+(?:\s*:\s*0x[0-9A-Fa-f]+)?')  # 0x100 or 0x100 : 0x200
+array_offset_re = re.compile(r'^\{\d+-\d+\}\s+(?:0x|16\'h)[0-9A-Fa-f]+\s*:\s*(?:0x|16\'h)[0-9A-Fa-f]+')  # {0-31} 0x3000 : 0x31F8 or 16\'h3000
+simple_offset_re = re.compile(r'^(?:0x|16\'h)[0-9A-Fa-f]+(?:\s*:\s*(?:0x|16\'h)[0-9A-Fa-f]+)?')  # 0x100 or 16\'h100 : 16\'h200
 
 footer_noise = re.compile(r'^(Page\b|Copyright|Arm\s+Limited|ARM\s+Limited)', re.IGNORECASE)
 
@@ -73,7 +73,7 @@ RESERVED_CONCATENATION_PATTERN = re.compile(r'^\d+.*[a-zA-Z]')
 
 ADDR_SEPARATORS = {":", "-", "–", ",", ";"}
 # One or more address tokens only (no names/types)
-addr_token_re = r'(?:\{\s*\d+(?:\s*-\s*\d+)?\s*\}|0x[0-9A-Fa-f]+|:|,|–|-)'
+addr_token_re = r'(?:\{\s*\d+(?:\s*-\s*\d+)?\s*\}|(?:0x|16\'h)[0-9A-Fa-f]+|:|,|–|-)'
 addr_line_re  = re.compile(r'^(?:\s*' + addr_token_re + r'\s*)+$')
 
 # Things that must never be treated as a register name
@@ -226,8 +226,8 @@ def clean_pdf_text(input_path: str, output_path: str):
         
         # Handle offset range splits (two patterns)
         # Pattern 1: "0x2240 :" followed by "0x2248" (colon on first line)
-        if re.match(r'^0x[0-9A-Fa-f]+\s*:$', line.strip()):
-            if i + 1 < len(cleaned_lines) and re.match(r'^0x[0-9A-Fa-f]+$', cleaned_lines[i + 1].strip()):
+        if re.match(r'^(?:0x|16\'h)[0-9A-Fa-f]+\s*:$', line.strip()):
+            if i + 1 < len(cleaned_lines) and re.match(r'^(?:0x|16\'h)[0-9A-Fa-f]+$', cleaned_lines[i + 1].strip()):
                 # Join the two lines into an offset range
                 combined = f"{line.strip()} {cleaned_lines[i + 1].strip()}\n"
                 pass2_lines.append(combined)
@@ -235,9 +235,9 @@ def clean_pdf_text(input_path: str, output_path: str):
                 continue
         
         # Pattern 2: "0x2240" followed by ":" followed by "0x2248" (colon on separate line)
-        if re.match(r'^0x[0-9A-Fa-f]+$', line.strip()):
+        if re.match(r'^(?:0x|16\'h)[0-9A-Fa-f]+$', line.strip()):
             if i + 1 < len(cleaned_lines) and cleaned_lines[i + 1].strip() == ':':
-                if i + 2 < len(cleaned_lines) and re.match(r'^0x[0-9A-Fa-f]+$', cleaned_lines[i + 2].strip()):
+                if i + 2 < len(cleaned_lines) and re.match(r'^(?:0x|16\'h)[0-9A-Fa-f]+$', cleaned_lines[i + 2].strip()):
                     # Join the three lines into an offset range
                     combined = f"{line.strip()} : {cleaned_lines[i + 2].strip()}\n"
                     pass2_lines.append(combined)
@@ -301,13 +301,13 @@ def clean_pdf_text(input_path: str, output_path: str):
             line3 = pass2_lines[i + 3].strip()
             
             # Look for: "0x37E0 cfg_reg0-1", ":", "0x37E8"
-            if (re.match(r'^0x[0-9A-Fa-f]+\s+\w+', line1) and 
+            if (re.match(r'^(?:0x|16\'h)[0-9A-Fa-f]+\s+\w+', line1) and 
                 line2 == ':' and 
-                re.match(r'^0x[0-9A-Fa-f]+$', line3)):
+                re.match(r'^(?:0x|16\'h)[0-9A-Fa-f]+$', line3)):
                 
                 # Extract components
                 array_match = re.match(r'^(\{[\d-]+\})\s+(.*?)\s+(RW|RO|WO|RWL|W1C|W1S|R/W)\s+(.*)', line)
-                offset_match = re.match(r'^(0x[0-9A-Fa-f]+)\s+(.*)', line1)
+                offset_match = re.match(r'^((?:0x|16\'h)[0-9A-Fa-f]+)\s+(.*)', line1)
                 
                 if array_match and offset_match:
                     array_indices = array_match.group(1)
@@ -331,7 +331,7 @@ def clean_pdf_text(input_path: str, output_path: str):
         # Handle wrapped register names (name ends with _ and has continuation)
         # Pattern: "0x2080 por_c2capb_c2c_port_ingressid_route_table_                RW     por_c2capb_c2c_port_ingressid_route_table_control_and_status"
         # Next line: "       control_and_status"
-        if re.match(r'^0x[0-9A-Fa-f]+.*_\s+(RW|RO|WO|RWL|W1C|W1S|R/W)', line):
+        if re.match(r'^(?:0x|16\'h)[0-9A-Fa-f]+.*_\s+(RW|RO|WO|RWL|W1C|W1S|R/W)', line):
             # This register name ends with underscore before the type
             if i + 1 < len(cleaned_lines):
                 next_line = cleaned_lines[i + 1]
@@ -345,14 +345,14 @@ def clean_pdf_text(input_path: str, output_path: str):
         # Handle array offset splits where ending offset is on next line
         # Pattern: "{0-31} 0x3000 :    ra_rnsam_hashed_tgt_grp_cfg1_region0-31 ..."
         # Next line: "0x30F8"
-        if re.match(r'^\{[\d-]+\}\s+0x[0-9A-Fa-f]+\s*:', line):
+        if re.match(r'^\{[\d-]+\}\s+(?:0x|16\'h)[0-9A-Fa-f]+\s*:', line):
             if i + 1 < len(cleaned_lines):
                 next_line = cleaned_lines[i + 1].strip()
                 # Check if next line is just a hex offset
-                if re.match(r'^0x[0-9A-Fa-f]+$', next_line):
+                if re.match(r'^(?:0x|16\'h)[0-9A-Fa-f]+$', next_line):
                     # Join the lines properly
                     # Extract parts from the first line
-                    match = re.match(r'^(\{[\d-]+\}\s+0x[0-9A-Fa-f]+\s*:)\s*(.*)', line)
+                    match = re.match(r'^(\{[\d-]+\}\s+(?:0x|16\'h)[0-9A-Fa-f]+\s*:)\s*(.*)', line)
                     if match:
                         offset_part = match.group(1)
                         rest_of_line = match.group(2)
@@ -371,7 +371,7 @@ def clean_pdf_text(input_path: str, output_path: str):
             # This line starts with array index but no offset - check if offset is on next line
             if i + 1 < len(pass2_lines):
                 next_line = pass2_lines[i + 1].strip()
-                if re.match(r'^0x[0-9A-Fa-f]+\s*:\s*0x[0-9A-Fa-f]+\s*$', next_line):
+                if re.match(r'^(?:0x|16\'h)[0-9A-Fa-f]+\s*:\s*(?:0x|16\'h)[0-9A-Fa-f]+\s*$', next_line):
                     # Found offset on next line - merge them
                     # Extract the array index from current line
                     match = re.match(r'^(\{[\d-]+\})\s+(.*)', line)
@@ -401,16 +401,16 @@ def clean_pdf_text(input_path: str, output_path: str):
                                     if not offset_candidate:  # Skip blank lines
                                         k += 1
                                         continue
-                                    if re.match(r'^0x[0-9A-Fa-f]+\s*:\s*0x[0-9A-Fa-f]+\s*$', offset_candidate):
+                                    if re.match(r'^(?:0x|16\'h)[0-9A-Fa-f]+\s*:\s*(?:0x|16\'h)[0-9A-Fa-f]+\s*$', offset_candidate):
                                         # Add to offset part, not end of line
                                         offset_part += f"; {continuation_array_idx} {offset_candidate}"
                                         j = k + 1
                                         offset_found = True
                                         break
-                                    elif re.match(r'^0x[0-9A-Fa-f]+$', offset_candidate):
+                                    elif re.match(r'^(?:0x|16\'h)[0-9A-Fa-f]+$', offset_candidate):
                                         # Handle split offset (start only, look for end)
                                         if k + 2 < len(pass2_lines):
-                                            if pass2_lines[k + 1].strip() == ':' and re.match(r'^0x[0-9A-Fa-f]+$', pass2_lines[k + 2].strip()):
+                                            if pass2_lines[k + 1].strip() == ':' and re.match(r'^(?:0x|16\'h)[0-9A-Fa-f]+$', pass2_lines[k + 2].strip()):
                                                 full_offset = f"{offset_candidate} : {pass2_lines[k + 2].strip()}"
                                                 # Add to offset part, not end of line
                                                 offset_part += f"; {continuation_array_idx} {full_offset}"
@@ -442,9 +442,9 @@ def clean_pdf_text(input_path: str, output_path: str):
         # Pattern: "{0-4} 0xF80 : 0xFA0       cmn_hns_cml_port_aggr_grp0-4_add_mask ..."
         # Next line(s): blank
         # Next line: "{5-31} 0x6028 : 0x60F8"
-        if re.match(r'^\{[\d-]+\}\s+0x[0-9A-Fa-f]+\s*:\s*0x[0-9A-Fa-f]+\s+\w+', line):
+        if re.match(r'^\{[\d-]+\}\s+(?:0x|16\'h)[0-9A-Fa-f]+\s*:\s*(?:0x|16\'h)[0-9A-Fa-f]+\s+\w+', line):
             # Extract components from current line  
-            match = re.match(r'^(\{[\d-]+\}\s+0x[0-9A-Fa-f]+\s*:\s*0x[0-9A-Fa-f]+)\s+(.*)', line)
+            match = re.match(r'^(\{[\d-]+\}\s+(?:0x|16\'h)[0-9A-Fa-f]+\s*:\s*(?:0x|16\'h)[0-9A-Fa-f]+)\s+(.*)', line)
             if match:
                 offset_part = match.group(1)
                 rest_of_line = match.group(2).rstrip('\n')
@@ -455,7 +455,7 @@ def clean_pdf_text(input_path: str, output_path: str):
                 while j < len(pass2_lines) and j <= i + 3:
                     lookahead = pass2_lines[j].strip()
                     # Check if this is a continuation offset (just the offset, no register name)
-                    if re.match(r'^\{[\d-]+\}\s+0x[0-9A-Fa-f]+\s*:\s*0x[0-9A-Fa-f]+$', lookahead):
+                    if re.match(r'^\{[\d-]+\}\s+(?:0x|16\'h)[0-9A-Fa-f]+\s*:\s*(?:0x|16\'h)[0-9A-Fa-f]+$', lookahead):
                         # Add to offset part, not end of line
                         offset_part += f"; {lookahead}"
                         i = j + 1
@@ -480,12 +480,94 @@ def clean_pdf_text(input_path: str, output_path: str):
         final_lines.append(line)
         i += 1
     
+    # Fourth pass: Join multi-segment arrays in CMN-700 format
+    # Pattern: {0-23} register_name RW description
+    #          16\'hC00 :
+    #          16\'hCB8
+    #          {24-63}
+    #          16\'h20C0 :
+    #          16\'h24B8
+    # Should become: {0-23} 16\'hC00 : 16\'hCB8; {24-63} 16\'h20C0 : 16\'h24B8 register_name RW description
+    pass4_lines = []
+    i = 0
+    
+    while i < len(final_lines):
+        line = final_lines[i]
+        
+        # Look for pattern: {X-Y} register_name TYPE description
+        first_segment_match = re.match(r'^(\{[\d-]+\})\s+(\w+.*?)\s+(RW|RO|WO|RWL|W1C|W1S|R/W)\s+(.*)', line)
+        if first_segment_match:
+            array_indices = [first_segment_match.group(1)]
+            register_name = first_segment_match.group(2)
+            reg_type = first_segment_match.group(3)
+            description = first_segment_match.group(4)
+            
+            # Look ahead for offset patterns
+            j = i + 1
+            offsets = []
+            
+            # Collect offset ranges for first segment
+            if j < len(final_lines):
+                # Look for: 16\'hXXX :
+                start_offset_match = re.match(r'^16\'h([0-9A-Fa-f]+)\s*:$', final_lines[j].strip())
+                if start_offset_match:
+                    j += 1
+                    if j < len(final_lines):
+                        # Look for: 16\'hXXX
+                        end_offset_match = re.match(r'^16\'h([0-9A-Fa-f]+)$', final_lines[j].strip())
+                        if end_offset_match:
+                            offsets.append(f"0x{start_offset_match.group(1)} : 0x{end_offset_match.group(1)}")
+                            j += 1
+            
+            # Look for additional segments
+            while j < len(final_lines):
+                # Look for: {X-Y}
+                next_segment_match = re.match(r'^(\{[\d-]+\})$', final_lines[j].strip())
+                if next_segment_match:
+                    array_indices.append(next_segment_match.group(1))
+                    j += 1
+                    
+                    # Look for its offset range
+                    if j < len(final_lines):
+                        start_offset_match = re.match(r'^16\'h([0-9A-Fa-f]+)\s*:$', final_lines[j].strip())
+                        if start_offset_match:
+                            j += 1
+                            if j < len(final_lines):
+                                end_offset_match = re.match(r'^16\'h([0-9A-Fa-f]+)$', final_lines[j].strip())
+                                if end_offset_match:
+                                    offsets.append(f"0x{start_offset_match.group(1)} : 0x{end_offset_match.group(1)}")
+                                    j += 1
+                                else:
+                                    break
+                            else:
+                                break
+                        else:
+                            break
+                else:
+                    break
+            
+            # If we found multiple segments, create the combined line
+            if len(array_indices) > 1 and len(offsets) == len(array_indices):
+                # Build the multi-segment offset string
+                offset_parts = []
+                for idx, offset in enumerate(offsets):
+                    offset_parts.append(f"{array_indices[idx]} {offset}")
+                
+                combined_offset = "; ".join(offset_parts)
+                combined_line = f"{combined_offset} {register_name} {reg_type} {description}\n"
+                pass4_lines.append(combined_line)
+                i = j
+                continue
+        
+        pass4_lines.append(line)
+        i += 1
+    
     # Write cleaned and joined text
     with open(output_path, 'w', encoding='utf-8') as f:
-        f.writelines(final_lines)
+        f.writelines(pass4_lines)
     
     print(f"[INFO] Cleaned text saved to {output_path}")
-    print(f"[INFO] Reduced from {len(lines)} to {len(final_lines)} lines")
+    print(f"[INFO] Reduced from {len(lines)} to {len(pass4_lines)} lines")
 
 def get_all_lines(pdf_path: str):
     """Extract text from PDF using pdftotext and return as list of lines."""
@@ -632,6 +714,27 @@ def normalize_addr(expr: str) -> str:
     return expr
 
 # ------------------ Parsers ------------------
+def parse_array_indices(offset_str):
+    """Extract array indices from patterns like {0-23} or {24-151}"""
+    indices = []
+    for match in re.finditer(r'\{(\d+)-(\d+)\}', offset_str):
+        start, end = int(match.group(1)), int(match.group(2))
+        indices.append((start, end))
+    return indices
+
+def extract_segment_offset(offset_str, segment_index):
+    """Extract specific segment offset from multi-segment pattern"""
+    segments = offset_str.split(';')
+    if segment_index < len(segments):
+        return segments[segment_index].strip()
+    return offset_str
+
+def generate_segmented_register_name(base_name, start_idx, end_idx):
+    """Generate segmented register name like non_hash_mem_region_reg0-23"""
+    # Remove existing range suffix if present
+    base_clean = re.sub(r'\d+-\d+$', '', base_name)
+    return f"{base_clean}{start_idx}-{end_idx}"
+
 def parse_register_tables(lines):
     rows = []
     current_table = None
@@ -681,7 +784,8 @@ def parse_register_tables(lines):
         
         # NEW: Handle pdftotext format with space-separated columns
         # Pattern 1: Multi-segment array format "{0-15} 0xD80 : 0xDF8; {16-47} 0x2880 : 0x2978 register_name RW description"
-        multi_segment_match = re.match(r'^(\{[\d-]+\}\s+0x[0-9A-Fa-f]+\s*:\s*0x[0-9A-Fa-f]+(?:\s*;\s*\{[\d-]+\}\s+0x[0-9A-Fa-f]+\s*:\s*0x[0-9A-Fa-f]+)+)\s+(\S+)\s+(\S+)?\s*(.*)?', s)
+        # IMPORTANT: This pattern must be checked BEFORE the single array pattern to avoid false matches
+        multi_segment_match = re.match(r'^(\{[\d-]+\}\s+(?:0x|16\'h)[0-9A-Fa-f]+\s*:\s*(?:0x|16\'h)[0-9A-Fa-f]+(?:\s*;\s*\{[\d-]+\}\s+(?:0x|16\'h)[0-9A-Fa-f]+\s*:\s*(?:0x|16\'h)[0-9A-Fa-f]+)+)\s*(\S+)\s+(\S+)?\s*(.*)?', s)
         if multi_segment_match:
             offset = multi_segment_match.group(1).strip()
             name = multi_segment_match.group(2).strip()
@@ -693,18 +797,37 @@ def parse_register_tables(lines):
                 desc = type_token + " " + desc if type_token != "-" else desc
                 type_token = "-"
             
-            rows.append({
-                "table": current_table,
-                "offset": offset,
-                "name": name,
-                "type": type_token,
-                "description": desc,
-            })
+            # Parse array indices for segment generation
+            indices = parse_array_indices(offset)
+            
+            if len(indices) > 1:
+                # Generate separate entries for each segment
+                for idx, (start, end) in enumerate(indices):
+                    segment_offset = extract_segment_offset(offset, idx)
+                    segment_name = generate_segmented_register_name(name, start, end)
+                    
+                    rows.append({
+                        "table": current_table,
+                        "offset": segment_offset,
+                        "name": segment_name,
+                        "type": type_token,
+                        "description": desc,
+                    })
+            else:
+                # Single segment - use as-is
+                rows.append({
+                    "table": current_table,
+                    "offset": offset,
+                    "name": name,
+                    "type": type_token,
+                    "description": desc,
+                })
+            
             i += 1
             continue
             
         # Pattern 2: Single array format "{0-31} 0x3000 : 0x31F8    register_name    RW    description"
-        array_match = re.match(r'^(\{\d+-\d+\}\s+0x[0-9A-Fa-f]+\s*:\s*0x[0-9A-Fa-f]+)\s+(\S+)\s+(\S+)?\s*(.*)?', s)
+        array_match = re.match(r'^(\{\d+-\d+\}\s+(?:0x|16\'h)[0-9A-Fa-f]+\s*:\s*(?:0x|16\'h)[0-9A-Fa-f]+)\s*(\S+)\s+(\S+)?\s*(.*)?', s)
         if array_match:
             offset = array_match.group(1).strip()
             name = array_match.group(2).strip()
@@ -727,7 +850,7 @@ def parse_register_tables(lines):
             continue
         
         # Pattern 3: Range format "0x100 : 0x200    register_name    RW    description"
-        range_match = re.match(r'^(0x[0-9A-Fa-f]+\s*:\s*0x[0-9A-Fa-f]+)\s+(\S+)\s+(\S+)?\s*(.*)?', s)
+        range_match = re.match(r'^((?:0x|16\'h)[0-9A-Fa-f]+\s*:\s*(?:0x|16\'h)[0-9A-Fa-f]+)\s+(\S+)\s+(\S+)?\s*(.*)?', s)
         if range_match:
             offset = range_match.group(1).strip()
             name = range_match.group(2).strip()
@@ -750,7 +873,7 @@ def parse_register_tables(lines):
             continue
         
         # Pattern 4: Offset+Size format "0x100 + 0x80    register_name    RW    description"
-        offset_plus_match = re.match(r'^(0x[0-9A-Fa-f]+\s*\+\s*0x[0-9A-Fa-f]+)\s+(\S+)\s+(\S+)?\s*(.*)?', s)
+        offset_plus_match = re.match(r'^((?:0x|16\'h)[0-9A-Fa-f]+\s*\+\s*(?:0x|16\'h)[0-9A-Fa-f]+)\s+(\S+)\s+(\S+)?\s*(.*)?', s)
         if offset_plus_match:
             offset = offset_plus_match.group(1).strip()
             name = offset_plus_match.group(2).strip()
@@ -775,7 +898,7 @@ def parse_register_tables(lines):
             continue
         
         # Pattern 5: Simple format "0x100    register_name    RW    description"
-        simple_match = re.match(r'^(0x[0-9A-Fa-f]+)\s+(\S+)\s+(\S+)?\s*(.*)?', s)
+        simple_match = re.match(r'^((?:0x|16\'h)[0-9A-Fa-f]+)\s+(\S+)\s+(\S+)?\s*(.*)?', s)
         if simple_match:
             offset = simple_match.group(1).strip()
             name = simple_match.group(2).strip()
@@ -801,7 +924,7 @@ def parse_register_tables(lines):
 
         # ENHANCED: Check if this line has both offset and name concatenated
         # Pattern: "0xXXXX register_name"
-        offset_name_match = re.match(r'^(0x[0-9A-Fa-f]+)\s+([A-Za-z_][A-Za-z0-9_]*(?:[+-][A-Za-z0-9_]+)*)$', s)
+        offset_name_match = re.match(r'^((?:0x|16\'h)[0-9A-Fa-f]+)\s+([A-Za-z_][A-Za-z0-9_]*(?:[+-][A-Za-z0-9_]+)*)$', s)
         if offset_name_match:
             # Found offset and name on same line
             pending_addr = offset_name_match.group(1)
@@ -2162,6 +2285,8 @@ def remove_spurious_reserved_entries(df):
 # ------------------ Driver ------------------
 def extract(pdf_path: str, out_dir: str = "L1_pdf_analysis"):
     lines = get_all_lines(pdf_path)
+    
+    
     reg_rows = parse_register_tables(lines)
     attr_rows = parse_attribute_tables(lines)
     
